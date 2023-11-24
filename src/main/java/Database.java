@@ -31,7 +31,7 @@ public class Database {
     // viser alle informationer om et givet medlem
     // skal måske skrives om til kun at vise relevant info
     public String showInfo(Member member) {
-        String output = "";
+        String output;
         output = "\nNavn: " + member.getName()
                 + "\nAlder: " + member.getAge()
                 + "\nMail: " + member.getMail()

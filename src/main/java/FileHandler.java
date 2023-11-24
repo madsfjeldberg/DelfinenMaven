@@ -184,7 +184,7 @@ public class FileHandler {
     }
 
     private static boolean parseBoolean(String string) {
-        return string.toLowerCase().equals("true");
+        return string.equalsIgnoreCase("true");
     }
 
 }

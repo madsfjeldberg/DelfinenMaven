@@ -38,15 +38,15 @@ public class UserInterface {
                     Træner Menu
                     1. Top 5 svømmere (IKKE IMPLEMENTERET)
                     2. Opdater resultat (BETA)
-                    3. Søg efter svømmer (IKKE IMPLEMENTERET)
+                    3. Søg efter svømmer (BETA)
                     9. Tilbage til hovedmenu""");
 
             userInput = getValidInput();
 
             switch (userInput) {
-                case 1 -> System.out.println("Hej");
+                case 1 -> top5();
                 case 2 -> update();
-                case 3 -> System.out.println(coachSearch());
+                case 3 -> coachSearch();
                 case 9 -> {
                     ctrl.saveMemberList();
                     ctrl.saveResultList();
@@ -61,7 +61,7 @@ public class UserInterface {
         do {
             System.out.println("""
                     Kasserer Menu
-                    1. Se Kontingentsliste
+                    1. Se Kontingentliste (IKKE IMPLEMENTERET)
                     9. Tilbage til hovedmenu""");
 
             userInput = getValidInput();
@@ -147,15 +147,16 @@ public class UserInterface {
                 9. Afslut""");
     }
 
-    private String top5() {
-        return "";
+    // TODO: lav det her lårt
+    private void top5() {
+
     }
 
-    public String coachSearch() {
+    public void coachSearch() {
 
         String out = "";
 
-        System.out.println("Indtast mail: ");
+        System.out.println("Indtast mail:");
         String mail = input.nextLine();
 
         for (Member member: ctrl.getMemberList()) {
@@ -168,10 +169,10 @@ public class UserInterface {
                                 + "\n\n";
                     }
                 }
-                return member.getName() + "\n" + out;
+                System.out.println(member.getName() + "\n" + out); //return member.getName() + "\n" + out;
             }
         }
-        return "Intet medlem fundet.";
+        System.out.println("Intet medlem fundet.");
     }
 
     private void update() {

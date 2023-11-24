@@ -32,22 +32,6 @@ public class Result {
         return time;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setDiscipline(String discipline) {
-        this.discipline = discipline;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     @Override
     public String toString() {
         return "Result{" +
