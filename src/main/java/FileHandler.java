@@ -15,7 +15,7 @@ public class FileHandler {
         file = new File(f);
     }
 
-    public void saveList(ArrayList<Member> list) {
+    public void saveMemberList(ArrayList<Member> list) {
 
         if (!file.exists()) {
             try {
@@ -41,6 +41,57 @@ public class FileHandler {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void saveResultList(ArrayList<Result> list) {
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try (PrintStream output = new PrintStream(file)) {
+            for (Result result: list) {
+                String out;
+                out = result.getMail()
+                        + "," + result.getDate()
+                        + "," + result.getTime()
+                        + "," + result.getDiscipline();
+
+                output.println(out);
+            }
+        } catch (FileNotFoundException e)  {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Result> loadResultList() {
+
+        ArrayList<Result> resultList = new ArrayList<>();
+        String mail;
+        LocalDate date;
+        String time;
+        String discipline;
+
+        try (Scanner reader = new Scanner(file)) {
+
+            while (reader.hasNextLine()) {
+                String[] resultValues = reader.nextLine().split(",");
+                mail = trimString(resultValues[0]);
+                date = parseDate(resultValues[1]);
+                time = trimString(resultValues[2]);
+                discipline = trimString(resultValues[3]);
+
+                Result result = new Result(mail, date, time, discipline);
+                resultList.add(result);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        return resultList;
     }
 
     public ArrayList<Member> loadMemberList() {
@@ -69,7 +120,7 @@ public class FileHandler {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Fil ikke fundet");
+            System.out.println("File not found.");
         }
         return memberList;
     }
@@ -103,7 +154,7 @@ public class FileHandler {
                 discipline = trimString(memberValues[8]);
                 team = trimString(memberValues[9]);
 
-                Result result = new Result(date, time, discipline);
+                Result result = new Result(mail, date, time, discipline);
                 TournamentMember member = new TournamentMember(name, age, mail, activeMembership, birthday, lastPayment, result, team);
                 memberList.add(member);
             }
@@ -135,4 +186,5 @@ public class FileHandler {
     private static boolean parseBoolean(String string) {
         return string.toLowerCase().equals("true");
     }
+
 }

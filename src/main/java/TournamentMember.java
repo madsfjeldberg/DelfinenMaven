@@ -11,6 +11,7 @@ public class TournamentMember extends Member {
         this.result = result;
         this.team = team;
     }
+
     public Result getResult() {
         return result;
     }
@@ -26,4 +27,5 @@ public class TournamentMember extends Member {
     public void setTeam(String team) {
         this.team = team;
     }
+
 }
