@@ -27,7 +27,6 @@ public class UserInterface {
                 case 3 -> trainerMenu();
                 case 9 -> System.out.println("Afslutter programmet. Farvel!");
             }
-
         } while (userInput != 9);
     }
 
@@ -48,9 +47,11 @@ public class UserInterface {
                 case 2 -> update();
                 case 3 -> coachSearch();
                 case 9 -> {
+                    System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
                     ctrl.saveResultList();
-                    System.out.println("Tilbage til hovedmenuen."); }
+                    run();
+                }
                 default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
         } while (userInput != 9);
@@ -69,8 +70,10 @@ public class UserInterface {
             switch (userInput) {
                 case 1 -> System.out.println("Hej");
                 case 9 -> {
+                    System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
-                    System.out.println("Tilbage til hovedmenuen."); }
+                    run();
+                }
                 default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
         } while (userInput != 9);
@@ -91,8 +94,9 @@ public class UserInterface {
                 case 1 -> createMembership();
                 case 2 -> showList();
                 case 9 -> {
-                    ctrl.saveMemberList();
                     System.out.println("Tilbage til hovedmenuen.");
+                    ctrl.saveMemberList();
+                    run();
                 }
                 default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
@@ -152,6 +156,7 @@ public class UserInterface {
 
     }
 
+    // TODO: fejlhåndtering
     public void coachSearch() {
 
         String out = "";
@@ -175,6 +180,7 @@ public class UserInterface {
         System.out.println("Intet medlem fundet.");
     }
 
+    // TODO: fejlhåndtering, inputsikring
     private void update() {
 
         LocalDate date;
