@@ -9,8 +9,12 @@ public class Controller {
         db = new Database();
     }
 
-    public void saveList() {
-        db.saveList();
+    public void saveMemberList() {
+        db.saveMemberList();
+    }
+
+    public void saveResultList() {
+        db.saveResultList();
     }
 
     public String showList() {
@@ -25,7 +29,15 @@ public class Controller {
         return db.getMemberList();
     }
 
+    public ArrayList<Result> getResultList() {
+        return db.getResultList();
+    }
+
     public void addMember(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
         db.addMember(name, age, mail, activeMembership, birthday, lastPayment);
+    }
+
+    public void addResult(String mail, LocalDate date, String time, String discipline) {
+        db.addResult(mail, date, time, discipline);
     }
 }
