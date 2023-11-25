@@ -3,34 +3,35 @@ import java.util.ArrayList;
 
 public class Database {
 
-    // skal måske bruge flere filehandlers?
-    // til at gemme svømmeresultat / konkurrencesvømmere
     FileHandler memberHandler;
     FileHandler resultHandler;
     FileHandler subscriptionHandler;
     private ArrayList<Member> memberList;
-    private ArrayList<TournamentMember> tournamentMemberList;
+    private ArrayList<Result> resultList;
     //private ArrayList<Subscription> subscriptionList;
 
     public Database() {
         memberHandler = new FileHandler("members.csv");
-        resultHandler = new FileHandler("tournamentmembers.csv");
+        resultHandler = new FileHandler("results.csv");
         subscriptionHandler = new FileHandler("subscription.csv");
         memberList = new ArrayList<>();
         memberList = memberHandler.loadMemberList();
-        tournamentMemberList = new ArrayList<>();
-        tournamentMemberList = resultHandler.loadTournamentMemberList();
+        resultList = resultHandler.loadResultList();
 
     }
 
-    public void saveList() {
-        memberHandler.saveList(memberList);
+    public void saveMemberList() {
+        memberHandler.saveMemberList(memberList);
+    }
+
+    public void saveResultList() {
+        resultHandler.saveResultList(resultList);
     }
 
     // viser alle informationer om et givet medlem
     // skal måske skrives om til kun at vise relevant info
     public String showInfo(Member member) {
-        String output = "";
+        String output;
         output = "\nNavn: " + member.getName()
                 + "\nAlder: " + member.getAge()
                 + "\nMail: " + member.getMail()
@@ -40,6 +41,10 @@ public class Database {
 
     public ArrayList<Member> getMemberList() {
         return memberList;
+    }
+
+    public ArrayList<Result> getResultList() {
+        return resultList;
     }
 
     public String showList() {
@@ -54,6 +59,11 @@ public class Database {
                           LocalDate birthday, LocalDate lastPayment) {
         Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
         memberList.add(member);
+    }
+
+    public void addResult(String mail, LocalDate date, String time, String discipline) {
+        Result result = new Result(mail, date, time, discipline);
+        resultList.add(result);
     }
 
 }
