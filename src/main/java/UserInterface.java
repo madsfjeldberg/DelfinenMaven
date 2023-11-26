@@ -1,7 +1,11 @@
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserInterface {
 
@@ -9,11 +13,13 @@ public class UserInterface {
     private final Scanner input;
     int userInput;
     DateTimeFormatter formatter;
+    private final Pattern timePattern;
 
     public UserInterface() {
         ctrl = new Controller();
         input = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        timePattern = Pattern.compile("^\\d{2}:\\d{2}:\\d{2}$"); // sætter format til "12:34:56"
     }
 
     public void run() {
@@ -38,7 +44,8 @@ public class UserInterface {
                     1. Top 5 svømmere (IKKE IMPLEMENTERET)
                     2. Opdater resultat (BETA)
                     3. Søg efter svømmer (BETA)
-                    9. Tilbage til hovedmenu""");
+                    9. Tilbage til hovedmenu
+                    """);
 
             userInput = getValidInput();
 
@@ -47,7 +54,6 @@ public class UserInterface {
                 case 2 -> update();
                 case 3 -> coachSearch();
                 case 9 -> {
-                    System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
                     ctrl.saveResultList();
                     run();
@@ -63,14 +69,14 @@ public class UserInterface {
             System.out.println("""
                     Kasserer Menu
                     1. Se Kontingentliste (IKKE IMPLEMENTERET)
-                    9. Tilbage til hovedmenu""");
+                    9. Tilbage til hovedmenu
+                    """);
 
             userInput = getValidInput();
 
             switch (userInput) {
                 case 1 -> System.out.println("Hej");
                 case 9 -> {
-                    System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
                     run();
                 }
@@ -86,7 +92,9 @@ public class UserInterface {
                     Formand Menu
                     1. Opret Medlemskab
                     2. Liste over medlemmer
-                    9. Tilbage til hovedmenu""");
+                    3. Redigér medlem
+                    9. Tilbage til hovedmenu
+                    """);
 
             userInput = getValidInput();
 
@@ -94,7 +102,6 @@ public class UserInterface {
                 case 1 -> createMembership();
                 case 2 -> showList();
                 case 9 -> {
-                    System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
                     run();
                 }
@@ -108,19 +115,51 @@ public class UserInterface {
         System.out.println("Indtast navn:");
         String name = input.nextLine();
 
-        System.out.println("Indtast alder:");
-        int age = input.nextInt();
-        input.nextLine();
+        int age = 0;
+        boolean validAge = false;
+        do {
+            try {
+                System.out.println("Indtast alder:");
+                age = input.nextInt();
+                input.nextLine();
+                if (age > 0) {
+                    validAge = true;
+                } else {
+                    System.out.println("Alder skal være et positivt tal.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl, indtast venligst en gyldig alder.");
+            }
+        } while (!validAge);
+
         System.out.println("Indtast mail:");
         String mail = input.nextLine();
 
-        System.out.println("Aktivt Medlemskab: (true/false)");
-        boolean activeMembership = Boolean.parseBoolean(input.nextLine());
+        System.out.println("Aktivt Medlemskab: (y/n)");
+        boolean run = true;
+        boolean activeMembership = false;
+        String choice = input.nextLine();
+        while (run) {
+            if (choice.equalsIgnoreCase("y") && choice.equalsIgnoreCase("n")) {
+                activeMembership = Boolean.parseBoolean(choice);
+                run = false;
+            } else System.out.println(("Indtast 'y' eller 'n'"));
+        }
+
 
         System.out.println("Indtast fødselsdagsdato:");
-        LocalDate birthday = LocalDate.parse(input.nextLine(), formatter);
+        LocalDate birthday = null;
+        boolean validDate = false;
+        do {
+            try {
+                birthday = LocalDate.parse(input.nextLine(), formatter);
+                validDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Ugyldigt format.");
+            }
+        } while (!validDate);
 
-        System.out.println("TEST (Bliver sat automatisk efter oprettelse(Ændres måske))");
+        System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
         LocalDate lastPayment = LocalDate.now();
 
         ctrl.addMember(name, age, mail, activeMembership, birthday, lastPayment);
@@ -151,7 +190,7 @@ public class UserInterface {
                 9. Afslut""");
     }
 
-    // TODO: lav det her lårt
+
     private void top5() {
 
     }
@@ -159,8 +198,7 @@ public class UserInterface {
     // TODO: fejlhåndtering
     public void coachSearch() {
 
-        String out = "";
-
+        StringBuilder out = new StringBuilder();
         System.out.println("Indtast mail:");
         String mail = input.nextLine();
 
@@ -168,13 +206,12 @@ public class UserInterface {
             if (mail.equals(member.getMail())) {
                 for (Result result: ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
-                        out += result.getDiscipline()
-                                + "\n" + result.getTime()
-                                + "\n" + result.getDate()
-                                + "\n\n";
+                        out.append(result.getDiscipline()).append("\n")
+                                .append(result.getTime()).append("\n")
+                                .append(result.getDate()).append("\n\n");
                     }
                 }
-                System.out.println(member.getName() + "\n" + out); //return member.getName() + "\n" + out;
+                System.out.println(member.getName() + "\n" + out);
             }
         }
         System.out.println("Intet medlem fundet.");
@@ -183,7 +220,7 @@ public class UserInterface {
     // TODO: fejlhåndtering, inputsikring
     private void update() {
 
-        LocalDate date;
+        LocalDate date = null;
         String time;
         String discipline;
 
@@ -196,17 +233,34 @@ public class UserInterface {
             }
         }
         if (chosenMember == null) {
-            System.out.println("Medlem ikke fundet");
+            System.out.println("Medlem ikke fundet.");
+        } else {
+            boolean validDate = false;
+            do {
+                try {
+                    System.out.println("Indtast dato (format dd-MM-yyyy)");
+                    date = LocalDate.parse(input.nextLine(), formatter);
+                    validDate = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Ugyldigt format. prøv igen.");
+                }
+            } while (!validDate);
+
+            boolean validTime;
+            do {
+                System.out.println("Indtast tid (format mm:ss:ms):");
+                time = input.nextLine();
+                Matcher matcher = timePattern.matcher(time);
+                validTime = matcher.matches();
+                if (!validTime) {
+                    System.out.println("Ugyldigt format. prøv igen.");
+                }
+            } while (!validTime);
+
+            System.out.println("Indtast disciplin:");
+            discipline = input.nextLine();
+
+            ctrl.addResult(mail, date, time, discipline);
         }
-
-        System.out.println("Indtast dato:");
-        date = LocalDate.parse(input.nextLine(), formatter);
-        System.out.println("Indtast tid (format mm:ss.ms):");
-        time = input.nextLine();
-        System.out.println("Indtast disciplin:");
-        discipline = input.nextLine();
-
-        ctrl.addResult(mail, date, time, discipline);
-        ctrl.saveResultList();
     }
 }

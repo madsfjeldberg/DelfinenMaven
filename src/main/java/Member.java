@@ -28,7 +28,6 @@ public class Member {
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
         this.nextPaymentDate = nextPaymentDate;
-        this.activeMembership = activeMembership;
         this.mail = mail;
     }
 
