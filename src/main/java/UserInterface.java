@@ -62,13 +62,17 @@ public class UserInterface {
         do {
             System.out.println("""
                     Kasserer Menu
-                    1. Se Kontingentliste (IKKE IMPLEMENTERET)
+                    1. Se Kontingentliste
+                    2. Se samlet kontingetbeløb
                     9. Tilbage til hovedmenu""");
 
             userInput = getValidInput();
 
             switch (userInput) {
-                case 1 -> System.out.println("Hej");
+                case 1 -> ctrl.showSubscriptionList();
+                case 2 -> {
+                    System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount());
+                }
                 case 9 -> {
                     System.out.println("Tilbage til hovedmenuen.");
                     ctrl.saveMemberList();
@@ -129,6 +133,7 @@ public class UserInterface {
     private void showList() {
         System.out.println(ctrl.showList());
     }
+
 
     private int getValidInput() {
         int inputNumber = 0;
