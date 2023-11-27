@@ -14,7 +14,6 @@ public class Subscription {
         return member;
     }
 
-
     public int getSubscriptionAmount() {
         return subscriptionAmount;
     }
@@ -22,10 +21,12 @@ public class Subscription {
     public boolean getisPaid() {
         return isPaid;
     }
+
     public String getIsPaidString() {
         updatePaymentStatus();
         return isPaid ? "Ja" : "Nej";
     }
+
     private void updatePaymentStatus() {
         LocalDate lastPaymentDate = member.getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
@@ -33,6 +34,7 @@ public class Subscription {
             isPaid = false;
         }
     }
+
     public void setAmount () {
     }
 
