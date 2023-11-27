@@ -1,36 +1,40 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
-    // skal måske bruge flere filehandlers?
-    // til at gemme svømmeresultat / konkurrencesvømmere
     FileHandler memberHandler;
     FileHandler resultHandler;
     FileHandler subscriptionHandler;
     private ArrayList<Member> memberList;
-    private ArrayList<TournamentMember> tournamentMemberList;
-    //private ArrayList<Subscription> subscriptionList;
+    private ArrayList<Result> resultList;
+    private ArrayList<Subscription> subscriptionList;
 
     public Database() {
         memberHandler = new FileHandler("members.csv");
-        resultHandler = new FileHandler("tournamentmembers.csv");
+        resultHandler = new FileHandler("results.csv");
         subscriptionHandler = new FileHandler("subscription.csv");
         memberList = new ArrayList<>();
         memberList = memberHandler.loadMemberList();
-        tournamentMemberList = new ArrayList<>();
-        tournamentMemberList = resultHandler.loadTournamentMemberList();
+        resultList = resultHandler.loadResultList();
+        subscriptionList = new ArrayList<>();
 
     }
 
-    public void saveList() {
-        memberHandler.saveList(memberList);
+    public void saveMemberList() {
+        memberHandler.saveMemberList(memberList);
+    }
+
+    public void saveResultList() {
+        resultHandler.saveResultList(resultList);
     }
 
     // viser alle informationer om et givet medlem
     // skal måske skrives om til kun at vise relevant info
     public String showInfo(Member member) {
-        String output = "";
+        String output;
         output = "\nNavn: " + member.getName()
                 + "\nAlder: " + member.getAge()
                 + "\nMail: " + member.getMail()
@@ -38,8 +42,26 @@ public class Database {
         return output;
     }
 
+
     public ArrayList<Member> getMemberList() {
         return memberList;
+    }
+
+    public ArrayList<Result> getResultList() {
+        return resultList;
+    }
+    public ArrayList<Subscription> getSubscriptionList() {
+
+        subscriptionList.clear();
+        for (Member member: memberList) {
+            int age = member.getAge();
+            boolean activeMember = member.isActiveMembership();
+            int subscriptionAmount = subscriptionCalculator(age, activeMember);
+
+            Subscription subscription = new Subscription(member, false, subscriptionAmount);
+            subscriptionList.add(subscription);
+            
+        } return subscriptionList;
     }
 
     public String showList() {
@@ -50,10 +72,72 @@ public class Database {
         return out;
     }
 
+
     public void addMember(String name, int age, String mail, boolean activeMembership,
                           LocalDate birthday, LocalDate lastPayment) {
         Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
         memberList.add(member);
     }
 
+    public void addResult(String mail, LocalDate date, String time, String discipline) {
+        Result result = new Result(mail, date, time, discipline);
+        resultList.add(result);
+    }
+
+    public static int ageCalculator(Member member) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate birthday = member.getBirthday();
+        Period period = Period.between(birthday, currentDate);
+        return period.getYears();
+
+    }
+
+    public int subscriptionCalculator(int age, boolean activeMember) {
+            int discountPercentage = 25;
+            int totalPercentage = 100;
+            int discountCalculator = totalPercentage / discountPercentage;
+            int subscriptionAmount = 0;
+
+            if (!activeMember) {
+                subscriptionAmount = 500;
+            }
+            if (activeMember && age < 18) {
+                subscriptionAmount = 1000;
+            }
+            if (activeMember && age > 18 && age < 60) {
+                subscriptionAmount = 1600;
+
+
+            } else if (activeMember && age > 60) {
+                subscriptionAmount = 1600 - 1600/discountCalculator;
+
+            } return subscriptionAmount;
+        }
+    public int getTotalSubscriptionAmount() {
+        getSubscriptionList();
+        int totalAmount = 0;
+
+        for (Subscription subscription : subscriptionList) {
+            totalAmount += subscription.getSubscriptionAmount();
+        }
+
+
+        return totalAmount;
+    }
+    public ArrayList<Subscription> getUnpaidSubscriptions() {
+        ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
+
+        for (Subscription subscription : subscriptionList) {
+            if (!subscription.getisPaid()) {
+                unpaidSubscriptions.add(subscription);
+            }
+        }
+
+        return unpaidSubscriptions;
+    }
 }
+
+
+
+
+
