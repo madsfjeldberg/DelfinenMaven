@@ -32,6 +32,8 @@ public class Member {
         this.mail = mail;
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -91,5 +93,8 @@ public class Member {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+    public void updateLastPaymentDate() {
+        this.lastPaymentDate = LocalDate.now();
     }
 }
