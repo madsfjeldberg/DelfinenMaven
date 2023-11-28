@@ -16,9 +16,6 @@ public class Controller {
     public void saveResultList() {
         db.saveResultList();
     }
-    public void getSubsciptionList() {
-        db.getSubscriptionList();
-    }
 
     public String showList() {
         return db.showList();

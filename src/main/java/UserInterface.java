@@ -166,7 +166,7 @@ public class UserInterface {
         System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
         LocalDate lastPayment = LocalDate.now();
 
-        ctrl.addMember(name, age, mail, activeMembership, birthday, lastPayment);
+        ctrl.addMember(name, age, mail, activeMembership, birthday, lastPayment, true);
     }
 
     private void showList() {

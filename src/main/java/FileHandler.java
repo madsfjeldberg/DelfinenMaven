@@ -9,11 +9,7 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-    private final File file;
-
-    public FileHandler(String f) {
-        file = new File(f);
-    }
+    private File file;
 
     public void saveMemberList(ArrayList<Member> list) {
 
@@ -94,8 +90,8 @@ public class FileHandler {
         return resultList;
     }
 
-    public ArrayList<Member> loadMemberList() {
-
+    public ArrayList<Member> loadMemberList(String fileName) {
+        File file = new File(fileName);
         ArrayList<Member> memberList = new ArrayList<>();
         String name;
         int age;
@@ -115,7 +111,7 @@ public class FileHandler {
                 birthday = parseDate(memberValues[4]);
                 lastPayment = parseDate(memberValues[5]);
 
-                Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
+                Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
                 memberList.add(member);
             }
 

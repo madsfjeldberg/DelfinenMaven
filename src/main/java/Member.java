@@ -3,6 +3,7 @@ import java.time.LocalDate;
 public class Member {
 
     private String name;
+    //TODO Skal redigere 'age'
     private int age;
     private String mail;
     private boolean activeMembership;
@@ -94,5 +95,32 @@ public class Member {
     }
     public void updateLastPaymentDate() {
         this.lastPaymentDate = LocalDate.now();
+    }
+    public int calculateSubscription () {
+        int discountPercentage = 25;
+        int totalPercentage = 100;
+        int discountCalculator = totalPercentage / discountPercentage;
+        int subscriptionAmount = 0;
+
+        if (!activeMembership) {
+            subscriptionAmount = 500;
+        }
+        if (activeMembership && age < 18) {
+            subscriptionAmount = 1000;
+        }
+        if (activeMembership && age > 18 && age < 60) {
+            subscriptionAmount = 1600;
+
+        } else if (activeMembership && age > 60) {
+            subscriptionAmount = 1600 - 1600/discountCalculator;
+
+        } return subscriptionAmount;
+    }
+
+
+    public String getIsPaidString() {
+        if (isPaid) {
+            return "Ja";
+        } else return "Nej";
     }
 }

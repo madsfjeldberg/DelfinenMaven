@@ -5,21 +5,17 @@ import java.util.List;
 
 public class Database {
 
-    FileHandler memberHandler;
-    FileHandler resultHandler;
-    FileHandler subscriptionHandler;
+    FileHandler fh;
     private ArrayList<Member> memberList;
     private ArrayList<Result> resultList;
-    private ArrayList<Subscription> subscriptionList;
 
     public Database() {
         memberHandler = new FileHandler("members.csv");
         resultHandler = new FileHandler("results.csv");
         subscriptionHandler = new FileHandler("subscription.csv");
         memberList = new ArrayList<>();
-        memberList = memberHandler.loadMemberList();
-        resultList = resultHandler.loadResultList();
-        subscriptionList = new ArrayList<>();
+        memberList = fh.loadMemberList("members.csv");
+        resultList = fh.loadResultList("results.csv");
 
     }
 
@@ -50,19 +46,8 @@ public class Database {
     public ArrayList<Result> getResultList() {
         return resultList;
     }
-    public ArrayList<Subscription> getSubscriptionList() {
 
-        subscriptionList.clear();
-        for (Member member: memberList) {
-            int age = member.getAge();
-            boolean activeMember = member.isActiveMembership();
-            int subscriptionAmount = subscriptionCalculator(age, activeMember);
 
-            Subscription subscription = new Subscription(member, false, subscriptionAmount);
-            subscriptionList.add(subscription);
-            
-        } return subscriptionList;
-    }
 
     public String showList() {
         String out = "";
@@ -73,8 +58,8 @@ public class Database {
     }
 
     public void addMember(String name, int age, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment) {
-        Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
+                          LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
+        Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, true);
         memberList.add(member);
     }
 
@@ -117,16 +102,24 @@ public class Database {
     public int getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
-        for (Subscription subscription : subscriptionList) {
-            totalAmount += subscription.getSubscriptionAmount();
+        for (Member subscription : memberList) {
+            totalAmount += subscription.calculateSubscription();
         }
         return totalAmount;
+    }
+    public void showSubscriptionList() {
+
+        for (Member member : memberList) {
+            System.out.println("Navn: " + member.getName()
+                    + ", Kontingent: " + member.calculateSubscription()
+                    + ", Betalt: " + member.getIsPaidString());
+        }
     }
 
     public ArrayList<Subscription> getUnpaidSubscriptions() {
         ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
 
-        for (Subscription subscription : subscriptionList) {
+        for (Member subscription : memberList) {
             if (!subscription.getisPaid()) {
                 unpaidSubscriptions.add(subscription);
             }
