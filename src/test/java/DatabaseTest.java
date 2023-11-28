@@ -11,23 +11,19 @@ import java.util.ArrayList;
 public class DatabaseTest {
 
     Database db;
-    FileHandler memberHandler;
-    FileHandler resultHandler;
+    FileHandler fh;
     ArrayList<Member> memberList;
     ArrayList<Result> resultList;
-    ArrayList<Subscription> subscriptionList;
     DateTimeFormatter formatter;
 
     @BeforeEach
     void setup() {
         db = new Database();
-        memberHandler = new FileHandler("membersTest.csv");
-        resultHandler = new FileHandler("resultTest.csv");
+        fh = new FileHandler();
         memberList = new ArrayList<>();
         resultList = new ArrayList<>();
-        subscriptionList = new ArrayList<>();
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
+        db.getMemberList().clear();
     }
 
     @Test
@@ -37,6 +33,7 @@ public class DatabaseTest {
         String actual = db.showInfo(testMember);
 
         String expected = """
+                
                 Navn: name
                 Alder: 28
                 Mail: mail
@@ -99,6 +96,7 @@ public class DatabaseTest {
         memberList.add(testMember);
         String actual = db.showList();
         String expected = """
+                
                 Navn: name
                 Alder: 28
                 Mail: mail
@@ -180,7 +178,7 @@ public class DatabaseTest {
         db.getSubscriptionList().add(sub1);
         db.getSubscriptionList().add(sub2);
 
-        int expected = 6000;
+        int expected = 4800;
         int actual = db.getTotalSubscriptionAmount();
 
         assertEquals(expected, actual);

@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -68,18 +67,15 @@ public class UserInterface {
         do {
             System.out.println("""
                     Kasserer Menu
-
                     1. Se Kontingentliste
-                    2. Se samlet kontingetbeløb
+                    2. Se samlet kontingentbeløb
                     9. Tilbage til hovedmenu""");
 
             userInput = getValidInput();
 
             switch (userInput) {
                 case 1 -> ctrl.showSubscriptionList();
-                case 2 -> {
-                    System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount());
-                }
+                case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount());
                 case 9 -> {
                     ctrl.saveMemberList();
                     run();
@@ -96,7 +92,7 @@ public class UserInterface {
                     Formand Menu
                     1. Opret Medlemskab
                     2. Liste over medlemmer
-                    3. Redigér medlem
+                    3. Redigér medlem (IKKE IMPLEMENTERET)
                     9. Tilbage til hovedmenu
                     """);
 
@@ -119,37 +115,23 @@ public class UserInterface {
         System.out.println("Indtast navn:");
         String name = input.nextLine();
 
-        int age = 0;
-        boolean validAge = false;
-        do {
-            try {
-                System.out.println("Indtast alder:");
-                age = input.nextInt();
-                input.nextLine();
-                if (age > 0) {
-                    validAge = true;
-                } else {
-                    System.out.println("Alder skal være et positivt tal.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Fejl, indtast venligst en gyldig alder.");
-            }
-        } while (!validAge);
-
         System.out.println("Indtast mail:");
         String mail = input.nextLine();
 
         System.out.println("Aktivt Medlemskab: (y/n)");
         boolean run = true;
         boolean activeMembership = false;
-        String choice = input.nextLine();
         while (run) {
-            if (choice.equalsIgnoreCase("y") && choice.equalsIgnoreCase("n")) {
-                activeMembership = Boolean.parseBoolean(choice);
+            String choice = input.nextLine();
+            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+                if (choice.equalsIgnoreCase("y")) {
+                    activeMembership = true;
+                } else if (choice.equalsIgnoreCase("n")) {
+                    activeMembership = false;
+                }
                 run = false;
             } else System.out.println(("Indtast 'y' eller 'n'"));
         }
-
 
         System.out.println("Indtast fødselsdagsdato:");
         LocalDate birthday = null;
@@ -200,17 +182,20 @@ public class UserInterface {
 
     }
 
-    // TODO: fejlhåndtering
     public void coachSearch() {
 
+        boolean foundMember = false;
+        boolean foundResult = false;
         StringBuilder out = new StringBuilder();
         System.out.println("Indtast mail:");
         String mail = input.nextLine();
 
         for (Member member: ctrl.getMemberList()) {
             if (mail.equals(member.getMail())) {
+                foundMember = true;
                 for (Result result: ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
+                        foundResult = true;
                         out.append(result.getDiscipline()).append("\n")
                                 .append(result.getTime()).append("\n")
                                 .append(result.getDate()).append("\n\n");
@@ -219,10 +204,14 @@ public class UserInterface {
                 System.out.println(member.getName() + "\n" + out);
             }
         }
-        System.out.println("Intet medlem fundet.");
+        if (!foundMember) {
+            System.out.println("Intet medlem fundet.");
+        }
+        if (!foundResult) {
+            System.out.println("Ingen tid registreret.");
+        }
     }
 
-    // TODO: fejlhåndtering, inputsikring
     private void update() {
 
         LocalDate date = null;
@@ -237,6 +226,7 @@ public class UserInterface {
                 chosenMember = member;
             }
         }
+
         if (chosenMember == null) {
             System.out.println("Medlem ikke fundet.");
         } else {

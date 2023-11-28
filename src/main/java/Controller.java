@@ -33,8 +33,8 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
-        db.addMember(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
+        db.addMember(name, mail, activeMembership, birthday, lastPayment, isPaid);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {

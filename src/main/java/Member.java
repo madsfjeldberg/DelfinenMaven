@@ -1,15 +1,14 @@
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Member {
 
     private String name;
-    //TODO Skal redigere 'age'
     private int age;
     private String mail;
     private boolean activeMembership;
     private LocalDate birthday;
     private LocalDate lastPaymentDate;
-    private LocalDate nextPaymentDate;
     private boolean isPaid;
 
     public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
@@ -23,18 +22,11 @@ public class Member {
         this.isPaid = isPaid;
     }
 
-    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, LocalDate nextPaymentDate, boolean isPaid) {
-        this.name = name;
-        this.age = age;
-        this.mail = mail;
-        this.activeMembership = activeMembership;
-        this.birthday = birthday;
-        this.lastPaymentDate = lastPaymentDate;
-        this.nextPaymentDate = nextPaymentDate;
-        this.mail = mail;
-        this.isPaid = isPaid;
+    public static int ageCalculator(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(birthday, currentDate);
+        return period.getYears();
     }
-
 
     public String getName() {
         return name;
@@ -52,25 +44,12 @@ public class Member {
         return lastPaymentDate;
     }
 
-    public LocalDate getNextPaymentDate() {
-        return nextPaymentDate;
-    }
-
     public boolean isActiveMembership() {
         return activeMembership;
     }
 
     public String getMail() {
         return mail;
-    }
-
-    public String getTeam(Member member) {
-        if (activeMembership) {
-            if (member.age < 18) {
-                return "Junior";
-            } else return "Senior";
-        }
-        return "Passiv";
     }
 
     public void setName(String name) {
@@ -96,9 +75,11 @@ public class Member {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
     public void updateLastPaymentDate() {
         this.lastPaymentDate = LocalDate.now();
     }
+
     public int calculateSubscription () {
         int discountPercentage = 25;
         int totalPercentage = 100;

@@ -44,8 +44,6 @@ public class Database {
         return resultList;
     }
 
-
-
     public String showList() {
         String out = "";
         for (Member member : memberList) {
@@ -54,9 +52,9 @@ public class Database {
         return out;
     }
 
-    public void addMember(String name, int age, String mail, boolean activeMembership,
+    public void addMember(String name, String mail, boolean activeMembership,
                           LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
-        Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, true);
+        Member member = new Member(name, mail, activeMembership, birthday, lastPayment, true);
         memberList.add(member);
     }
 
@@ -70,14 +68,13 @@ public class Database {
         LocalDate birthday = member.getBirthday();
         Period period = Period.between(birthday, currentDate);
         return period.getYears();
-
     }
 
     public int getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
-        for (Member subscription : memberList) {
-            totalAmount += subscription.calculateSubscription();
+        for (Member member : memberList) {
+            totalAmount += member.calculateSubscription();
         }
         return totalAmount;
     }
