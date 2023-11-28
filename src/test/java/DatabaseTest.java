@@ -28,7 +28,7 @@ public class DatabaseTest {
 
     @Test
     void showInfo() {
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
 
         String actual = db.showInfo(testMember);
 
@@ -41,37 +41,11 @@ public class DatabaseTest {
         assertEquals(expected, actual);
     }
 
-    // TODO: evt check på indhold i stedet for størrelse.
-    @Test
-    void getSubscriptionList() {
-
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember1 = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember2 = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-
-        Subscription subscription = new Subscription(testMember, false, db.subscriptionCalculator(testMember.getAge(), testMember.isActiveMembership()));
-        Subscription subscription1 = new Subscription(testMember1, false, db.subscriptionCalculator(testMember1.getAge(), testMember1.isActiveMembership()));
-        Subscription subscription2 = new Subscription(testMember2, false, db.subscriptionCalculator(testMember2.getAge(), testMember2.isActiveMembership()));
-
-        subscriptionList.add(subscription);
-        subscriptionList.add(subscription1);
-        subscriptionList.add(subscription2);
-
-        ArrayList<Subscription> expected = new ArrayList<>();
-        expected.add(subscription);
-        expected.add(subscription1);
-        expected.add(subscription2);
-
-        ArrayList<Subscription> actual = db.getSubscriptionList();
-
-        assertEquals(expected.size(), actual.size());
-    }
-
 
     @Test
     void addMember() {
 
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
 
 
         ArrayList<Member> memberList = new ArrayList<>();
@@ -89,10 +63,10 @@ public class DatabaseTest {
     @Test
     void showList() {
 
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
         db.getMemberList().clear();
 
-        db.addMember("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        db.addMember("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
         memberList.add(testMember);
         String actual = db.showList();
         String expected = """
@@ -122,7 +96,7 @@ public class DatabaseTest {
     @Test
     void ageCalculator() {
         LocalDate currentDate = LocalDate.now();
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
 
         int actual = db.ageCalculator(testMember);
         Period period = Period.between(LocalDate.of(1995, 4, 29), currentDate);
@@ -131,52 +105,16 @@ public class DatabaseTest {
     }
 
     @Test
-    void subscriptionCalculator() {
-        Member testMemberSenior = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-
-        int ageSenior = testMemberSenior.getAge();
-        boolean activeMember = testMemberSenior.isActiveMembership();
-
-        int discountPercentage = 25;
-        int totalPercentage = 100;
-        int discountCalculator = totalPercentage / discountPercentage;
-        int subscriptionAmount = 0;
-
-        if (!activeMember) {
-            subscriptionAmount = 500;
-        }
-        if (activeMember && testMemberSenior.getAge() < 18) {
-            subscriptionAmount = 1000;
-        }
-        if (activeMember && testMemberSenior.getAge() > 18 && testMemberSenior.getAge() < 60) {
-            subscriptionAmount = 1600;
-
-
-        } else if (activeMember && testMemberSenior.getAge() > 60) {
-            subscriptionAmount = 1600 - 1600 / discountCalculator;
-
-            int actual = db.subscriptionCalculator(ageSenior, activeMember);
-            int expected = 1600;
-
-            assertEquals(expected, actual);
-
-        }
-    }
-
-    @Test
     void getTotalSubscriptionAmount() {
 
-        Member testMember = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember1 = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember2 = new Member("name", 28, "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
+        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
+        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
 
-        Subscription sub = new Subscription(testMember, false, 1600);
-        Subscription sub1 = new Subscription(testMember1, false, 1600);
-        Subscription sub2 = new Subscription(testMember2, false, 1600);
-
-        db.getSubscriptionList().add(sub);
-        db.getSubscriptionList().add(sub1);
-        db.getSubscriptionList().add(sub2);
+        db.getMemberList().clear();
+        db.getMemberList().add(testMember);
+        db.getMemberList().add(testMember1);
+        db.getMemberList().add(testMember2);
 
         int expected = 4800;
         int actual = db.getTotalSubscriptionAmount();

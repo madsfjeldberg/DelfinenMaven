@@ -11,14 +11,13 @@ public class Member {
     private LocalDate lastPaymentDate;
     private boolean isPaid;
 
-    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
+    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
         this.name = name;
-        this.age = age;
+        this.age = ageCalculator(birthday);
         this.mail = mail;
         this.activeMembership = activeMembership;
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
-        this.nextPaymentDate = lastPaymentDate.plusYears(1);
         this.isPaid = isPaid;
     }
 

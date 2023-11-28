@@ -95,7 +95,6 @@ public class FileHandler {
         File file = new File(fileName);
         ArrayList<Member> memberList = new ArrayList<>();
         String name;
-        int age;
         String mail;
         boolean activeMembership;
         LocalDate birthday;
@@ -107,14 +106,13 @@ public class FileHandler {
             while (reader.hasNextLine()) {
                 String[] memberValues = reader.nextLine().split(",");
                 name = trimString(memberValues[0]);
-                age = parseTrim(memberValues[1]);
-                mail = trimString(memberValues[2]);
-                activeMembership = parseBoolean(memberValues[3]);
-                birthday = parseDate(memberValues[4]);
-                lastPayment = parseDate(memberValues[5]);
-                isPaid = parseBoolean(memberValues[6]);
+                mail = trimString(memberValues[1]);
+                activeMembership = parseBoolean(memberValues[2]);
+                birthday = parseDate(memberValues[3]);
+                lastPayment = parseDate(memberValues[4]);
+                isPaid = parseBoolean(memberValues[5]);
 
-                Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
+                Member member = new Member(name, mail, activeMembership, birthday, lastPayment, isPaid);
                 memberList.add(member);
             }
 
