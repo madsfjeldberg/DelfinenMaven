@@ -64,8 +64,8 @@ public class FileHandler {
         }
     }
 
-    public ArrayList<Result> loadResultList() {
-
+    public ArrayList<Result> loadResultList(String fileName) {
+        File file = new File(fileName);
         ArrayList<Result> resultList = new ArrayList<>();
         String mail;
         LocalDate date;
@@ -85,7 +85,7 @@ public class FileHandler {
                 resultList.add(result);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            System.out.println("Fil ikke fundet.");
         }
         return resultList;
     }
@@ -99,6 +99,7 @@ public class FileHandler {
         boolean activeMembership;
         LocalDate birthday;
         LocalDate lastPayment;
+        boolean isPaid;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -110,6 +111,7 @@ public class FileHandler {
                 activeMembership = parseBoolean(memberValues[3]);
                 birthday = parseDate(memberValues[4]);
                 lastPayment = parseDate(memberValues[5]);
+                isPaid = parseBoolean(memberValues[6]);
 
                 Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
                 memberList.add(member);

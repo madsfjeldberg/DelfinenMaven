@@ -10,8 +10,9 @@ public class Member {
     private LocalDate birthday;
     private LocalDate lastPaymentDate;
     private LocalDate nextPaymentDate;
+    private boolean isPaid;
 
-    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate) {
+    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
         this.name = name;
         this.age = age;
         this.mail = mail;
@@ -19,9 +20,10 @@ public class Member {
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
         this.nextPaymentDate = lastPaymentDate.plusYears(1);
+        this.isPaid = isPaid;
     }
 
-    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, LocalDate nextPaymentDate) {
+    public Member(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, LocalDate nextPaymentDate, boolean isPaid) {
         this.name = name;
         this.age = age;
         this.mail = mail;
@@ -30,6 +32,7 @@ public class Member {
         this.lastPaymentDate = lastPaymentDate;
         this.nextPaymentDate = nextPaymentDate;
         this.mail = mail;
+        this.isPaid = isPaid;
     }
 
 

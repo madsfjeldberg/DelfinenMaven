@@ -33,21 +33,18 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
-        db.addMember(name, age, mail, activeMembership, birthday, lastPayment);
+    public void addMember(String name, int age, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
+        db.addMember(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {
         db.addResult(mail, date, time, discipline);
     }
+
     public void showSubscriptionList() {
-        ArrayList<Subscription> subscriptionList = db.getSubscriptionList();
-        for (Subscription subscription : subscriptionList) {
-            System.out.println("Navn: " + subscription.getMember().getName()
-                    + ", Kontinget: " + subscription.getSubscriptionAmount()
-                    + ", Betalt: " + subscription.getIsPaidString());
-        }
+        db.showSubscriptionList();
     }
+
     public int getTotalSubscriptionAmount() {
         int totalAmount = db.getTotalSubscriptionAmount(); // Get the total amount from the database
 
