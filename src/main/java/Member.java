@@ -101,10 +101,20 @@ public class Member {
         } return subscriptionAmount;
     }
 
+    private void updatePaymentStatus() {
+        LocalDate lastPaymentDate = getLastPaymentDate();
+        LocalDate currentDate = LocalDate.now();
+        if (lastPaymentDate.plusYears(1).isBefore(currentDate)) {
+            isPaid = false;
+        }
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
 
     public String getIsPaidString() {
-        if (isPaid) {
-            return "Ja";
-        } else return "Nej";
+        updatePaymentStatus();
+        return isPaid ? "Ja" : "Nej";
     }
 }
