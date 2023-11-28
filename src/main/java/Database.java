@@ -72,7 +72,6 @@ public class Database {
         return out;
     }
 
-
     public void addMember(String name, int age, String mail, boolean activeMembership,
                           LocalDate birthday, LocalDate lastPayment) {
         Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
@@ -92,6 +91,7 @@ public class Database {
 
     }
 
+    // kan skrives om til at tage member ind i stedet for specifikke attributer
     public int subscriptionCalculator(int age, boolean activeMember) {
             int discountPercentage = 25;
             int totalPercentage = 100;
@@ -113,17 +113,16 @@ public class Database {
 
             } return subscriptionAmount;
         }
+
     public int getTotalSubscriptionAmount() {
-        getSubscriptionList();
         int totalAmount = 0;
 
         for (Subscription subscription : subscriptionList) {
             totalAmount += subscription.getSubscriptionAmount();
         }
-
-
         return totalAmount;
     }
+
     public ArrayList<Subscription> getUnpaidSubscriptions() {
         ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
 
@@ -132,7 +131,6 @@ public class Database {
                 unpaidSubscriptions.add(subscription);
             }
         }
-
         return unpaidSubscriptions;
     }
 }

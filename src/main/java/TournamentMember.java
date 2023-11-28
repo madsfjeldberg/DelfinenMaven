@@ -1,5 +1,7 @@
 import java.time.LocalDate;
 
+// Skal evt. slettes?
+
 public class TournamentMember extends Member {
 
     private Result result;
@@ -27,5 +29,4 @@ public class TournamentMember extends Member {
     public void setTeam(String team) {
         this.team = team;
     }
-
 }
