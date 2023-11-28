@@ -9,11 +9,7 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-    private final File file;
-
-    public FileHandler(String f) {
-        file = new File(f);
-    }
+    private File file;
 
     public void saveMemberList(ArrayList<Member> list) {
 
@@ -68,8 +64,8 @@ public class FileHandler {
         }
     }
 
-    public ArrayList<Result> loadResultList() {
-
+    public ArrayList<Result> loadResultList(String fileName) {
+        File file = new File(fileName);
         ArrayList<Result> resultList = new ArrayList<>();
         String mail;
         LocalDate date;
@@ -89,13 +85,13 @@ public class FileHandler {
                 resultList.add(result);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            System.out.println("Fil ikke fundet.");
         }
         return resultList;
     }
 
-    public ArrayList<Member> loadMemberList() {
-
+    public ArrayList<Member> loadMemberList(String fileName) {
+        File file = new File(fileName);
         ArrayList<Member> memberList = new ArrayList<>();
         String name;
         int age;
@@ -103,6 +99,7 @@ public class FileHandler {
         boolean activeMembership;
         LocalDate birthday;
         LocalDate lastPayment;
+        boolean isPaid;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -114,8 +111,9 @@ public class FileHandler {
                 activeMembership = parseBoolean(memberValues[3]);
                 birthday = parseDate(memberValues[4]);
                 lastPayment = parseDate(memberValues[5]);
+                isPaid = parseBoolean(memberValues[6]);
 
-                Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
+                Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, isPaid);
                 memberList.add(member);
             }
 

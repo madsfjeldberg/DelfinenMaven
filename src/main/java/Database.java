@@ -1,34 +1,27 @@
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Database {
 
-    FileHandler memberHandler;
-    FileHandler resultHandler;
-    FileHandler subscriptionHandler;
+    FileHandler fh;
     private ArrayList<Member> memberList;
     private ArrayList<Result> resultList;
-    private ArrayList<Subscription> subscriptionList;
 
     public Database() {
-        memberHandler = new FileHandler("members.csv");
-        resultHandler = new FileHandler("results.csv");
-        subscriptionHandler = new FileHandler("subscription.csv");
+        fh = new FileHandler();
         memberList = new ArrayList<>();
-        memberList = memberHandler.loadMemberList();
-        resultList = resultHandler.loadResultList();
-        subscriptionList = new ArrayList<>();
+        memberList = fh.loadMemberList("members.csv");
+        resultList = fh.loadResultList("results.csv");
 
     }
 
     public void saveMemberList() {
-        memberHandler.saveMemberList(memberList);
+        fh.saveMemberList(memberList);
     }
 
     public void saveResultList() {
-        resultHandler.saveResultList(resultList);
+        fh.saveResultList(resultList);
     }
 
     // viser alle informationer om et givet medlem
@@ -50,19 +43,8 @@ public class Database {
     public ArrayList<Result> getResultList() {
         return resultList;
     }
-    public ArrayList<Subscription> getSubscriptionList() {
 
-        subscriptionList.clear();
-        for (Member member: memberList) {
-            int age = member.getAge();
-            boolean activeMember = member.isActiveMembership();
-            int subscriptionAmount = subscriptionCalculator(age, activeMember);
 
-            Subscription subscription = new Subscription(member, false, subscriptionAmount);
-            subscriptionList.add(subscription);
-            
-        } return subscriptionList;
-    }
 
     public String showList() {
         String out = "";
@@ -73,8 +55,8 @@ public class Database {
     }
 
     public void addMember(String name, int age, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment) {
-        Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment);
+                          LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
+        Member member = new Member(name, age, mail, activeMembership, birthday, lastPayment, true);
         memberList.add(member);
     }
 
@@ -91,48 +73,35 @@ public class Database {
 
     }
 
-    // kan skrives om til at tage member ind i stedet for specifikke attributer
-    public int subscriptionCalculator(int age, boolean activeMember) {
-            int discountPercentage = 25;
-            int totalPercentage = 100;
-            int discountCalculator = totalPercentage / discountPercentage;
-            int subscriptionAmount = 0;
-
-            if (!activeMember) {
-                subscriptionAmount = 500;
-            }
-            if (activeMember && age < 18) {
-                subscriptionAmount = 1000;
-            }
-            if (activeMember && age > 18 && age < 60) {
-                subscriptionAmount = 1600;
-
-
-            } else if (activeMember && age > 60) {
-                subscriptionAmount = 1600 - 1600/discountCalculator;
-
-            } return subscriptionAmount;
-        }
-
     public int getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
-        for (Subscription subscription : subscriptionList) {
-            totalAmount += subscription.getSubscriptionAmount();
+        for (Member subscription : memberList) {
+            totalAmount += subscription.calculateSubscription();
         }
         return totalAmount;
     }
+    public void showSubscriptionList() {
 
-    public ArrayList<Subscription> getUnpaidSubscriptions() {
+        for (Member member : memberList) {
+            System.out.println("Navn: " + member.getName()
+                    + ", Kontingent: " + member.calculateSubscription()
+                    + ", Betalt: " + member.getIsPaidString());
+        }
+    }
+
+    /*public ArrayList<Subscription> getUnpaidSubscriptions() {
         ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
 
-        for (Subscription subscription : subscriptionList) {
+        for (Member subscription : memberList) {
             if (!subscription.getisPaid()) {
                 unpaidSubscriptions.add(subscription);
             }
         }
         return unpaidSubscriptions;
-    }
+    }*/
+
+
 }
 
 

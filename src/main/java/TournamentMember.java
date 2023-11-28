@@ -9,7 +9,7 @@ public class TournamentMember extends Member {
 
     public TournamentMember(String name, int age, String mail, boolean activeMembership,
                             LocalDate birthday, LocalDate lastPaymentDate, Result result, String team) {
-        super(name, age, mail, activeMembership,birthday, lastPaymentDate);
+        super(name, age, mail, activeMembership,birthday, lastPaymentDate, true);
         this.result = result;
         this.team = team;
     }
