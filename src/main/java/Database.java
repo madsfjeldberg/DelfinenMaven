@@ -116,7 +116,7 @@ public class Database {
         }
     }
 
-    public ArrayList<Subscription> getUnpaidSubscriptions() {
+    /*public ArrayList<Subscription> getUnpaidSubscriptions() {
         ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
 
         for (Member subscription : memberList) {
@@ -125,7 +125,9 @@ public class Database {
             }
         }
         return unpaidSubscriptions;
-    }
+    }*/
+
+
 }
 
 
