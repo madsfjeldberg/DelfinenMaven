@@ -51,4 +51,14 @@ public class Controller {
 
         return totalAmount;
     }
+    public ArrayList<Member> getUnpaidMember() {
+        return db.getUnpaidMember();
+    }
+    public ArrayList<Member> getPaidMember() {
+        return db.getPaidMember();
+    }
+    public void updatePaymentForMember(String mail) {
+        db.updatePaymentForMember(mail);
+    }
+
 }

@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="030a1087-ee6c-4661-9929-72d71e61c5cd" name="Changes" comment="28-11&#10;&#10;Mange ændringer.&#10;&#10;Filehandler fixet&#10;ui opdateret&#10;kasserer opdateret&#10;&#10;kig efter selv. :)">
-      <change afterPath="$PROJECT_DIR$/membersBACKUP.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/members.csv" beforeDir="false" afterPath="$PROJECT_DIR$/members.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/membersTest.csv" beforeDir="false" afterPath="$PROJECT_DIR$/membersTest.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resultTest.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resultTest.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Result.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FileHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FileHandlerTest.java" afterDir="false" />
     </list>
     <list id="41feaf26-6356-4ccd-b09c-e05dff8bf78f" name="Changes by ejler" comment="Changes by ejler" />
     <list id="5a0c9678-9d56-445e-9d57-5a8ef82ccfe9" name="Changes by milas" comment="" />
@@ -64,9 +58,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2Yg6WL0q4hhUcXChRvjFGeBbkcR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -80,7 +74,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "mads-unittest",
+    "git-widget-placeholder": "Treasurer-updated",
     "last_opened_file_path": "F:/Mit drev/KEA - 1. Semester/DelfinenMaven",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,7 +83,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.java in DelfinenMaven">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="DelfinenMaven" />
@@ -175,6 +169,7 @@
       <workItem from="1700941382369" duration="4809000" />
       <workItem from="1701014689890" duration="16461000" />
       <workItem from="1701250740737" duration="2661000" />
+      <workItem from="1701286811526" duration="6739000" />
     </task>
     <task id="LOCAL-00001" summary="27-11&#10;&#10;diverse unittest">
       <option name="closed" value="true" />

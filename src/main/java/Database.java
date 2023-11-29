@@ -87,16 +87,61 @@ public class Database {
         }
     }
 
-    /*public ArrayList<Subscription> getUnpaidSubscriptions() {
-        ArrayList<Subscription> unpaidSubscriptions = new ArrayList<>();
+    public ArrayList<Member> getUnpaidMember() {
+        ArrayList<Member> unpaidMember = new ArrayList<>();
+        int totalamount = 0;
 
-        for (Member subscription : memberList) {
-            if (!subscription.getisPaid()) {
-                unpaidSubscriptions.add(subscription);
+        for (Member member : memberList) {
+            if (!member.isPaid()) {
+                unpaidMember.add(member);
+                totalamount += member.calculateSubscription();
             }
         }
-        return unpaidSubscriptions;
-    }*/
+        System.out.println("Unpaid Members:");
+        for (Member member : unpaidMember) {
+            System.out.println("Navn: " + member.getName()
+                    + ", Kontinget: " + member.calculateSubscription()
+                    + ", Betalt: " + member.getIsPaidString());
+        }
+
+        System.out.println("Total manglende kontingent: " + totalamount);
+        return unpaidMember;
+    }
+
+    public ArrayList<Member> getPaidMember() {
+        ArrayList<Member> paidMember = new ArrayList<>();
+        int totalamount = 0;
+
+        for (Member member : memberList) {
+            if (member.isPaid()) {
+                paidMember.add(member);
+                totalamount += member.calculateSubscription();
+            }
+        }
+        System.out.println("Unpaid Members:");
+        for (Member member : paidMember) {
+            System.out.println("Navn: " + member.getName()
+                    + ", Kontinget: " + member.calculateSubscription()
+                    + ", Betalt: " + member.getIsPaidString());
+        }
+
+        System.out.println("Total manglende kontingent: " + totalamount);
+        return paidMember;
+    }
+    public void updatePaymentForMember(String mail) {
+        ArrayList<Member> memberList = getMemberList();
+
+        for (Member member : memberList) {
+            if (mail.equals(member.getMail())) {
+                member.updateLastPaymentDate();
+                member.setIsPaid(true);
+                saveMemberList();
+                return;
+            }
+        }
+
+        System.out.println("Member not found.");
+    }
 
 
 }
