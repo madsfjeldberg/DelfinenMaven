@@ -182,6 +182,7 @@ public class UserInterface {
 
     }
 
+    // TODO udvid med søgning på navn også
     public void coachSearch() {
 
         boolean foundMember = false;

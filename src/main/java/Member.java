@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 public class Member {
 
@@ -115,5 +116,23 @@ public class Member {
     public String getIsPaidString() {
         updatePaymentStatus();
         return isPaid ? "Ja" : "Nej";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return activeMembership == member.activeMembership &&
+                isPaid == member.isPaid &&
+                Objects.equals(name, member.name) &&
+                Objects.equals(mail, member.mail) &&
+                Objects.equals(birthday, member.birthday) &&
+                Objects.equals(lastPaymentDate, member.lastPaymentDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, mail, activeMembership, birthday, lastPaymentDate, isPaid);
     }
 }
