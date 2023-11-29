@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -41,12 +40,10 @@ public class DatabaseTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     void addMember() {
 
         Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), true);
-
 
         ArrayList<Member> memberList = new ArrayList<>();
         memberList.add(testMember);

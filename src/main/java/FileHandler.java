@@ -11,8 +11,8 @@ public class FileHandler {
 
 
 
-    public void saveMemberList(ArrayList<Member> list) {
-        File file = new File("members.csv");
+    public void saveMemberList(ArrayList<Member> list, String fileName) {
+        File file = new File(fileName);
 
         if (!file.exists()) {
             try {
@@ -39,8 +39,8 @@ public class FileHandler {
         }
     }
 
-    public void saveResultList(ArrayList<Result> list) {
-        File file = new File("results.csv");
+    public void saveResultList(ArrayList<Result> list, String fileName) {
+        File file = new File(fileName);
 
         if (!file.exists()) {
             try {
@@ -124,10 +124,6 @@ public class FileHandler {
 
     private String trimString(String input) {
         return input.trim();
-    }
-
-    private int parseTrim(String input) {
-        return Integer.parseInt(trimString(input));
     }
 
     private static String formatDate(LocalDate localDate) {

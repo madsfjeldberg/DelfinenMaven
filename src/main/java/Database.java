@@ -17,11 +17,11 @@ public class Database {
     }
 
     public void saveMemberList() {
-        fh.saveMemberList(memberList);
+        fh.saveMemberList(memberList, "members.csv");
     }
 
     public void saveResultList() {
-        fh.saveResultList(resultList);
+        fh.saveResultList(resultList, "results.csv");
     }
 
     // viser alle informationer om et givet medlem
@@ -45,11 +45,11 @@ public class Database {
     }
 
     public String showList() {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         for (Member member : memberList) {
-            out += showInfo(member);
+            out.append(showInfo(member));
         }
-        return out;
+        return out.toString();
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
