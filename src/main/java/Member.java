@@ -19,7 +19,7 @@ public class Member {
         this.activeMembership = activeMembership;
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
-        this.isPaid = isPaid;
+        this.isPaid = updatePaymentStatus();
     }
 
     public static int ageCalculator(LocalDate birthday) {
@@ -84,7 +84,6 @@ public class Member {
         this.lastPaymentDate = LocalDate.now();
     }
 
-
     public int calculateSubscription () {
         int discountPercentage = 25;
         int totalPercentage = 100;
@@ -106,7 +105,7 @@ public class Member {
         } return subscriptionAmount;
     }
 
-    private void updatePaymentStatus() {
+    private boolean updatePaymentStatus() {
         LocalDate lastPaymentDate = getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
         if (lastPaymentDate.plusYears(1).isBefore(currentDate)) {

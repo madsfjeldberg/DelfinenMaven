@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-
-
     public void saveMemberList(ArrayList<Member> list, String fileName) {
         File file = new File(fileName);
 
@@ -99,7 +97,6 @@ public class FileHandler {
         boolean activeMembership;
         LocalDate birthday;
         LocalDate lastPayment;
-        boolean isPaid;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -138,5 +135,4 @@ public class FileHandler {
     private static boolean parseBoolean(String string) {
         return string.equalsIgnoreCase("true");
     }
-
 }

@@ -41,8 +41,8 @@ public class Controller {
         db.addResult(mail, date, time, discipline);
     }
 
-    public void showSubscriptionList() {
-        db.showSubscriptionList();
+    public String showSubscriptionList() {
+        return db.showSubscriptionList();
     }
 
     public int getTotalSubscriptionAmount() {
@@ -51,10 +51,10 @@ public class Controller {
 
         return totalAmount;
     }
-    public ArrayList<Member> getUnpaidMember() {
+    public String getUnpaidMember() {
         return db.getUnpaidMember();
     }
-    public ArrayList<Member> getPaidMember() {
+    public String getPaidMember() {
         return db.getPaidMember();
     }
     public void updatePaymentForMember(String mail) {
