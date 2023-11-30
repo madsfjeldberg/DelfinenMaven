@@ -12,7 +12,7 @@ public class Member {
     private LocalDate lastPaymentDate;
     private boolean isPaid;
 
-    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
+    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate) {
         this.name = name;
         this.age = ageCalculator(birthday);
         this.mail = mail;
@@ -80,14 +80,8 @@ public class Member {
         this.isPaid = isPaid;
     }
 
-    private void saveMemberListToFile() {
-        Database db = new Database();
-        db.saveMemberList();
-    }
-
     public void updateLastPaymentDate() {
         this.lastPaymentDate = LocalDate.now();
-        saveMemberListToFile();
     }
 
 

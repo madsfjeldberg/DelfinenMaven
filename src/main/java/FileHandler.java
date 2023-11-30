@@ -110,9 +110,8 @@ public class FileHandler {
                 activeMembership = parseBoolean(memberValues[2]);
                 birthday = parseDate(memberValues[3]);
                 lastPayment = parseDate(memberValues[4]);
-                isPaid = parseBoolean(memberValues[5]);
 
-                Member member = new Member(name, mail, activeMembership, birthday, lastPayment, isPaid);
+                Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
                 memberList.add(member);
             }
 

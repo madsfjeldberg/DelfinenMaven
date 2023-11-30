@@ -136,11 +136,10 @@ public class Database {
                 member.updateLastPaymentDate();
                 member.setIsPaid(true);
                 saveMemberList();
-                return;
+                return "Medlem opdateret.";
             }
         }
-
-        System.out.println("Member not found.");
+        return "Medlem ikke fundet.";
     }
 
 

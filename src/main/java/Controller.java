@@ -33,8 +33,8 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
-        db.addMember(name, mail, activeMembership, birthday, lastPayment, isPaid);
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
+        db.addMember(name, mail, activeMembership, birthday, lastPayment);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {
@@ -59,6 +59,9 @@ public class Controller {
     }
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
+    }
+    public void updatePaymentStatus() {
+
     }
 
 }
