@@ -115,8 +115,7 @@ public class Database {
                     .append("\n");
         }
 
-        System.out.println("Total manglende kontingent: " + totalamount);
-        return unpaidMember;
+        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
     }
 
     public String getPaidMember() {
@@ -129,7 +128,7 @@ public class Database {
                 totalamount += member.calculateSubscription();
             }
         }
-        System.out.println("Unpaid Members:");
+        StringBuilder out = new StringBuilder();
         for (Member member : paidMember) {
 
             out.append("Navn: ").append(member.getName())

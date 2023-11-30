@@ -62,7 +62,6 @@ public class UserInterface {
                     ctrl.saveResultList();
                     run();
                 }
-                default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
         } while (userInput != 9);
     }
@@ -92,7 +91,6 @@ public class UserInterface {
                     ctrl.saveMemberList();
                     run();
                 }
-                default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
         } while (userInput != 9);
     }
@@ -117,7 +115,6 @@ public class UserInterface {
                     ctrl.saveMemberList();
                     run();
                 }
-                default -> System.out.println("Fejl, tast venligst et gyldigt input fra menuen.");
             }
         } while (userInput != 9);
     }

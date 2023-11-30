@@ -108,9 +108,7 @@ public class Member {
     private boolean updatePaymentStatus() {
         LocalDate lastPaymentDate = getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
-        if (lastPaymentDate.plusYears(1).isBefore(currentDate)) {
-            isPaid = false;
-        }
+        return !lastPaymentDate.plusYears(1).isBefore(currentDate);
     }
 
     public boolean isPaid() {
