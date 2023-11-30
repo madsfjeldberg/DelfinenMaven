@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -69,6 +70,9 @@ public class UserInterface {
                     Kasserer Menu
                     1. Se Kontingentliste
                     2. Se samlet kontingentbeløb
+                    3. Se ubetalt kontingetliste
+                    4. Se betalt kontingentliste
+                    5. Opdater betalingsstatus for medlem
                     9. Tilbage til hovedmenu""");
 
             userInput = getValidInput();
@@ -76,6 +80,9 @@ public class UserInterface {
             switch (userInput) {
                 case 1 -> ctrl.showSubscriptionList();
                 case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount());
+                case 3 -> ctrl.getUnpaidMember();
+                case 4 -> ctrl.getPaidMember();
+                case 5 -> updatePaymentForMember();
                 case 9 -> {
                     ctrl.saveMemberList();
                     run();
@@ -257,6 +264,32 @@ public class UserInterface {
             discipline = input.nextLine();
 
             ctrl.addResult(mail, date, time, discipline);
+        }
+
+    }
+    private void updatePaymentForMember() {
+        System.out.println("Indtast mail på det medlem, du skal opdatering betaling for:");
+        String mail = input.nextLine();
+
+        ArrayList<Member> memberList = ctrl.getMemberList();
+
+        for (Member member : memberList) {
+            if (mail.equals(member.getMail())) {
+                System.out.println("Ønsker du at opdatere betalingen for dette medlem Ja eller Nej?\n" + "Navn: " + member.getName()
+                        + ", Kontinget: " + member.calculateSubscription()
+                        + ", Betalt: " + member.getIsPaidString());
+
+                String response = input.nextLine().toLowerCase();
+                if (response.equals("ja")) {
+                    ctrl.updatePaymentForMember(mail);
+                    member.updateLastPaymentDate();
+                    System.out.println("Betaling opdateret for medlem: " + member.getName());
+                } else {
+                    System.out.println("Betaling ikke opdateret.");
+                }
+
+                return;
+            }
         }
     }
 }

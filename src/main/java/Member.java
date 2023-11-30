@@ -76,9 +76,20 @@ public class Member {
         this.mail = mail;
     }
 
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
+    private void saveMemberListToFile() {
+        Database db = new Database();
+        db.saveMemberList();
+    }
+
     public void updateLastPaymentDate() {
         this.lastPaymentDate = LocalDate.now();
+        saveMemberListToFile();
     }
+
 
     public int calculateSubscription () {
         int discountPercentage = 25;
