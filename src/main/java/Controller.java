@@ -33,16 +33,16 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
-        db.addMember(name, mail, activeMembership, birthday, lastPayment, isPaid);
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
+        db.addMember(name, mail, activeMembership, birthday, lastPayment);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {
         db.addResult(mail, date, time, discipline);
     }
 
-    public void showSubscriptionList() {
-        db.showSubscriptionList();
+    public String showSubscriptionList() {
+        return db.showSubscriptionList();
     }
 
     public int getTotalSubscriptionAmount() {
@@ -51,14 +51,17 @@ public class Controller {
 
         return totalAmount;
     }
-    public ArrayList<Member> getUnpaidMember() {
+    public String getUnpaidMember() {
         return db.getUnpaidMember();
     }
-    public ArrayList<Member> getPaidMember() {
+    public String getPaidMember() {
         return db.getPaidMember();
     }
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
+    }
+    public void updatePaymentStatus() {
+
     }
 
 }

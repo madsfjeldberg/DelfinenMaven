@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-
-
     public void saveMemberList(ArrayList<Member> list, String fileName) {
         File file = new File(fileName);
 
@@ -99,7 +97,6 @@ public class FileHandler {
         boolean activeMembership;
         LocalDate birthday;
         LocalDate lastPayment;
-        boolean isPaid;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -110,9 +107,8 @@ public class FileHandler {
                 activeMembership = parseBoolean(memberValues[2]);
                 birthday = parseDate(memberValues[3]);
                 lastPayment = parseDate(memberValues[4]);
-                isPaid = parseBoolean(memberValues[5]);
 
-                Member member = new Member(name, mail, activeMembership, birthday, lastPayment, isPaid);
+                Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
                 memberList.add(member);
             }
 
@@ -139,5 +135,4 @@ public class FileHandler {
     private static boolean parseBoolean(String string) {
         return string.equalsIgnoreCase("true");
     }
-
 }

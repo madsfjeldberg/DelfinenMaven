@@ -12,14 +12,14 @@ public class Member {
     private LocalDate lastPaymentDate;
     private boolean isPaid;
 
-    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, boolean isPaid) {
+    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate) {
         this.name = name;
         this.age = ageCalculator(birthday);
         this.mail = mail;
         this.activeMembership = activeMembership;
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
-        this.isPaid = isPaid;
+        this.isPaid = updatePaymentStatus();
     }
 
     public static int ageCalculator(LocalDate birthday) {
@@ -80,16 +80,9 @@ public class Member {
         this.isPaid = isPaid;
     }
 
-    private void saveMemberListToFile() {
-        Database db = new Database();
-        db.saveMemberList();
-    }
-
     public void updateLastPaymentDate() {
         this.lastPaymentDate = LocalDate.now();
-        saveMemberListToFile();
     }
-
 
     public int calculateSubscription () {
         int discountPercentage = 25;
@@ -112,12 +105,10 @@ public class Member {
         } return subscriptionAmount;
     }
 
-    private void updatePaymentStatus() {
+    private boolean updatePaymentStatus() {
         LocalDate lastPaymentDate = getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
-        if (lastPaymentDate.plusYears(1).isBefore(currentDate)) {
-            isPaid = false;
-        }
+        return !lastPaymentDate.plusYears(1).isBefore(currentDate);
     }
 
     public boolean isPaid() {

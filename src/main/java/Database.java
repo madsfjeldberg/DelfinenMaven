@@ -13,7 +13,6 @@ public class Database {
         memberList = new ArrayList<>();
         memberList = fh.loadMemberList("members.csv");
         resultList = fh.loadResultList("results.csv");
-
     }
 
     public void saveMemberList() {
@@ -53,8 +52,8 @@ public class Database {
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment, boolean isPaid) {
-        Member member = new Member(name, mail, activeMembership, birthday, lastPayment, true);
+                          LocalDate birthday, LocalDate lastPayment) {
+        Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
         memberList.add(member);
     }
 
@@ -63,6 +62,7 @@ public class Database {
         resultList.add(result);
     }
 
+    // udregner alder på baggrund af fødselsdag
     public static int ageCalculator(Member member) {
         LocalDate currentDate = LocalDate.now();
         LocalDate birthday = member.getBirthday();
@@ -78,16 +78,23 @@ public class Database {
         }
         return totalAmount;
     }
-    public void showSubscriptionList() {
 
+    public String showSubscriptionList() {
+
+        StringBuilder out = new StringBuilder();
         for (Member member : memberList) {
-            System.out.println("Navn: " + member.getName()
-                    + ", Kontingent: " + member.calculateSubscription()
-                    + ", Betalt: " + member.getIsPaidString());
+            out.append("Navn: ")
+                    .append(member.getName())
+                    .append(", Kontingent: ")
+                    .append(member.calculateSubscription())
+                    .append(", Betalt: ")
+                    .append(member.getIsPaidString())
+                    .append("\n");
         }
+        return out.toString();
     }
 
-    public ArrayList<Member> getUnpaidMember() {
+    public String getUnpaidMember() {
         ArrayList<Member> unpaidMember = new ArrayList<>();
         int totalamount = 0;
 
@@ -97,18 +104,21 @@ public class Database {
                 totalamount += member.calculateSubscription();
             }
         }
-        System.out.println("Unpaid Members:");
+        StringBuilder out = new StringBuilder();
         for (Member member : unpaidMember) {
-            System.out.println("Navn: " + member.getName()
-                    + ", Kontinget: " + member.calculateSubscription()
-                    + ", Betalt: " + member.getIsPaidString());
+            out.append("Navn: ")
+                    .append(member.getName())
+                    .append(", Kontingent: ")
+                    .append(member.calculateSubscription())
+                    .append(", Betalt: ")
+                    .append(member.getIsPaidString())
+                    .append("\n");
         }
 
-        System.out.println("Total manglende kontingent: " + totalamount);
-        return unpaidMember;
+        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
     }
 
-    public ArrayList<Member> getPaidMember() {
+    public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
         int totalamount = 0;
 
@@ -118,17 +128,21 @@ public class Database {
                 totalamount += member.calculateSubscription();
             }
         }
-        System.out.println("Unpaid Members:");
+        StringBuilder out = new StringBuilder();
         for (Member member : paidMember) {
-            System.out.println("Navn: " + member.getName()
-                    + ", Kontinget: " + member.calculateSubscription()
-                    + ", Betalt: " + member.getIsPaidString());
+
+            out.append("Navn: ").append(member.getName())
+                    .append(", Kontingent: ")
+                    .append(member.calculateSubscription())
+                    .append(", Betalt: ")
+                    .append(member.getIsPaidString())
+                    .append("\n");
         }
 
-        System.out.println("Total manglende kontingent: " + totalamount);
-        return paidMember;
+        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + totalamount + "\n";
     }
-    public void updatePaymentForMember(String mail) {
+
+    public String updatePaymentForMember(String mail) {
         ArrayList<Member> memberList = getMemberList();
 
         for (Member member : memberList) {
@@ -136,14 +150,11 @@ public class Database {
                 member.updateLastPaymentDate();
                 member.setIsPaid(true);
                 saveMemberList();
-                return;
+                return "Medlem opdateret.";
             }
         }
-
-        System.out.println("Member not found.");
+        return "Medlem ikke fundet.";
     }
-
-
 }
 
 
