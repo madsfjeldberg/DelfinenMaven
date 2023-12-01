@@ -4,28 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="030a1087-ee6c-4661-9929-72d71e61c5cd" name="Changes" comment="26-11&#10;&#10;Inputvalidering i &#10;update()&#10;createMembership()">
+    <list default="true" id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/members.csv" beforeDir="false" afterPath="$PROJECT_DIR$/members.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
-    </list>
-    <list id="06c2d9db-e5e1-46ed-9b25-f83840f17278" name="Changes by ejler" comment="" />
-    <list id="986c6285-403f-4355-9e39-b41ffd339e8d" name="Changes by madsfjeldberg" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
-    </list>
-    <list id="5a0c9678-9d56-445e-9d57-5a8ef82ccfe9" name="Changes by milas" comment="" />
-    <list id="cca13e03-4b69-4d45-812a-a512d655a1b8" name="Changes by soren" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Member.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,108 +40,17 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="093188ff-ece4-4156-984d-edbe6449e4a0" />
-        <option name="url" value="https://github.com/madsfjeldberg/DelfinenMaven.git" />
+        <option name="accountId" value="af5e91c1-6ac5-43d0-a8b9-7a8e64a858ef" />
+        <option name="url" value="https://github.com/madsfjeldberg/DelfinenMaven" />
       </UrlAndAccount>
     </option>
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Database.java">
-      <ranges>
-        <range start1="15" end1="16" start2="15" end2="15" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="55" end1="57" start2="54" end2="56" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="65" end1="65" start2="64" end2="65" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="80" end1="81" start2="80" end2="80" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="82" end1="82" start2="81" end2="84" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="83" end1="86" start2="85" end2="92" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="87" end1="87" start2="93" end2="94" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="89" end1="90" start2="96" end2="97" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="99" end1="100" start2="106" end2="107" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="101" end1="104" start2="108" end2="115" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="106" end1="108" start2="117" end2="118" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-        <range start1="110" end1="111" start2="120" end2="121" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="120" end1="121" start2="130" end2="131" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-        <range start1="122" end1="125" start2="132" end2="139" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="127" end1="129" start2="141" end2="142" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="130" end1="131" start2="143" end2="145" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="138" end1="139" start2="152" end2="153" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="141" end1="143" start2="155" end2="156" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="144" end1="146" start2="157" end2="157" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/Controller.java">
-      <ranges>
-        <range start1="35" end1="37" start2="35" end2="37" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="43" end1="45" start2="43" end2="45" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="53" end1="54" start2="53" end2="54" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="56" end1="57" start2="56" end2="57" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="62" end1="62" start2="62" end2="65" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/Member.java">
-      <ranges>
-        <range start1="14" end1="15" start2="14" end2="15" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="21" end1="22" start2="21" end2="22" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="81" end1="86" start2="81" end2="81" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="89" end1="90" start2="84" end2="84" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="92" end1="93" start2="86" end2="86" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="114" end1="115" start2="107" end2="108" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="117" end1="120" start2="110" end2="111" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/UserInterface.java">
-      <ranges>
-        <range start1="16" end1="16" start2="16" end2="19" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="22" end1="22" start2="25" end2="26" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="45" end1="46" start2="49" end2="50" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="60" end1="61" start2="64" end2="64" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-        <range start1="72" end1="73" start2="75" end2="76" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="75" end1="76" start2="78" end2="80" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="80" end1="84" start2="84" end2="88" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="89" end1="90" start2="93" end2="93" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-        <range start1="114" end1="115" start2="117" end2="117" changelist="cca13e03-4b69-4d45-812a-a512d655a1b8" />
-        <range start1="124" end1="126" start2="126" end2="137" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="142" end1="143" start2="153" end2="153" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="146" end1="146" start2="156" end2="157" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="148" end1="149" start2="159" end2="163" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="157" end1="158" start2="171" end2="172" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="164" end1="165" start2="178" end2="178" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="186" end1="187" start2="199" end2="199" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="227" end1="228" start2="239" end2="239" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="229" end1="229" start2="240" end2="241" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="243" end1="244" start2="255" end2="256" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="247" end1="248" start2="259" end2="260" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="253" end1="254" start2="265" end2="266" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="258" end1="259" start2="270" end2="271" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="262" end1="264" start2="274" end2="287" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="265" end1="265" start2="288" end2="289" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="267" end1="268" start2="291" end2="291" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="269" end1="269" start2="292" end2="293" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="270" end1="271" start2="294" end2="296" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="273" end1="274" start2="298" end2="299" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="275" end1="276" start2="300" end2="301" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="278" end1="279" start2="303" end2="304" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="285" end1="285" start2="310" end2="311" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="289" end1="291" start2="315" end2="315" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/FileHandler.java">
-      <ranges>
-        <range start1="11" end1="13" start2="11" end2="11" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="101" end1="102" start2="99" end2="99" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-        <range start1="112" end1="113" start2="109" end2="109" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="114" end1="115" start2="110" end2="111" changelist="030a1087-ee6c-4661-9929-72d71e61c5cd" />
-        <range start1="141" end1="142" start2="137" end2="137" changelist="986c6285-403f-4355-9e39-b41ffd339e8d" />
-      </ranges>
-    </file>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: -1
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2Yg6WL0q4hhUcXChRvjFGeBbkcR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -167,22 +59,23 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/madsfjeldberg/Library/CloudStorage/GoogleDrive-madsfjelle@gmail.com/My Drive/KEA - 1. Semester/DelfinenMaven",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="DelfinenMaven" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DatabaseTest.addResult" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DelfinenMaven" />
       <option name="PACKAGE_NAME" value="" />
@@ -233,6 +126,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.DatabaseTest.addResult" />
+      <item itemvalue="JUnit.DatabaseTest.ageCalculator" />
+      <item itemvalue="JUnit.DatabaseTest.getTotalSubscriptionAmount" />
+      <item itemvalue="JUnit.DatabaseTest.showList" />
+      <item itemvalue="JUnit.DatabaseTest.subscriptionCalculator" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DatabaseTest.getTotalSubscriptionAmount" />
@@ -246,7 +147,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="030a1087-ee6c-4661-9929-72d71e61c5cd" name="Changes" comment="" />
+      <changelist id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="" />
       <created>1700934905096</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -254,7 +155,54 @@
       <workItem from="1700934906405" duration="1974000" />
       <workItem from="1700941382369" duration="4809000" />
       <workItem from="1701014689890" duration="16461000" />
+      <workItem from="1701250740737" duration="3972000" />
+      <workItem from="1701258575065" duration="142000" />
+      <workItem from="1701284472171" duration="122000" />
+      <workItem from="1701250740737" duration="2661000" />
+      <workItem from="1701286811526" duration="6739000" />
+      <workItem from="1701415937058" duration="753000" />
     </task>
+    <task id="LOCAL-00001" summary="27-11&#10;&#10;diverse unittest">
+      <option name="closed" value="true" />
+      <created>1701095232187</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701095232187</updated>
+    </task>
+    <task id="LOCAL-00002" summary="28-11&#10;&#10;Mange ændringer.&#10;&#10;Filehandler fixet&#10;ui opdateret&#10;kasserer opdateret&#10;&#10;kig efter selv. :)">
+      <option name="closed" value="true" />
+      <created>1701184838767</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701184838767</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Changes by ejler">
+      <option name="closed" value="true" />
+      <created>1701184843232</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701184843232</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changes by soren">
+      <option name="closed" value="true" />
+      <created>1701184846675</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701184846675</updated>
+    </task>
+    <task id="LOCAL-00005" summary="29-11&#10;&#10;FileHandler tests færdig.">
+      <option name="closed" value="true" />
+      <created>1701253779492</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701253779492</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +233,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="26-11&#10;&#10;Inputvalidering i &#10;update()&#10;createMembership()" />
-    <option name="LAST_COMMIT_MESSAGE" value="26-11&#10;&#10;Inputvalidering i &#10;update()&#10;createMembership()" />
+    <MESSAGE value="27-11&#10;&#10;diverse unittest" />
+    <MESSAGE value="Changes by ejler" />
+    <MESSAGE value="28-11&#10;&#10;Mange ændringer.&#10;&#10;Filehandler fixet&#10;ui opdateret&#10;kasserer opdateret&#10;&#10;kig efter selv. :)" />
+    <MESSAGE value="Changes by soren" />
+    <MESSAGE value="29-11&#10;&#10;FileHandler tests færdig." />
+    <MESSAGE value="Changes by ejler" />
+    <MESSAGE value="28-11&#10;&#10;Mange ændringer.&#10;&#10;Filehandler fixet&#10;ui opdateret&#10;kasserer opdateret&#10;&#10;kig efter selv. :)" />
+    <MESSAGE value="Changes by soren" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes by soren" />
   </component>
 </project>

@@ -34,7 +34,6 @@ public class Database {
         return output;
     }
 
-
     public ArrayList<Member> getMemberList() {
         return memberList;
     }
@@ -108,11 +107,13 @@ public class Database {
         for (Member member : unpaidMember) {
             out.append("Navn: ")
                     .append(member.getName())
-                    .append(", Kontingent: ")
+                    .append("\nKontingent: ")
                     .append(member.calculateSubscription())
-                    .append(", Betalt: ")
+                    .append("\nBetalt: ")
                     .append(member.getIsPaidString())
-                    .append("\n");
+                    .append("\nMail: ")
+                    .append(member.getMail())
+                    .append("\n\n");
         }
 
         return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
@@ -132,11 +133,13 @@ public class Database {
         for (Member member : paidMember) {
 
             out.append("Navn: ").append(member.getName())
-                    .append(", Kontingent: ")
+                    .append("\nKontingent: ")
                     .append(member.calculateSubscription())
-                    .append(", Betalt: ")
+                    .append("\nBetalt: ")
                     .append(member.getIsPaidString())
-                    .append("\n");
+                    .append("\nMail: ")
+                    .append(member.getMail())
+                    .append("\n\n");
         }
 
         return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + totalamount + "\n";

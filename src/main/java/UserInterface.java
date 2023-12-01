@@ -83,7 +83,7 @@ public class UserInterface {
 
             switch (userInput) {
                 case 1 -> System.out.println(ctrl.showSubscriptionList());
-                case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount() + "\n");
+                case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount() + " pr. år.\n");
                 case 3 -> System.out.println(ctrl.getUnpaidMember());
                 case 4 -> System.out.println(ctrl.getPaidMember());
                 case 5 -> updatePaymentForMember();
@@ -170,6 +170,7 @@ public class UserInterface {
         LocalDate lastPayment = LocalDate.now();
 
         ctrl.addMember(name, mail, activeMembership, birthday, lastPayment);
+        System.out.println("Medlem oprettet.\n");
     }
 
     private void showList() {
@@ -232,6 +233,7 @@ public class UserInterface {
         }
     }
 
+    //TODO mere robust mail og dato check
     private void update() {
 
         LocalDate date = null;
