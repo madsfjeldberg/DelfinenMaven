@@ -23,7 +23,7 @@ public class UserInterface {
         input = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         timePattern = Pattern.compile("^\\d{2}:\\d{2}:\\d{2}$"); // sætter format til "12:34:56"
-        mailPattern = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+        mailPattern = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"); // sikrer mailformat
     }
 
     public void run() {
@@ -162,7 +162,7 @@ public class UserInterface {
                 } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
 
             } catch (DateTimeParseException e) {
-                System.out.println("Ugyldigt format.");
+                System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
 
@@ -202,24 +202,26 @@ public class UserInterface {
 
     }
 
-    // TODO udvid med søgning på navn også
     public void coachSearch() {
 
         boolean foundMember = false;
         boolean foundResult = false;
         StringBuilder out = new StringBuilder();
-        System.out.println("Indtast mail:");
-        String mail = input.nextLine();
+
+        System.out.println("Indtast navn eller mail:");
+        String response = input.nextLine();
+        String mail;
 
         for (Member member: ctrl.getMemberList()) {
-            if (mail.equals(member.getMail())) {
+            if (response.equalsIgnoreCase(member.getName()) || response.equalsIgnoreCase(member.getMail())) {
                 foundMember = true;
+                mail = member.getMail();
                 for (Result result: ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
-                        out.append(result.getDiscipline()).append("\n")
-                                .append(result.getTime()).append("\n")
-                                .append(result.getDate()).append("\n\n");
+                        out.append("Disciplin: ").append(result.getDiscipline()).append("\n")
+                                .append("Tid: ").append(result.getTime()).append("\n")
+                                .append("Dato: ").append(result.getDate()).append("\n\n");
                     }
                 }
                 System.out.println(member.getName() + "\n" + out);
@@ -233,18 +235,20 @@ public class UserInterface {
         }
     }
 
-    //TODO mere robust mail og dato check
     private void update() {
 
+        Member chosenMember = null;
         LocalDate date = null;
         String time;
         String discipline;
-        Member chosenMember = null;
 
-        System.out.println("Indtast email på det medlem som skal opdateres:");
-        String mail = input.nextLine();
+        System.out.println("Indtast navn eller mail på det medlem der skal opdateres:");
+
+        String mail = "";
+        String response = input.nextLine();
         for (Member member: ctrl.getMemberList()) {
-            if (mail.equals(member.getMail())) {
+            if (response.equalsIgnoreCase(member.getName()) || response.equalsIgnoreCase(member.getMail())) {
+                mail = member.getMail();
                 chosenMember = member;
             }
         }
@@ -257,9 +261,11 @@ public class UserInterface {
                 try {
                     System.out.println("Indtast dato (dd-MM-yyyy)");
                     date = LocalDate.parse(input.nextLine(), formatter);
-                    validDate = true;
+                    if (date.isAfter(minDate) && date.isBefore(maxDate)) {
+                        validDate = true;
+                    } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
                 } catch (DateTimeParseException e) {
-                    System.out.println("Ugyldigt format. prøv igen. (dd-MM-yyyy)");
+                    System.out.println("Ugyldigt format. Prøv igen.");
                 }
             } while (!validDate);
 
@@ -270,7 +276,7 @@ public class UserInterface {
                 Matcher matcher = timePattern.matcher(time);
                 validTime = matcher.matches();
                 if (!validTime) {
-                    System.out.println("Ugyldigt format. prøv igen. (mm:ss:ms)");
+                    System.out.println("Ugyldigt format. Prøv igen.");
                 }
             } while (!validTime);
 
@@ -297,8 +303,6 @@ public class UserInterface {
 
         System.out.println("Indtast mail på det medlem, du skal opdatere betaling for:");
         String mail = input.nextLine();
-
-        // ArrayList<Member> memberList = ctrl.getMemberList();
 
         for (Member member : ctrl.getMemberList()) {
             if (mail.equals(member.getMail())) {
