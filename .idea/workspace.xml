@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="Små UI ændringer, clean output">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="inputsikring og diverse godter.">
       <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subscription.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +157,7 @@
       <workItem from="1701284472171" duration="122000" />
       <workItem from="1701250740737" duration="2661000" />
       <workItem from="1701286811526" duration="6739000" />
-      <workItem from="1701415937058" duration="2477000" />
+      <workItem from="1701415937058" duration="2810000" />
     </task>
     <task id="LOCAL-00001" summary="27-11&#10;&#10;diverse unittest">
       <option name="closed" value="true" />
@@ -207,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701416795051</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="inputsikring og diverse godter.">
+      <option name="closed" value="true" />
+      <created>1701421462449</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701421462449</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +255,7 @@
     <MESSAGE value="28-11&#10;&#10;Mange ændringer.&#10;&#10;Filehandler fixet&#10;ui opdateret&#10;kasserer opdateret&#10;&#10;kig efter selv. :)" />
     <MESSAGE value="Changes by soren" />
     <MESSAGE value="Små UI ændringer, clean output" />
-    <option name="LAST_COMMIT_MESSAGE" value="Små UI ændringer, clean output" />
+    <MESSAGE value="inputsikring og diverse godter." />
+    <option name="LAST_COMMIT_MESSAGE" value="inputsikring og diverse godter." />
   </component>
 </project>

@@ -115,7 +115,6 @@ public class Database {
                     .append(member.getMail())
                     .append("\n\n");
         }
-
         return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
     }
 

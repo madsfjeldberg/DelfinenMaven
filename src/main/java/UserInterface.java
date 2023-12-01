@@ -235,14 +235,12 @@ public class UserInterface {
         }
     }
 
-    //TODO mere robust mail og dato check
     private void update() {
 
         Member chosenMember = null;
         LocalDate date = null;
         String time;
         String discipline;
-
 
         System.out.println("Indtast navn eller mail på det medlem der skal opdateres:");
 
