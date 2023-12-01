@@ -137,19 +137,7 @@ public class UserInterface {
         } while (!validMail);
 
         System.out.println("Aktivt Medlemskab: (y/n)");
-        boolean run = true;
-        boolean activeMembership = false;
-        while (run) {
-            String choice = input.nextLine();
-            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
-                if (choice.equalsIgnoreCase("y")) {
-                    activeMembership = true;
-                } else if (choice.equalsIgnoreCase("n")) {
-                    activeMembership = false;
-                }
-                run = false;
-            } else System.out.println(("Indtast 'y' eller 'n'"));
-        }
+        boolean activeMembership = booleanCheck(input.nextLine());
 
         LocalDate birthday = null;
         boolean validDate = false;
@@ -207,6 +195,7 @@ public class UserInterface {
         boolean foundMember = false;
         boolean foundResult = false;
         StringBuilder out = new StringBuilder();
+        StringBuilder out2 = new StringBuilder();
 
         System.out.println("Indtast navn eller mail:");
         String response = input.nextLine();
@@ -219,12 +208,22 @@ public class UserInterface {
                 for (Result result: ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
-                        out.append("Disciplin: ").append(result.getDiscipline()).append("\n")
-                                .append("Tid: ").append(result.getTime()).append("\n")
-                                .append("Dato: ").append(result.getDate()).append("\n\n");
+                        if (result instanceof CompResult) {
+                            out2.append("Disciplin: ").append(result.getDiscipline())
+                                    .append("\nTid: ").append(result.getTime())
+                                    .append("\nDato: ").append(result.getDate())
+                                    .append("\nStævne: ").append(((CompResult) result).getCompetition())
+                                    .append("\nPlacering: ").append(((CompResult) result).getPlacement())
+                                    .append("\n\n");
+                        }
+                        out.append("Disciplin: ").append(result.getDiscipline())
+                                .append("\nTid: ").append(result.getTime())
+                                .append("\nDato: ").append(result.getDate())
+                                .append("\n\n");
                     }
                 }
-                System.out.println(member.getName() + "\n" + out);
+                System.out.printf("%s\nStævnetider:\n%s\nTræningstider:\n%s", member.getName(), out2, out);
+                System.out.println();
             }
         }
         if (!foundMember) {
@@ -245,19 +244,7 @@ public class UserInterface {
         String placement = "";
 
         System.out.println("Stævnetid? (y/n): ");
-        boolean run = true;
-        boolean comp = false;
-        while (run) {
-            String choice = input.nextLine();
-            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
-                if (choice.equalsIgnoreCase("y")) {
-                    comp = true;
-                } else if (choice.equalsIgnoreCase("n")) {
-                    comp = false;
-                }
-                run = false;
-            } else System.out.println(("Indtast 'y' eller 'n'"));
-        }
+        boolean comp = booleanCheck(input.nextLine());
 
         if (comp) {
             System.out.println("Indtast stævnenavn: ");
@@ -326,6 +313,24 @@ public class UserInterface {
 
             }
         }
+    }
+
+    private boolean booleanCheck(String response) {
+        boolean run = true;
+        while (run) {
+            if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n")) {
+                if (response.equalsIgnoreCase("y")) {
+                    return true;
+                } else if (response.equalsIgnoreCase("n")) {
+                    return false;
+                }
+                run = false;
+            } else {
+                System.out.println(("Indtast 'y' eller 'n'"));
+                response = input.nextLine();
+            }
+        }
+        return true;
     }
 
     private void updatePaymentForMember() {
