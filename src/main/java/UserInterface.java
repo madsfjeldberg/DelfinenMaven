@@ -241,6 +241,30 @@ public class UserInterface {
         LocalDate date = null;
         String time;
         String discipline;
+        String competition = "";
+        String placement = "";
+
+        System.out.println("Stævnetid? (y/n): ");
+        boolean run = true;
+        boolean comp = false;
+        while (run) {
+            String choice = input.nextLine();
+            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+                if (choice.equalsIgnoreCase("y")) {
+                    comp = true;
+                } else if (choice.equalsIgnoreCase("n")) {
+                    comp = false;
+                }
+                run = false;
+            } else System.out.println(("Indtast 'y' eller 'n'"));
+        }
+
+        if (comp) {
+            System.out.println("Indtast stævnenavn: ");
+            competition = input.nextLine();
+            System.out.println("Indtast placering: ");
+            placement = input.nextLine();
+        }
 
         System.out.println("Indtast navn eller mail på det medlem der skal opdateres:");
 
@@ -295,7 +319,12 @@ public class UserInterface {
             } while (!validDiscipline);
 
             System.out.println("Tid opdateret.");
-            ctrl.addResult(mail, date, time, discipline);
+            if (comp) {
+                ctrl.addCompResult(mail, date, time, discipline, placement, competition);
+            } else {
+                ctrl.addResult(mail, date, time, discipline);
+
+            }
         }
     }
 

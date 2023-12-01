@@ -41,6 +41,10 @@ public class Controller {
         db.addResult(mail, date, time, discipline);
     }
 
+    public void addCompResult(String mail, LocalDate date, String time, String discipline, String placement, String competition) {
+        db.addCompResult(mail, date, time, discipline, placement, competition);
+    }
+
     public String showSubscriptionList() {
         return db.showSubscriptionList();
     }

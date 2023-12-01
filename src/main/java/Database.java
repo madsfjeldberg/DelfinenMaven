@@ -56,6 +56,11 @@ public class Database {
         memberList.add(member);
     }
 
+    public void addCompResult(String mail, LocalDate date, String time, String discipline, String placement, String competition) {
+        CompResult result = new CompResult(mail, date, time, discipline, placement, competition);
+        resultList.add(result);
+    }
+
     public void addResult(String mail, LocalDate date, String time, String discipline) {
         Result result = new Result(mail, date, time, discipline);
         resultList.add(result);
