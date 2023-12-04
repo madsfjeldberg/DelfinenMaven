@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserInterface {
+public class UserInterface{
 
     private final Controller ctrl;
     private final Scanner input;
@@ -186,29 +186,62 @@ public class UserInterface {
     }
 
     private void top5() {
-        do {
-            System.out.println("""
-                1. Sorter efter TOP 5 i crawl
-                2. Sorter efter TOP 5 i rygcrawl
-                3. Sorter efter TOP 5 i brystsvømning
-                4. Sorter efter TOP 5 i butterfly
-                9. Tilbage til trænermenu
-                """);
+        int swimStyleOption;
 
-            int swimStyleOption = getValidInput();
 
-            switch (swimStyleOption) {
-                case 1 -> ctrl.showTop5("crawl");
-                case 2 -> ctrl.showTop5("rygcrawl");
-                case 3 -> ctrl.showTop5("brystsvømning");
-                case 4 -> ctrl.showTop5("butterfly");
-                case 9 -> {
-                    ctrl.saveMemberList();
-                    trainerMenu();
-                }
+        System.out.println("""
+            1. Turneringstider
+            2. Træningstider
+            9. Tilbage til Træner Menu
+            """);
+
+        int timeTypeOption = getValidInput();
+
+        boolean isCompetition = false;
+        switch (timeTypeOption) {
+            case 1 -> isCompetition = true;
+            case 2 -> isCompetition = false;
+            case 9 -> {
+                trainerMenu();
             }
-        } while (userInput != 9);
+        }
+
+        System.out.println("""
+            1. Senior
+            2. Junior
+            9. Tilbage til Træner Menu
+            """);
+
+        int categoryOption = getValidInput();
+
+        boolean isSenior = false;
+        switch (categoryOption) {
+            case 1 -> isSenior = true;
+            case 2 -> isSenior = false;
+            case 9 -> {
+                trainerMenu();
+            }
+        }
+
+        System.out.println("""
+            1. Crawl
+            2. Rygcrawl
+            3. Brystsvømning
+            4. Butterfly
+            9. Tilbage til Træner Menu
+            """);
+
+        swimStyleOption = getValidInput();
+
+        switch (swimStyleOption) {
+            case 1 -> db.showTop5(isCompetition, isSenior, "crawl");
+            case 2 -> db.showTop5(isCompetition, isSenior, "rygcrawl");
+            case 3 -> db.showTop5(isCompetition, isSenior, "brystsvømning");
+            case 4 -> db.showTop5(isCompetition, isSenior, "butterfly");
+            case 9 -> trainerMenu();
+        }
     }
+
 
     public void coachSearch() {
         boolean foundMember = false;

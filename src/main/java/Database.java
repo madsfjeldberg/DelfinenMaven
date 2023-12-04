@@ -1,6 +1,9 @@
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Database {
 
@@ -178,6 +181,41 @@ public class Database {
         }
         return "Medlem ikke fundet.";
     }
+    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle) {
+        List<Result> filteredResults = resultList.stream()
+                .filter(result -> result instanceof CompResult == isCompetition)
+                .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
+                .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle)).sorted(Comparator.comparing(Result::getTime)).toList();
+
+        System.out.printf("Top 5 %s Tider - %s\n", isCompetition ? "Turneringstider" : "Træningstider", swimStyle);
+        System.out.println("--------------------------------------------------------");
+        for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
+            Result result = filteredResults.get(i);
+            String resultType = isCompetition ? "Turneringstider" : "Træningstider";
+            String ageGroup = isSenior ? "Senior" : "Junior";
+
+            Member member = getMemberByEmail(result.getMail());
+
+            if (member != null) {
+                System.out.printf("%d. %s Tider: %s, Dato: %s, %s, %s\n",
+                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName());
+            } else {
+                System.out.printf("%d. %s Tider: %s, Dato: %s, %s, Medlem ikke fundet\n",
+                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup);
+            }
+        }
+        System.out.println("--------------------------------------------------------");
+    }
+
+    public Member getMemberByEmail(String email) {
+        for (Member member : memberList) {
+            if (member.getMail().equalsIgnoreCase(email)) {
+                return member;
+            }
+        }
+        return null;
+    }
+
 }
 
 
