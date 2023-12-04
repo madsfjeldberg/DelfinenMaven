@@ -50,12 +50,19 @@ public class FileHandler {
 
         try (PrintStream output = new PrintStream(file)) {
             for (Result result: list) {
+
                 String out;
                 out = result.getMail()
                         + "," + result.getDate()
                         + "," + result.getTime()
                         + "," + result.getDiscipline();
 
+                if (result instanceof CompResult) {
+                    out += ","
+                            + (((CompResult) result).getPlacement())
+                            + ","
+                            + ((CompResult) result).getCompetition();
+                }
                 output.println(out);
             }
         } catch (FileNotFoundException e)  {
@@ -70,6 +77,8 @@ public class FileHandler {
         LocalDate date;
         String time;
         String discipline;
+        String placement;
+        String competition;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -79,9 +88,16 @@ public class FileHandler {
                 date = parseDate(resultValues[1]);
                 time = trimString(resultValues[2]);
                 discipline = trimString(resultValues[3]);
+                if (resultValues.length > 4) {
+                    placement = trimString(resultValues[4]);
+                    competition = trimString(resultValues[5]);
+                    CompResult result = new CompResult(mail,date,time,discipline,placement,competition);
+                    resultList.add(result);
+                } else {
+                    Result result = new Result(mail, date, time, discipline);
+                    resultList.add(result);
+                }
 
-                Result result = new Result(mail, date, time, discipline);
-                resultList.add(result);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Fil ikke fundet.");
