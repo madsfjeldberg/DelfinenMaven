@@ -15,8 +15,8 @@ public class UserInterface {
     DateTimeFormatter formatter;
     private final Pattern timePattern;
     private final Pattern mailPattern;
-    LocalDate minDate = LocalDate.now().minusYears(100);
-    LocalDate maxDate = LocalDate.now();
+    private final LocalDate minDate = LocalDate.now().minusYears(100);
+    private final LocalDate maxDate = LocalDate.now();
 
     public UserInterface() {
         ctrl = new Controller();
@@ -191,46 +191,46 @@ public class UserInterface {
     }
 
     public void coachSearch() {
-
         boolean foundMember = false;
         boolean foundResult = false;
-        StringBuilder out = new StringBuilder();
-        StringBuilder out2 = new StringBuilder();
 
-        System.out.println("Indtast navn eller mail:");
+        System.out.println("\u001B[34mIndtast navn eller mail:\u001B[0m");
         String response = input.nextLine();
         String mail;
 
-        for (Member member: ctrl.getMemberList()) {
+        for (Member member : ctrl.getMemberList()) {
             if (response.equalsIgnoreCase(member.getName()) || response.equalsIgnoreCase(member.getMail())) {
                 foundMember = true;
                 mail = member.getMail();
-                for (Result result: ctrl.getResultList()) {
+                StringBuilder outputTraining = new StringBuilder();
+                StringBuilder outputCompetition = new StringBuilder();
+
+                for (Result result : ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
                         if (result instanceof CompResult) {
-                            out2.append("Disciplin: ").append(result.getDiscipline())
-                                    .append("\nTid: ").append(result.getTime())
-                                    .append("\nDato: ").append(result.getDate())
-                                    .append("\nStævne: ").append(((CompResult) result).getCompetition())
-                                    .append("\nPlacering: ").append(((CompResult) result).getPlacement())
-                                    .append("\n\n");
+                            outputCompetition.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s |%n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(),
+                                    ((CompResult) result).getCompetition(), ((CompResult) result).getPlacement()));
+                        } else {
+                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-29s |%n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(), "\u001B[32mTræning\u001B[0m"));
                         }
-                        out.append("Disciplin: ").append(result.getDiscipline())
-                                .append("\nTid: ").append(result.getTime())
-                                .append("\nDato: ").append(result.getDate())
-                                .append("\n\n");
                     }
                 }
-                System.out.printf("%s\nStævnetider:\n%s\nTræningstider:\n%s", member.getName(), out2, out);
+
+                System.out.printf("\u001B[36m%s\u001B[0m\n%s\n%s\n%s\n%s\n%s\n%s",
+                        member.getName(), "─".repeat(85), "| Disciplin       | Tid        | Dato       | Stævne               | Placering  |\n",
+                        "─".repeat(85), outputCompetition, outputTraining, "─".repeat(85));
                 System.out.println();
             }
         }
+
         if (!foundMember) {
-            System.out.println("Intet medlem fundet.");
+            System.out.println("\u001B[31mIntet medlem fundet.\u001B[0m");
         }
         if (!foundResult) {
-            System.out.println("Ingen tid registreret.");
+            System.out.println("\u001B[31mIngen tid registreret.\u001B[0m");
         }
     }
 

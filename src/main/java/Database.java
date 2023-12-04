@@ -25,6 +25,7 @@ public class Database {
 
     // viser alle informationer om et givet medlem
     // skal måske skrives om til kun at vise relevant info
+    /*
     public String showInfo(Member member) {
         String output;
         output = "\nNavn: " + member.getName()
@@ -32,6 +33,15 @@ public class Database {
                 + "\nMail: " + member.getMail()
                 + "\n";
         return output;
+    }
+
+     */
+
+    public String showInfo(Member member) {
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
+                member.getName(), member.getAge(), member.getMail(), "tlf nr. her"));
+        return output.toString();
     }
 
     public ArrayList<Member> getMemberList() {
@@ -43,11 +53,17 @@ public class Database {
     }
 
     public String showList() {
-        StringBuilder out = new StringBuilder();
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("─".repeat(90)));
+        output.append("\n");
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n", "Navn", "Alder", "Mail", "Telefon nr."));
+        output.append(String.format("─".repeat(90)));
+        output.append("\n");
+
         for (Member member : memberList) {
-            out.append(showInfo(member));
+            output.append(showInfo(member));
         }
-        return out.toString();
+        return output.toString();
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
