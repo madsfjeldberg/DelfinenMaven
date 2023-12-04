@@ -187,20 +187,20 @@ public class Database {
                 .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
                 .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle)).sorted(Comparator.comparing(Result::getTime)).toList();
 
-        System.out.printf("Top 5 %s Tider - %s\n", isCompetition ? "Turneringstider" : "Træningstider", swimStyle);
+        System.out.printf("Top 5 %stid - %s\n", isCompetition ? "Turnerings" : "Trænings", swimStyle);
         System.out.println("--------------------------------------------------------");
         for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
             Result result = filteredResults.get(i);
-            String resultType = isCompetition ? "Turneringstider" : "Træningstider";
+            String resultType = isCompetition ? "Turnerings" : "Trænings";
             String ageGroup = isSenior ? "Senior" : "Junior";
 
             Member member = getMemberByEmail(result.getMail());
 
             if (member != null) {
-                System.out.printf("%d. %s Tider: %s, Dato: %s, %s, %s\n",
+                System.out.printf("%d. %stid: %s, Dato: %s, %s, %s\n",
                         i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName());
             } else {
-                System.out.printf("%d. %s Tider: %s, Dato: %s, %s, Medlem ikke fundet\n",
+                System.out.printf("%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet\n",
                         i + 1, resultType, result.getTime(), result.getDate(), ageGroup);
             }
         }

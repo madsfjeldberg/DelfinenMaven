@@ -61,4 +61,8 @@ public class Controller {
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
     }
+
+    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle){
+        db.showTop5(isCompetition, isSenior, swimStyle);
+    }
 }

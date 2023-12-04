@@ -234,10 +234,10 @@ public class UserInterface{
         swimStyleOption = getValidInput();
 
         switch (swimStyleOption) {
-            case 1 -> db.showTop5(isCompetition, isSenior, "crawl");
-            case 2 -> db.showTop5(isCompetition, isSenior, "rygcrawl");
-            case 3 -> db.showTop5(isCompetition, isSenior, "brystsvømning");
-            case 4 -> db.showTop5(isCompetition, isSenior, "butterfly");
+            case 1 -> ctrl.showTop5(isCompetition, isSenior, "crawl");
+            case 2 -> ctrl.showTop5(isCompetition, isSenior, "rygcrawl");
+            case 3 -> ctrl.showTop5(isCompetition, isSenior, "brystsvømning");
+            case 4 -> ctrl.showTop5(isCompetition, isSenior, "butterfly");
             case 9 -> trainerMenu();
         }
     }
