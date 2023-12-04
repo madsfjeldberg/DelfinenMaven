@@ -199,7 +199,28 @@ public class UserInterface {
     }
 
     private void top5() {
+        do {
+            System.out.println("""
+                1. Sorter efter TOP 5 i crawl
+                2. Sorter efter TOP 5 i rygcrawl
+                3. Sorter efter TOP 5 i brystsvømning
+                4. Sorter efter TOP 5 i butterfly
+                9. Tilbage til trænermenu
+                """);
 
+            int swimStyleOption = getValidInput();
+
+            switch (swimStyleOption) {
+                case 1 -> ctrl.showTop5("crawl");
+                case 2 -> ctrl.showTop5("rygcrawl");
+                case 3 -> ctrl.showTop5("brystsvømning");
+                case 4 -> ctrl.showTop5("butterfly");
+                case 9 -> {
+                    ctrl.saveMemberList();
+                    trainerMenu();
+                }
+            }
+        } while (userInput != 9);
     }
 
     public void coachSearch() {
