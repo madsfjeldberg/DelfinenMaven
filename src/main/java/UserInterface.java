@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -15,8 +14,8 @@ public class UserInterface {
     DateTimeFormatter formatter;
     private final Pattern timePattern;
     private final Pattern mailPattern;
-    LocalDate minDate = LocalDate.now().minusYears(100);
-    LocalDate maxDate = LocalDate.now();
+    private final LocalDate minDate = LocalDate.now().minusYears(100);
+    private final LocalDate maxDate = LocalDate.now();
 
     public UserInterface() {
         ctrl = new Controller();
@@ -137,19 +136,7 @@ public class UserInterface {
         } while (!validMail);
 
         System.out.println("Aktivt Medlemskab: (y/n)");
-        boolean run = true;
-        boolean activeMembership = false;
-        while (run) {
-            String choice = input.nextLine();
-            if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
-                if (choice.equalsIgnoreCase("y")) {
-                    activeMembership = true;
-                } else if (choice.equalsIgnoreCase("n")) {
-                    activeMembership = false;
-                }
-                run = false;
-            } else System.out.println(("Indtast 'y' eller 'n'"));
-        }
+        boolean activeMembership = booleanCheck(input.nextLine());
 
         LocalDate birthday = null;
         boolean validDate = false;
@@ -224,35 +211,46 @@ public class UserInterface {
     }
 
     public void coachSearch() {
-
         boolean foundMember = false;
         boolean foundResult = false;
-        StringBuilder out = new StringBuilder();
 
-        System.out.println("Indtast navn eller mail:");
+        System.out.println("\u001B[34mIndtast navn eller mail:\u001B[0m");
         String response = input.nextLine();
         String mail;
 
-        for (Member member: ctrl.getMemberList()) {
+        for (Member member : ctrl.getMemberList()) {
             if (response.equalsIgnoreCase(member.getName()) || response.equalsIgnoreCase(member.getMail())) {
                 foundMember = true;
                 mail = member.getMail();
-                for (Result result: ctrl.getResultList()) {
+                StringBuilder outputTraining = new StringBuilder();
+                StringBuilder outputCompetition = new StringBuilder();
+
+                for (Result result : ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
-                        out.append("Disciplin: ").append(result.getDiscipline()).append("\n")
-                                .append("Tid: ").append(result.getTime()).append("\n")
-                                .append("Dato: ").append(result.getDate()).append("\n\n");
+                        if (result instanceof CompResult) {
+                            outputCompetition.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s |%n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(),
+                                    ((CompResult) result).getCompetition(), ((CompResult) result).getPlacement()));
+                        } else {
+                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-29s |%n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(), "\u001B[32mTræning\u001B[0m"));
+                        }
                     }
                 }
-                System.out.println(member.getName() + "\n" + out);
+
+                System.out.printf("\u001B[36m%s\u001B[0m\n%s\n%s\n%s\n%s\n%s\n%s",
+                        member.getName(), "─".repeat(85), "| Disciplin       | Tid        | Dato       | Stævne               | Placering  |\n",
+                        "─".repeat(85), outputCompetition, outputTraining, "─".repeat(85));
+                System.out.println();
             }
         }
+
         if (!foundMember) {
-            System.out.println("Intet medlem fundet.");
+            System.out.println("\u001B[31mIntet medlem fundet.\u001B[0m");
         }
         if (!foundResult) {
-            System.out.println("Ingen tid registreret.");
+            System.out.println("\u001B[31mIngen tid registreret.\u001B[0m");
         }
     }
 
@@ -262,6 +260,18 @@ public class UserInterface {
         LocalDate date = null;
         String time;
         String discipline;
+        String competition = "";
+        String placement = "";
+
+        System.out.println("Stævnetid? (y/n): ");
+        boolean comp = booleanCheck(input.nextLine());
+
+        if (comp) {
+            System.out.println("Indtast stævnenavn: ");
+            competition = input.nextLine();
+            System.out.println("Indtast placering: ");
+            placement = input.nextLine();
+        }
 
         System.out.println("Indtast navn eller mail på det medlem der skal opdateres:");
 
@@ -316,8 +326,31 @@ public class UserInterface {
             } while (!validDiscipline);
 
             System.out.println("Tid opdateret.");
-            ctrl.addResult(mail, date, time, discipline);
+            if (comp) {
+                ctrl.addCompResult(mail, date, time, discipline, placement, competition);
+            } else {
+                ctrl.addResult(mail, date, time, discipline);
+
+            }
         }
+    }
+
+    private boolean booleanCheck(String response) {
+        boolean run = true;
+        while (run) {
+            if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n")) {
+                if (response.equalsIgnoreCase("y")) {
+                    return true;
+                } else if (response.equalsIgnoreCase("n")) {
+                    return false;
+                }
+                run = false;
+            } else {
+                System.out.println(("Indtast 'y' eller 'n'"));
+                response = input.nextLine();
+            }
+        }
+        return true;
     }
 
     private void updatePaymentForMember() {

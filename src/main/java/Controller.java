@@ -25,10 +25,6 @@ public class Controller {
         return db.showList();
     }
 
-    public String showInfo(Member member) {
-        return db.showInfo(member);
-    }
-
     public ArrayList<Member> getMemberList() {
         return db.getMemberList();
     }
@@ -45,15 +41,16 @@ public class Controller {
         db.addResult(mail, date, time, discipline);
     }
 
+    public void addCompResult(String mail, LocalDate date, String time, String discipline, String placement, String competition) {
+        db.addCompResult(mail, date, time, discipline, placement, competition);
+    }
+
     public String showSubscriptionList() {
         return db.showSubscriptionList();
     }
 
     public int getTotalSubscriptionAmount() {
-        int totalAmount = db.getTotalSubscriptionAmount(); // Get the total amount from the database
-
-
-        return totalAmount;
+        return db.getTotalSubscriptionAmount(); // Get the total amount from the database
     }
     public String getUnpaidMember() {
         return db.getUnpaidMember();
@@ -64,7 +61,6 @@ public class Controller {
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
     }
-    public void updatePaymentStatus() {
 
     }
     public void showTop5(String discipline) {
@@ -82,5 +78,4 @@ public class Controller {
 
         System.out.println();
     }
-
 }

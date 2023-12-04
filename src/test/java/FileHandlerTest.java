@@ -17,8 +17,8 @@ public class FileHandlerTest {
     @Test
     void saveMemberList() {
         ArrayList<Member> memberList = new ArrayList<>();
-        Member member1 = new Member("John", "john@doe", true, LocalDate.of(1990, 1, 1), LocalDate.of(2022, 2, 2), true);
-        Member member2 = new Member("Jane", "jane@doe", false, LocalDate.of(1995, 5, 5), LocalDate.of(2021, 1, 1), false);
+        Member member1 = new Member("John", "john@doe", true, LocalDate.of(1990, 1, 1), LocalDate.of(2022, 2, 2));
+        Member member2 = new Member("Jane", "jane@doe", false, LocalDate.of(1995, 5, 5), LocalDate.of(2021, 1, 1));
         memberList.add(member1);
         memberList.add(member2);
 
@@ -61,8 +61,8 @@ public class FileHandlerTest {
     @Test
     void loadMemberList() {
         ArrayList<Member> memberList = new ArrayList<>();
-        Member member1 = new Member("John", "john@doe", true, LocalDate.of(1990, 1, 1), LocalDate.of(2022, 2, 2), true);
-        Member member2 = new Member("Jane", "jane@doe", false, LocalDate.of(1995, 5, 5), LocalDate.of(2021, 1, 1), false);
+        Member member1 = new Member("John", "john@doe", true, LocalDate.of(1990, 1, 1), LocalDate.of(2022, 2, 2));
+        Member member2 = new Member("Jane", "jane@doe", false, LocalDate.of(1995, 5, 5), LocalDate.of(2021, 1, 1));
         memberList.add(member1);
         memberList.add(member2);
 
