@@ -54,10 +54,10 @@ public class Database {
 
     public String showList() {
         StringBuilder output = new StringBuilder();
-        output.append(String.format("─".repeat(90)));
+        output.append("─".repeat(90));
         output.append("\n");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n", "Navn", "Alder", "Mail", "Telefon nr."));
-        output.append(String.format("─".repeat(90)));
+        output.append(")─".repeat(90));
         output.append("\n");
 
         for (Member member : memberList) {

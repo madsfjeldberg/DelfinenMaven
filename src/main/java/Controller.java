@@ -21,10 +21,6 @@ public class Controller {
         return db.showList();
     }
 
-    public String showInfo(Member member) {
-        return db.showInfo(member);
-    }
-
     public ArrayList<Member> getMemberList() {
         return db.getMemberList();
     }
@@ -50,10 +46,7 @@ public class Controller {
     }
 
     public int getTotalSubscriptionAmount() {
-        int totalAmount = db.getTotalSubscriptionAmount(); // Get the total amount from the database
-
-
-        return totalAmount;
+        return db.getTotalSubscriptionAmount(); // Get the total amount from the database
     }
     public String getUnpaidMember() {
         return db.getUnpaidMember();
@@ -64,8 +57,4 @@ public class Controller {
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
     }
-    public void updatePaymentStatus() {
-
-    }
-
 }

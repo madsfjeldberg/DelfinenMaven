@@ -52,26 +52,6 @@ public class Member {
         return mail;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setLastPaymentDate(LocalDate lastPaymentDate) {
-        this.lastPaymentDate = lastPaymentDate;
-    }
-
-    public void setActiveMembership(boolean activeMembership) {
-        this.activeMembership = activeMembership;
-    }
-
     public void setMail(String mail) {
         this.mail = mail;
     }

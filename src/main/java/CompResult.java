@@ -18,12 +18,4 @@ public class CompResult extends Result{
     public String getCompetition() {
         return competition;
     }
-
-    public void setPlacement(String placement) {
-        this.placement = placement;
-    }
-
-    public void setCompetition(String competition) {
-        this.competition = competition;
-    }
 }
