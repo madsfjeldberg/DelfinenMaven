@@ -62,7 +62,7 @@ public class Controller {
         db.updatePaymentForMember(mail);
     }
 
-    }
+
     public void showTop5(String discipline) {
         List<Result> results = getResultList();
 

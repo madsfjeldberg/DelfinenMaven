@@ -57,8 +57,9 @@ public class Database {
         output.append("─".repeat(90));
         output.append("\n");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n", "Navn", "Alder", "Mail", "Telefon nr."));
-        output.append(")─".repeat(90));
+        output.append("─".repeat(90));
         output.append("\n");
+
 
         for (Member member : memberList) {
             output.append(showInfo(member));
@@ -93,8 +94,12 @@ public class Database {
     public int getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
+        int currentYear = LocalDate.now().getYear();
+
         for (Member member : memberList) {
-            totalAmount += member.calculateSubscription();
+            if (member.getLastPaymentDate().getYear() == currentYear){
+                totalAmount += member.calculateSubscription();
+            }
         }
         return totalAmount;
     }
@@ -136,7 +141,7 @@ public class Database {
                     .append(member.getMail())
                     .append("\n\n");
         }
-        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
+        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalamount +"\u001B[0m" + "\n";
     }
 
     public String getPaidMember() {
@@ -162,7 +167,7 @@ public class Database {
                     .append("\n\n");
         }
 
-        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + totalamount + "\n";
+        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + "\u001B[32m" + totalamount + "\u001B[0m" + "\n";
     }
 
     public String updatePaymentForMember(String mail) {

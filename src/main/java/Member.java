@@ -88,7 +88,11 @@ public class Member {
     private boolean updatePaymentStatus() {
         LocalDate lastPaymentDate = getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
-        return !lastPaymentDate.plusYears(1).isBefore(currentDate);
+
+        int lastPaymentYear = lastPaymentDate.getYear();
+        int currentYear = currentDate.getYear();
+
+        return !(lastPaymentYear == currentYear - 1 && lastPaymentDate.getMonthValue() < 9);
     }
 
     public boolean isPaid() {
@@ -97,7 +101,7 @@ public class Member {
 
     public String getIsPaidString() {
         updatePaymentStatus();
-        return isPaid ? "Ja" : "Nej";
+        return isPaid ? "\u001B[32mJa\u001B[0m" : "\u001B[31mNej\u001B[0m";
     }
 
     @Override
