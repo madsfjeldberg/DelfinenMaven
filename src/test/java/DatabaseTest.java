@@ -104,9 +104,9 @@ public class DatabaseTest {
     @Test
     void getTotalSubscriptionAmount() {
 
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
+        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
+        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
 
         db.getMemberList().clear();
         db.getMemberList().add(testMember);
@@ -118,5 +118,44 @@ public class DatabaseTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testUpdatePaymentForMember() {
+        String mail = "john@example.com";
+        String result = db.updatePaymentForMember(mail);
+        assertTrue(result.equals("Medlem opdateret.") || result.equals("Medlem ikke fundet."));
+    }
+
+    @Test
+    public void testGetUnpaidMember() {
+        String unpaidMemberList = db.getUnpaidMember();
+        assertNotNull(unpaidMemberList);
+        assertTrue(unpaidMemberList.contains("Medlemmer der ikke har betalt"));
+    }
+
+    @Test
+    public void testGetPaidMember() {
+        String paidMemberList = db.getPaidMember();
+        assertNotNull(paidMemberList);
+        assertTrue(paidMemberList.contains("Medlemmer der har betalt"));
+    }
+
+
+    @Test
+    public void testShowSubscriptionList() {
+        db.getMemberList().clear();
+        Member testMember = new Member("John Doe", "john@example.com", true, LocalDate.of(1990, 1, 1), LocalDate.now());
+        testMember.setIsPaid(true);
+        db.getMemberList().add(testMember);
+
+
+        String subscriptionList = db.showSubscriptionList();
+
+
+        assertTrue(subscriptionList.contains("Navn: John Doe"));
+        assertTrue(subscriptionList.contains("Kontingent: " + testMember.calculateSubscription()));
+        assertTrue(subscriptionList.contains("Betalt: " + testMember.getIsPaidString()));
+    }
+
 }
 

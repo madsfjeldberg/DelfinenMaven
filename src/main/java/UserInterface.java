@@ -82,7 +82,7 @@ public class UserInterface{
 
             switch (userInput) {
                 case 1 -> System.out.println(ctrl.showSubscriptionList());
-                case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount() + " pr. år.\n");
+                case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount() + " kr. for indeværende år.\n");
                 case 3 -> System.out.println(ctrl.getUnpaidMember());
                 case 4 -> System.out.println(ctrl.getPaidMember());
                 case 5 -> updatePaymentForMember();
