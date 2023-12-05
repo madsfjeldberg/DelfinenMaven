@@ -62,20 +62,7 @@ public class Controller {
         db.updatePaymentForMember(mail);
     }
 
-    }
-    public void showTop5(String discipline) {
-        List<Result> results = getResultList();
-
-        List<Result> filteredResults = results.stream()
-                .filter(result -> result.getDiscipline().equalsIgnoreCase(discipline)).sorted(Comparator.comparing(Result::getTime)).toList();
-
-        System.out.println("Top 5 in " + discipline + ":");
-        int count = Math.min(5, filteredResults.size());
-        for (int i = 0; i < count; i++) {
-            Result result = filteredResults.get(i);
-            System.out.println((i + 1) + ". " + result.getMail() + " - " + result.getTime());
-        }
-
-        System.out.println();
+    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle){
+        db.showTop5(isCompetition, isSenior, swimStyle);
     }
 }
