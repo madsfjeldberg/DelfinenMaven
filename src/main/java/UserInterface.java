@@ -164,21 +164,33 @@ public class UserInterface{
                 birthday = LocalDate.parse(input.nextLine(), formatter);
                 if (birthday.isAfter(minDate) && birthday.isBefore(maxDate)) {
                     validDate = true;
-                } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
+                } else
+                    System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
-        int phoneNumber=0;
-        System.out.println("Indtast telefonnummber: (eks. 12345678)");
-        phoneNumber = input.nextInt();
+        int phoneNumber = 0;
 
-        System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
-        LocalDate lastPayment = LocalDate.now();
+        while (true) {
+            System.out.println("Indtast telefonnummer: (eks. 12345678)");
 
-        ctrl.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
-        System.out.println("Medlem oprettet.\n");
+            if (input.hasNextInt()) {
+                phoneNumber = input.nextInt();
+                break;
+            } else {
+                System.out.println("Telefonnummer skal være et tal. Prøv igen.");
+                input.next();
+            }
+        }
+
+            System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
+            LocalDate lastPayment = LocalDate.now();
+
+            ctrl.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
+            System.out.println("Medlem oprettet.\n");
+
     }
 
     private void showList() {
