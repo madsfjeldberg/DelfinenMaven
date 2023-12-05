@@ -152,11 +152,14 @@ public class UserInterface{
                 System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
+        int phoneNumber=0;
+        System.out.println("Indtast telefonnummber: (eks. 12345678)");
+        phoneNumber = input.nextInt();
 
         System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
         LocalDate lastPayment = LocalDate.now();
 
-        ctrl.addMember(name, mail, activeMembership, birthday, lastPayment);
+        ctrl.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
         System.out.println("Medlem oprettet.\n");
     }
 

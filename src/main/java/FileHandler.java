@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class FileHandler {
 
     public void saveMemberList(ArrayList<Member> list, String fileName) {
@@ -113,6 +115,7 @@ public class FileHandler {
         boolean activeMembership;
         LocalDate birthday;
         LocalDate lastPayment;
+        int phoneNumber;
 
         try (Scanner reader = new Scanner(file)) {
 
@@ -123,8 +126,9 @@ public class FileHandler {
                 activeMembership = parseBoolean(memberValues[2]);
                 birthday = parseDate(memberValues[3]);
                 lastPayment = parseDate(memberValues[4]);
+                phoneNumber = parseInt(memberValues[6]);
 
-                Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
+                Member member = new Member(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
                 memberList.add(member);
             }
 

@@ -43,7 +43,7 @@ public class Database {
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
-                member.getName(), member.getAge(), member.getMail(), "tlf nr. her"));
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber()));
         return output.toString();
     }
 
@@ -71,8 +71,8 @@ public class Database {
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment) {
-        Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
+                          LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+        Member member = new Member(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
         memberList.add(member);
     }
 
