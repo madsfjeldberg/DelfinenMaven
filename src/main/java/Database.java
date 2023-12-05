@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -146,7 +147,6 @@ public class Database {
         }
         return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalamount +"\u001B[0m" + "\n";
     }
-
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
         int totalamount = 0;

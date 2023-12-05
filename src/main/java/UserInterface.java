@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,6 +103,7 @@ public class UserInterface{
                     1. Opret Medlemskab
                     2. Liste over medlemmer
                     3. Redigér medlem (IKKE IMPLEMENTERET)
+                    4. Slet medlem
                     9. Tilbage til hovedmenu
                     """);
 
@@ -110,12 +112,28 @@ public class UserInterface{
             switch (userInput) {
                 case 1 -> createMembership();
                 case 2 -> showList();
+                case 4 -> deleteMember();
                 case 9 -> {
                     ctrl.saveMemberList();
                     run();
                 }
             }
         } while (userInput != 9);
+    }
+    public void deleteMember() {
+        System.out.println("Indtast email på det medlem, du ønsker at slette");
+        Iterator<Member> iterator = ctrl.getMemberList().iterator();
+        String emailToDelete = input.nextLine();
+        while (iterator.hasNext()) {
+            Member member = iterator.next();
+            if (member.getMail().equalsIgnoreCase(emailToDelete)) {
+                iterator.remove();
+                ctrl.saveMemberList(); // Save the updated list after deletion
+                System.out.println("Medlem slettet: " + member.getName());
+                return;
+            }
+        }
+        System.out.println("Medlem ikke fundet med email: " + emailToDelete);
     }
 
     private void createMembership() {
