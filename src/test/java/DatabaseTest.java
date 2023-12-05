@@ -114,7 +114,7 @@ public class DatabaseTest {
         db.getMemberList().add(testMember2);
 
         int expected = 4800;
-        int actual = db.getTotalSubscriptionAmount();
+        int actual = Integer.parseInt(db.getTotalSubscriptionAmount());
 
         assertEquals(expected, actual);
     }

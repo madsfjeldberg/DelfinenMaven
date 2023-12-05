@@ -23,20 +23,6 @@ public class Database {
         fh.saveResultList(resultList, "results.csv");
     }
 
-    // viser alle informationer om et givet medlem
-    // skal måske skrives om til kun at vise relevant info
-    /*
-    public String showInfo(Member member) {
-        String output;
-        output = "\nNavn: " + member.getName()
-                + "\nAlder: " + member.getAge()
-                + "\nMail: " + member.getMail()
-                + "\n";
-        return output;
-    }
-
-     */
-
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
@@ -57,7 +43,7 @@ public class Database {
         output.append("─".repeat(90));
         output.append("\n");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n", "Navn", "Alder", "Mail", "Telefon nr."));
-        output.append(")─".repeat(90));
+        output.append("─".repeat(90));
         output.append("\n");
 
         for (Member member : memberList) {
@@ -90,38 +76,55 @@ public class Database {
         return period.getYears();
     }
 
-    public int getTotalSubscriptionAmount() {
+    public String getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
         for (Member member : memberList) {
             totalAmount += member.calculateSubscription();
         }
-        return totalAmount;
+        String total = String.valueOf(totalAmount);
+        return colorize(total, "GREEN");
     }
 
     public String showSubscriptionList() {
 
         StringBuilder out = new StringBuilder();
         for (Member member : memberList) {
+            boolean isPaid = member.isPaid();
+            String coloredPaidStatus = isPaid ? colorize("Ja", "GREEN") : colorize("Nej", "RED");
+
             out.append("Navn: ")
                     .append(member.getName())
                     .append(", Kontingent: ")
                     .append(member.calculateSubscription())
                     .append(", Betalt: ")
-                    .append(member.getIsPaidString())
+                    .append(coloredPaidStatus)
                     .append("\n");
         }
         return out.toString();
     }
 
+    private String colorize(String text, String color) {
+
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_GREEN = "\u001B[32m";
+
+        return switch (color.toUpperCase()) {
+            case "GREEN" -> ANSI_GREEN + text + ANSI_RESET;
+            case "RED" -> ANSI_RED + text + ANSI_RESET;
+            default -> text;
+        };
+    }
+
     public String getUnpaidMember() {
         ArrayList<Member> unpaidMember = new ArrayList<>();
-        int totalamount = 0;
+        int totalAmount = 0;
 
         for (Member member : memberList) {
             if (!member.isPaid()) {
                 unpaidMember.add(member);
-                totalamount += member.calculateSubscription();
+                totalAmount += member.calculateSubscription();
             }
         }
         StringBuilder out = new StringBuilder();
@@ -136,17 +139,17 @@ public class Database {
                     .append(member.getMail())
                     .append("\n\n");
         }
-        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalamount + "\n";
+        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + totalAmount + "\n";
     }
 
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
-        int totalamount = 0;
+        int totalAmount = 0;
 
         for (Member member : memberList) {
             if (member.isPaid()) {
                 paidMember.add(member);
-                totalamount += member.calculateSubscription();
+                totalAmount += member.calculateSubscription();
             }
         }
         StringBuilder out = new StringBuilder();
@@ -162,7 +165,7 @@ public class Database {
                     .append("\n\n");
         }
 
-        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + totalamount + "\n";
+        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + totalAmount + "\n";
     }
 
     public String updatePaymentForMember(String mail) {
