@@ -107,22 +107,28 @@ public class Database {
         return colorize(total, "GREEN");
     }
 
+    public String showInfoSubscription(Member member) {
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-25s |\n",
+                member.getName(), member.getAge(), member.getMail(), "tlf nr. her", member.calculateSubscription() + " kr.", member.getIsPaidString()));
+        return output.toString();
+    }
+
     public String showSubscriptionList() {
 
-        StringBuilder out = new StringBuilder();
-        for (Member member : memberList) {
-            boolean isPaid = member.isPaid();
-            String coloredPaidStatus = isPaid ? colorize("Ja", "GREEN") : colorize("Nej", "RED");
+        StringBuilder output = new StringBuilder();
+        output.append("─".repeat(130));
+        output.append("\n");
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
+        output.append("─".repeat(130));
+        output.append("\n");
 
-            out.append("Navn: ")
-                    .append(member.getName())
-                    .append(", Kontingent: ")
-                    .append(member.calculateSubscription())
-                    .append(", Betalt: ")
-                    .append(coloredPaidStatus)
-                    .append("\n");
+        for (Member member : memberList) {
+
+            output.append(showInfoSubscription(member));
+
         }
-        return out.toString();
+        return output.toString();
     }
 
     private String colorize(String text, String color) {
@@ -148,20 +154,18 @@ public class Database {
                 totalAmount += member.calculateSubscription();
             }
         }
-        StringBuilder out = new StringBuilder();
+        StringBuilder output = new StringBuilder();
+        output.append("─".repeat(130));
+        output.append("\n");
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
+        output.append("─".repeat(130));
+        output.append("\n");
         for (Member member : unpaidMember) {
-            out.append("Navn: ")
-                    .append(member.getName())
-                    .append("\nKontingent: ")
-                    .append(member.calculateSubscription())
-                    .append("\nBetalt: ")
-                    .append(member.getIsPaidString())
-                    .append("\nMail: ")
-                    .append(member.getMail())
-                    .append("\n\n");
+           output.append(showInfoSubscription(member));
         }
 
-        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalAmount +"\u001B[0m" + "\n";
+        System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalamount + " kr.");
+        return output.toString();
 
     }
     public String getPaidMember() {
@@ -174,20 +178,18 @@ public class Database {
                 totalAmount += member.calculateSubscription();
             }
         }
-        StringBuilder out = new StringBuilder();
+        StringBuilder output = new StringBuilder();
+        output.append("─".repeat(130));
+        output.append("\n");
+        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
+        output.append("─".repeat(130));
+        output.append("\n");
         for (Member member : paidMember) {
-
-            out.append("Navn: ").append(member.getName())
-                    .append("\nKontingent: ")
-                    .append(member.calculateSubscription())
-                    .append("\nBetalt: ")
-                    .append(member.getIsPaidString())
-                    .append("\nMail: ")
-                    .append(member.getMail())
-                    .append("\n\n");
+            output.append(showInfoSubscription(member));
         }
+        System.out.println("\n Indtægt fra betalende medlemmer: " + totalamount + " kr.");
+        return output.toString();
 
-        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + "\u001B[32m" + totalAmount + "\u001B[0m" + "\n";
 
     }
 
@@ -250,6 +252,8 @@ public class Database {
         }
         return null;
     }
+
+
 
 }
 
