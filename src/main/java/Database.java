@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class Database {
@@ -25,6 +24,20 @@ public class Database {
     public void saveResultList() {
         fh.saveResultList(resultList, "results.csv");
     }
+
+    // viser alle informationer om et givet medlem
+    // skal måske skrives om til kun at vise relevant info
+    /*
+    public String showInfo(Member member) {
+        String output;
+        output = "\nNavn: " + member.getName()
+                + "\nAlder: " + member.getAge()
+                + "\nMail: " + member.getMail()
+                + "\n";
+        return output;
+    }
+
+     */
 
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
@@ -148,8 +161,8 @@ public class Database {
                     .append("\n\n");
         }
 
-        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalamount +"\u001B[0m" + "\n";
-      
+        return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalAmount +"\u001B[0m" + "\n";
+
     }
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
@@ -174,7 +187,7 @@ public class Database {
                     .append("\n\n");
         }
 
-        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + "\u001B[32m" + totalamount + "\u001B[0m" + "\n";
+        return "Medlemmer der har betalt:\n" + out + "\nTotal indbetalt kontingent: " + "\u001B[32m" + totalAmount + "\u001B[0m" + "\n";
 
     }
 
