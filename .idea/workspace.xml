@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="inputsikring og diverse godter." />
+    <list default="true" id="5a9fe9b3-8b02-4949-a5fd-63a480981083" name="Changes" comment="tilføjelse af telefonnummer">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +66,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;soren&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;milas5.12&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -165,6 +169,8 @@
       <workItem from="1701415937058" duration="2810000" />
       <workItem from="1701687956949" duration="3416000" />
       <workItem from="1701694257068" duration="7293000" />
+      <workItem from="1701768210769" duration="1693000" />
+      <workItem from="1701769978993" duration="1672000" />
     </task>
     <task id="LOCAL-00001" summary="27-11&#10;&#10;diverse unittest">
       <option name="closed" value="true" />
@@ -238,7 +244,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701701773769</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="tilføjelse af telefonnummer">
+      <option name="closed" value="true" />
+      <created>1701769869135</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1701769869135</updated>
+    </task>
+    <task id="LOCAL-00011" summary="tilføjelse af telefonnummer">
+      <option name="closed" value="true" />
+      <created>1701769880762</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1701769880762</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,6 +301,22 @@
     <MESSAGE value="Changes by soren" />
     <MESSAGE value="Små UI ændringer, clean output" />
     <MESSAGE value="inputsikring og diverse godter." />
-    <option name="LAST_COMMIT_MESSAGE" value="inputsikring og diverse godter." />
+    <MESSAGE value="tilføjelse af telefonnummer" />
+    <option name="LAST_COMMIT_MESSAGE" value="tilføjelse af telefonnummer" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

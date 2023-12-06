@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class Database {
@@ -42,7 +43,7 @@ public class Database {
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
-                member.getName(), member.getAge(), member.getMail(), "tlf nr. her"));
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber()));
         return output.toString();
     }
 
@@ -70,8 +71,8 @@ public class Database {
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment) {
-        Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
+                          LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+        Member member = new Member(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
         memberList.add(member);
     }
 
@@ -145,7 +146,6 @@ public class Database {
         }
         return "Medlemmer der ikke har betalt:\n" + out + "\nTotal manglende kontingent: " + "\u001B[31m" + totalamount +"\u001B[0m" + "\n";
     }
-
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
         int totalamount = 0;
