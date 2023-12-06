@@ -44,7 +44,7 @@ public class UserInterface{
         do {
             System.out.println("""
                     Træner Menu
-                    1. Top 5 svømmere (IKKE IMPLEMENTERET)
+                    1. Top 5 svømmere (BETA)
                     2. Opdater resultat (BETA)
                     3. Søg efter svømmer
                     9. Tilbage til hovedmenu
@@ -185,61 +185,36 @@ public class UserInterface{
                 9. Afslut""");
     }
 
-    private void top5() {
-        int swimStyleOption;
-
-
+    public void top5() {
         System.out.println("""
-            1. Turneringstider
-            2. Træningstider
-            9. Tilbage til Træner Menu
-            """);
+        1. Turneringstider
+        2. Træningstider
+        9. Tilbage til Træner Menu
+        """);
 
         int timeTypeOption = getValidInput();
 
-        boolean isCompetition = false;
-        switch (timeTypeOption) {
-            case 1 -> isCompetition = true;
-            case 2 -> isCompetition = false;
-            case 9 -> {
-                trainerMenu();
-            }
+        boolean isCompetition = timeTypeOption == 1;
+        if (timeTypeOption == 9) {
+            trainerMenu();
         }
 
         System.out.println("""
-            1. Senior
-            2. Junior
-            9. Tilbage til Træner Menu
-            """);
+        1. Senior
+        2. Junior
+        9. Tilbage til Træner Menu
+        """);
 
         int categoryOption = getValidInput();
 
-        boolean isSenior = false;
-        switch (categoryOption) {
-            case 1 -> isSenior = true;
-            case 2 -> isSenior = false;
-            case 9 -> {
-                trainerMenu();
-            }
+        boolean isSenior = categoryOption == 1;
+        if (categoryOption == 9) {
+            trainerMenu();
         }
 
-        System.out.println("""
-            1. Crawl
-            2. Rygcrawl
-            3. Brystsvømning
-            4. Butterfly
-            9. Tilbage til Træner Menu
-            """);
-
-        swimStyleOption = getValidInput();
-
-        switch (swimStyleOption) {
-            case 1 -> ctrl.showTop5(isCompetition, isSenior, "crawl");
-            case 2 -> ctrl.showTop5(isCompetition, isSenior, "rygcrawl");
-            case 3 -> ctrl.showTop5(isCompetition, isSenior, "brystsvømning");
-            case 4 -> ctrl.showTop5(isCompetition, isSenior, "butterfly");
-            case 9 -> trainerMenu();
-        }
+        String top5Result = ctrl.showTop5(isCompetition, isSenior);
+        System.out.println(top5Result);
+        System.out.println();
     }
 
 

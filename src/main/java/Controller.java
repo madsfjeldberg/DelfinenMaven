@@ -1,9 +1,5 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -62,7 +58,8 @@ public class Controller {
         db.updatePaymentForMember(mail);
     }
 
-    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle){
-        db.showTop5(isCompetition, isSenior, swimStyle);
+    public String showTop5(boolean isCompetition, boolean isSenior){
+        return db.showTop5(isCompetition, isSenior);
     }
+
 }
