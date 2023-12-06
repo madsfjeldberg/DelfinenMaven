@@ -98,7 +98,7 @@ public class Member {
         int lastPaymentYear = lastPaymentDate.getYear();
         int currentYear = currentDate.getYear();
 
-        return !(lastPaymentYear == currentYear - 1 && lastPaymentDate.getMonthValue() < 9);
+        return !(lastPaymentYear <= currentYear - 1 && lastPaymentDate.getMonthValue() < 9);
     }
 
     public boolean isPaid() {
