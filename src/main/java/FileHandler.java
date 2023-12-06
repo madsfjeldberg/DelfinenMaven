@@ -30,7 +30,8 @@ public class FileHandler {
                         + "," + member.isActiveMembership()
                         + "," + formatDate(member.getBirthday())
                         + "," + formatDate(member.getLastPaymentDate())
-                        + "," + member.isPaid();
+                        + "," + member.isPaid()
+                        + "," + member.getPhoneNumber();
 
                 output.println(out);
             }
