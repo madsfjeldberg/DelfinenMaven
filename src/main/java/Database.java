@@ -168,9 +168,9 @@ public class Database {
             }
         }
         StringBuilder output = new StringBuilder();
+        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
         output.append("─".repeat(130));
         output.append("\n");
-        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
         output.append("─".repeat(130));
         output.append("\n");

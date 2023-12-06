@@ -3,23 +3,23 @@ Mads Fjeldberg,mafj0001@stud.kea.dk,true,21-09-1996,23-08-2022,false,22939355
 Thomas Pedersen,thomas92@gmail.com,false,22-03-1992,05-09-2022,true,12345678
 Martin Ejlersen,maej0001@stud.kea.dk,true,02-05-1994,05-12-2023,true,12345678
 Milas Sørensen,milassorensen@gmail.com,true,29-04-1995,05-12-2023,true,12345678
-Ian Bridgwood,ian@mail.dk,true,22-04-1985,01-12-2023,true,12345678
-Søren,sope0001@stud.kea.dk,true,13-06-2003,05-12-2021,true,12345678
+Ian Bridgwood,ian@mail.dk,true,22-04-1985,01-12-2020,false,12345678
+Søren,sope0001@stud.kea.dk,true,13-06-2003,06-12-2023,true,12345678
 Bob,bob@example.com,true,10-10-1985,03-10-2023,true,87654321
 Alice,alice@example.com,false,12-12-1992,04-10-2023,true,98765432
-Mike,mike@example.com,true,07-07-1988,06-10-2023,true,23456789
-Emily,emily@example.com,false,09-09-1993,08-10-2023,true,34567890
+Mike,mike@example.com,true,07-07-1988,06-10-2021,false,23456789
+Emily,emily@example.com,false,09-09-1993,08-10-2021,false,34567890
 David,david@example.com,true,11-11-1982,09-10-2023,true,34561278
 Sarah,sarah@example.com,false,03-03-1990,07-10-2023,true,87651234
 Chris,chris@example.com,true,05-05-1987,10-10-2023,true,56781234
-Megan,megan@example.com,false,02-02-1991,11-10-2023,true,87654321
+Megan,megan@example.com,false,02-02-1991,11-10-2020,false,87654321
 Kevin,kevin@example.com,true,08-08-1980,12-10-2023,true,98761234
 Laura,laura@example.com,false,06-06-1989,05-10-2023,true,12348765
 Steven,steven@example.com,true,04-04-1983,02-10-2023,true,87654321
-Jessica,jessica@example.com,false,01-01-1998,01-10-2023,true,56781234
-Ryan,ryan@example.com,true,09-09-1986,03-10-2023,true,98761234
+Jessica,jessica@example.com,false,01-01-1998,01-10-2021,false,56781234
+Ryan,ryan@example.com,true,09-09-1986,03-10-2022,true,98761234
 Ashley,ashley@example.com,false,07-07-1994,04-10-2023,true,34561278
-Daniel,daniel@example.com,true,12-12-1981,06-10-2023,true,87654321
+Daniel,daniel@example.com,true,12-12-1981,06-10-2019,false,87654321
 Olivia,olivia@example.com,false,05-05-1996,08-10-2023,true,12348765
 Justin,justin@example.com,true,10-10-1984,09-10-2023,true,56781234
 Rachel,rachel@example.com,false,08-08-1990,11-10-2023,true,23456789
