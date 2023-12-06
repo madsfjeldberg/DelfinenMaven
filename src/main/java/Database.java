@@ -2,8 +2,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Database {
 
@@ -26,24 +26,10 @@ public class Database {
         fh.saveResultList(resultList, "results.csv");
     }
 
-    // viser alle informationer om et givet medlem
-    // skal måske skrives om til kun at vise relevant info
-    /*
-    public String showInfo(Member member) {
-        String output;
-        output = "\nNavn: " + member.getName()
-                + "\nAlder: " + member.getAge()
-                + "\nMail: " + member.getMail()
-                + "\n";
-        return output;
-    }
-
-     */
-
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
-                member.getName(), member.getAge(), member.getMail(), "tlf nr. her"));
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber()));
         return output.toString();
     }
 
@@ -71,8 +57,8 @@ public class Database {
     }
 
     public void addMember(String name, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment) {
-        Member member = new Member(name, mail, activeMembership, birthday, lastPayment);
+                          LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+        Member member = new Member(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
         memberList.add(member);
     }
 
@@ -94,7 +80,7 @@ public class Database {
         return period.getYears();
     }
 
-    public int getTotalSubscriptionAmount() {
+    public String getTotalSubscriptionAmount() {
         int totalAmount = 0;
 
         int currentYear = LocalDate.now().getYear();
@@ -104,7 +90,8 @@ public class Database {
                 totalAmount += member.calculateSubscription();
             }
         }
-        return totalAmount;
+        String total = String.valueOf(totalAmount);
+        return colorize(total, "GREEN");
     }
 
     public String showInfoSubscription(Member member) {
@@ -124,19 +111,34 @@ public class Database {
         output.append("\n");
 
         for (Member member : memberList) {
+
             output.append(showInfoSubscription(member));
+
         }
         return output.toString();
     }
 
+    private String colorize(String text, String color) {
+
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_GREEN = "\u001B[32m";
+
+        return switch (color.toUpperCase()) {
+            case "GREEN" -> ANSI_GREEN + text + ANSI_RESET;
+            case "RED" -> ANSI_RED + text + ANSI_RESET;
+            default -> text;
+        };
+    }
+
     public String getUnpaidMember() {
         ArrayList<Member> unpaidMember = new ArrayList<>();
-        int totalamount = 0;
+        int totalAmount = 0;
 
         for (Member member : memberList) {
             if (!member.isPaid()) {
                 unpaidMember.add(member);
-                totalamount += member.calculateSubscription();
+                totalAmount += member.calculateSubscription();
             }
         }
         StringBuilder output = new StringBuilder();
@@ -148,18 +150,22 @@ public class Database {
         for (Member member : unpaidMember) {
            output.append(showInfoSubscription(member));
         }
+
         System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalamount + " kr.");
         return output.toString();
-    }
 
+
+      
+
+    }
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
-        int totalamount = 0;
+        int totalAmount = 0;
 
         for (Member member : memberList) {
             if (member.isPaid()) {
                 paidMember.add(member);
-                totalamount += member.calculateSubscription();
+                totalAmount += member.calculateSubscription();
             }
         }
         StringBuilder output = new StringBuilder();
@@ -173,6 +179,7 @@ public class Database {
         }
         System.out.println("\n Indtægt fra betalende medlemmer: " + totalamount + " kr.");
         return output.toString();
+
     }
 
     public String updatePaymentForMember(String mail) {
@@ -188,30 +195,42 @@ public class Database {
         }
         return "Medlem ikke fundet.";
     }
-    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle) {
-        List<Result> filteredResults = resultList.stream()
-                .filter(result -> result instanceof CompResult == isCompetition)
-                .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
-                .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle)).sorted(Comparator.comparing(Result::getTime)).toList();
+    public String showTop5(boolean isCompetition, boolean isSenior) {
+        StringBuilder resultStringBuilder = new StringBuilder();
 
-        System.out.printf("Top 5 %stid - %s\n", isCompetition ? "Turnerings" : "Trænings", swimStyle);
-        System.out.println("--------------------------------------------------------");
-        for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
-            Result result = filteredResults.get(i);
-            String resultType = isCompetition ? "Turnerings" : "Trænings";
-            String ageGroup = isSenior ? "Senior" : "Junior";
+        resultStringBuilder.append(String.format("Top 5 %stid - Alle discipliner\n", isCompetition ? "Turnerings" : "Trænings"));
+        resultStringBuilder.append("--------------------------------------------------------");
 
-            Member member = getMemberByEmail(result.getMail());
+        for (String swimStyle : List.of("crawl", "rygcrawl", "brystsvømning", "butterfly")) {
+            List<Result> filteredResults = resultList.stream()
+                    .filter(result -> result instanceof CompResult == isCompetition)
+                    .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
+                    .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle))
+                    .sorted(Comparator.comparing(Result::getTime))
+                    .toList();
 
-            if (member != null) {
-                System.out.printf("%d. %stid: %s, Dato: %s, %s, %s\n",
-                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName());
-            } else {
-                System.out.printf("%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet\n",
-                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup);
+            if (!filteredResults.isEmpty()) {
+                resultStringBuilder.append("\nDisciplin: ").append(swimStyle);
+                for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
+                    Result result = filteredResults.get(i);
+                    String resultType = isCompetition ? "Turnerings" : "Trænings";
+                    String ageGroup = isSenior ? "Senior" : "Junior";
+
+                    Member member = getMemberByEmail(result.getMail());
+
+                    if (member != null) {
+                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, %s, Medlem: %s",
+                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName(), swimStyle));
+                    } else {
+                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet, Disciplin: %s",
+                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, swimStyle));
+                    }
+                }
+                resultStringBuilder.append("\n--------------------------------------------------------");
             }
         }
-        System.out.println("--------------------------------------------------------");
+
+        return resultStringBuilder.toString();
     }
 
     public Member getMemberByEmail(String email) {

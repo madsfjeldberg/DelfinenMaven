@@ -1,9 +1,5 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -33,8 +29,8 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
-        db.addMember(name, mail, activeMembership, birthday, lastPayment);
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+        db.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {
@@ -49,7 +45,7 @@ public class Controller {
         return db.showSubscriptionList();
     }
 
-    public int getTotalSubscriptionAmount() {
+    public String getTotalSubscriptionAmount() {
         return db.getTotalSubscriptionAmount(); // Get the total amount from the database
     }
     public String getUnpaidMember() {
@@ -62,7 +58,8 @@ public class Controller {
         db.updatePaymentForMember(mail);
     }
 
-    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle){
-        db.showTop5(isCompetition, isSenior, swimStyle);
+    public String showTop5(boolean isCompetition, boolean isSenior){
+        return db.showTop5(isCompetition, isSenior);
     }
+
 }

@@ -1,7 +1,11 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,7 +48,7 @@ public class UserInterface{
         do {
             System.out.println("""
                     Træner Menu
-                    1. Top 5 svømmere (IKKE IMPLEMENTERET)
+                    1. Top 5 svømmere (BETA)
                     2. Opdater resultat (BETA)
                     3. Søg efter svømmer
                     9. Tilbage til hovedmenu
@@ -102,6 +106,7 @@ public class UserInterface{
                     1. Opret Medlemskab
                     2. Liste over medlemmer
                     3. Redigér medlem (IKKE IMPLEMENTERET)
+                    4. Slet medlem
                     9. Tilbage til hovedmenu
                     """);
 
@@ -110,12 +115,28 @@ public class UserInterface{
             switch (userInput) {
                 case 1 -> createMembership();
                 case 2 -> showList();
+                case 4 -> deleteMember();
                 case 9 -> {
                     ctrl.saveMemberList();
                     run();
                 }
             }
         } while (userInput != 9);
+    }
+    public void deleteMember() {
+        System.out.println("Indtast email på det medlem, du ønsker at slette");
+        Iterator<Member> iterator = ctrl.getMemberList().iterator();
+        String emailToDelete = input.nextLine();
+        while (iterator.hasNext()) {
+            Member member = iterator.next();
+            if (member.getMail().equalsIgnoreCase(emailToDelete)) {
+                iterator.remove();
+                ctrl.saveMemberList(); // Save the updated list after deletion
+                System.out.println("Medlem slettet: " + member.getName());
+                return;
+            }
+        }
+        System.out.println("Medlem ikke fundet med email: " + emailToDelete);
     }
 
     private void createMembership() {
@@ -146,18 +167,33 @@ public class UserInterface{
                 birthday = LocalDate.parse(input.nextLine(), formatter);
                 if (birthday.isAfter(minDate) && birthday.isBefore(maxDate)) {
                     validDate = true;
-                } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
+                } else
+                    System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
+        int phoneNumber = 0;
 
-        System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
-        LocalDate lastPayment = LocalDate.now();
+        while (true) {
+            System.out.println("Indtast telefonnummer: (eks. 12345678)");
 
-        ctrl.addMember(name, mail, activeMembership, birthday, lastPayment);
-        System.out.println("Medlem oprettet.\n");
+            if (input.hasNextInt()) {
+                phoneNumber = input.nextInt();
+                break;
+            } else {
+                System.out.println("Telefonnummer skal være et tal. Prøv igen.");
+                input.next();
+            }
+        }
+
+            System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
+            LocalDate lastPayment = LocalDate.now();
+
+            ctrl.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
+            System.out.println("Medlem oprettet.\n");
+
     }
 
     private void showList() {
@@ -185,61 +221,36 @@ public class UserInterface{
                 9. Afslut""");
     }
 
-    private void top5() {
-        int swimStyleOption;
-
-
+    public void top5() {
         System.out.println("""
-            1. Turneringstider
-            2. Træningstider
-            9. Tilbage til Træner Menu
-            """);
+        1. Turneringstider
+        2. Træningstider
+        9. Tilbage til Træner Menu
+        """);
 
         int timeTypeOption = getValidInput();
 
-        boolean isCompetition = false;
-        switch (timeTypeOption) {
-            case 1 -> isCompetition = true;
-            case 2 -> isCompetition = false;
-            case 9 -> {
-                trainerMenu();
-            }
+        boolean isCompetition = timeTypeOption == 1;
+        if (timeTypeOption == 9) {
+            trainerMenu();
         }
 
         System.out.println("""
-            1. Senior
-            2. Junior
-            9. Tilbage til Træner Menu
-            """);
+        1. Senior
+        2. Junior
+        9. Tilbage til Træner Menu
+        """);
 
         int categoryOption = getValidInput();
 
-        boolean isSenior = false;
-        switch (categoryOption) {
-            case 1 -> isSenior = true;
-            case 2 -> isSenior = false;
-            case 9 -> {
-                trainerMenu();
-            }
+        boolean isSenior = categoryOption == 1;
+        if (categoryOption == 9) {
+            trainerMenu();
         }
 
-        System.out.println("""
-            1. Crawl
-            2. Rygcrawl
-            3. Brystsvømning
-            4. Butterfly
-            9. Tilbage til Træner Menu
-            """);
-
-        swimStyleOption = getValidInput();
-
-        switch (swimStyleOption) {
-            case 1 -> ctrl.showTop5(isCompetition, isSenior, "crawl");
-            case 2 -> ctrl.showTop5(isCompetition, isSenior, "rygcrawl");
-            case 3 -> ctrl.showTop5(isCompetition, isSenior, "brystsvømning");
-            case 4 -> ctrl.showTop5(isCompetition, isSenior, "butterfly");
-            case 9 -> trainerMenu();
-        }
+        String top5Result = ctrl.showTop5(isCompetition, isSenior);
+        System.out.println(top5Result);
+        System.out.println();
     }
 
 
@@ -289,6 +300,7 @@ public class UserInterface{
 
     private void update() {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SS");
         Member chosenMember = null;
         LocalDate date = null;
         String time;
@@ -323,11 +335,12 @@ public class UserInterface{
             boolean validDate = false;
             do {
                 try {
-                    System.out.println("Indtast dato (dd-MM-yyyy)");
+                    System.out.println("Indtast dato: (dd-MM-yyyy)");
                     date = LocalDate.parse(input.nextLine(), formatter);
                     if (date.isAfter(minDate) && date.isBefore(maxDate)) {
                         validDate = true;
-                    } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
+                    } else System.out.printf("Dato skal være mellem %s og %s.\n",
+                            formatter.format(minDate), formatter.format(maxDate));
                 } catch (DateTimeParseException e) {
                     System.out.println("Ugyldigt format. Prøv igen.");
                 }
@@ -344,8 +357,9 @@ public class UserInterface{
                 }
             } while (!validTime);
 
+
             boolean validDiscipline = false;
-            String[] disciplines = {"crawl","rygcrawl","brystsvømning","butterfly"};
+            String[] disciplines = {"crawl","rygcrawl","bryst","butterfly"};
             do {
                 System.out.println("Indtast disciplin:");
                 discipline = input.nextLine().toLowerCase();
@@ -355,36 +369,47 @@ public class UserInterface{
                         break;
                     }
                 }
-                if (!validDiscipline) System.out.println("Ugyldig disciplin. (crawl, rygcrawl, brystsvømning, butterfly)");
+                if (!validDiscipline) System.out.println("Ugyldig disciplin. (crawl, rygcrawl, bryst, butterfly)");
             } while (!validDiscipline);
 
-            System.out.println("Tid opdateret.");
             if (comp) {
                 ctrl.addCompResult(mail, date, time, discipline, placement, competition);
             } else {
-                ctrl.addResult(mail, date, time, discipline);
-
+                for (Result result: ctrl.getResultList()) {
+                    if (discipline.equals(result.getDiscipline())) {
+                        // Checker om tiden er hurtigere eller langsommere. Hvis langsommere, gemmes ikke, hvis hurtigere, erstatter gemt tid.
+                        try {
+                            Date time1 = sdf.parse(time);
+                            Date time2 = sdf.parse(result.getTime());
+                            int compare = time1.compareTo(time2);
+                            if (compare < 0) {
+                                ctrl.getResultList().remove(result);
+                                ctrl.addResult(mail, date, time, discipline);
+                            }
+                            if (compare > 0) {
+                                System.out.println("Tid er langsommere, gemmes ikke.");
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                }
             }
+            System.out.println("Tid opdateret.");
         }
-    }
 
     private boolean booleanCheck(String response) {
-        boolean run = true;
-        while (run) {
-            if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n")) {
-                if (response.equalsIgnoreCase("y")) {
-                    return true;
-                } else if (response.equalsIgnoreCase("n")) {
-                    return false;
-                }
-                run = false;
-            } else {
-                System.out.println(("Indtast 'y' eller 'n'"));
-                response = input.nextLine();
+        while (true) {
+            if (response.equalsIgnoreCase("y")) {
+                return true;
+            } else if (response.equalsIgnoreCase("n")) {
+                return false;
+            }
+            System.out.println("Indtast 'y' eller 'n'");
+            response = input.nextLine();
             }
         }
-        return true;
-    }
 
     private void updatePaymentForMember() {
 
