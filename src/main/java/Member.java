@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Member {
 
-    private String name;
-    private int age;
+    private final String name;
+    private final int age;
     private String mail;
     private boolean activeMembership;
     private LocalDate birthday;
