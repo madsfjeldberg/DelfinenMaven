@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class Database {
@@ -25,6 +24,20 @@ public class Database {
     public void saveResultList() {
         fh.saveResultList(resultList, "results.csv");
     }
+
+    // viser alle informationer om et givet medlem
+    // skal måske skrives om til kun at vise relevant info
+    /*
+    public String showInfo(Member member) {
+        String output;
+        output = "\nNavn: " + member.getName()
+                + "\nAlder: " + member.getAge()
+                + "\nMail: " + member.getMail()
+                + "\n";
+        return output;
+    }
+
+     */
 
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
@@ -154,9 +167,6 @@ public class Database {
         System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalamount + " kr.");
         return output.toString();
 
-
-      
-
     }
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
@@ -179,6 +189,7 @@ public class Database {
         }
         System.out.println("\n Indtægt fra betalende medlemmer: " + totalamount + " kr.");
         return output.toString();
+
 
     }
 
