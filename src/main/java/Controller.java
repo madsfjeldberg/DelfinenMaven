@@ -6,7 +6,7 @@ public class Controller {
     private final Database db;
 
     public Controller() {
-        db = new Database();
+        db = new Database("members.csv", "results.csv");
     }
 
     public void saveMemberList() {

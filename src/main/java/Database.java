@@ -10,11 +10,11 @@ public class Database {
     private ArrayList<Member> memberList;
     private ArrayList<Result> resultList;
 
-    public Database() {
+    public Database(String members, String results) {
         fh = new FileHandler();
         memberList = new ArrayList<>();
-        memberList = fh.loadMemberList("members.csv");
-        resultList = fh.loadResultList("results.csv");
+        memberList = fh.loadMemberList(members);
+        resultList = fh.loadResultList(results);
     }
 
     public void saveMemberList() {
@@ -98,6 +98,8 @@ public class Database {
 
         int currentYear = LocalDate.now().getYear();
 
+
+
         for (Member member : memberList) {
             if (member.getLastPaymentDate().getYear() == currentYear){
                 totalAmount += member.calculateSubscription();
@@ -110,7 +112,7 @@ public class Database {
     public String showInfoSubscription(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-25s |\n",
-                member.getName(), member.getAge(), member.getMail(), "tlf nr. her", member.calculateSubscription() + " kr.", member.getIsPaidString()));
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber(), member.calculateSubscription() + " kr.", member.getIsPaidString()));
         return output.toString();
     }
 
@@ -154,7 +156,9 @@ public class Database {
                 totalAmount += member.calculateSubscription();
             }
         }
+
         StringBuilder output = new StringBuilder();
+        output.append("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
         output.append("─".repeat(130));
         output.append("\n");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
@@ -164,10 +168,9 @@ public class Database {
            output.append(showInfoSubscription(member));
         }
 
-        System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         return output.toString();
-
     }
+
     public String getPaidMember() {
         ArrayList<Member> paidMember = new ArrayList<>();
         int totalAmount = 0;
@@ -189,8 +192,6 @@ public class Database {
         }
         System.out.println("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         return output.toString();
-
-
     }
 
     public String updatePaymentForMember(String mail) {
@@ -221,7 +222,9 @@ public class Database {
                     .toList();
 
             if (!filteredResults.isEmpty()) {
-                resultStringBuilder.append("\nDisciplin: ").append(swimStyle);
+                resultStringBuilder.append("\n");
+                resultStringBuilder.append(String.format("%38s", swimStyle.toUpperCase()));
+                resultStringBuilder.append("\n");
                 for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
                     Result result = filteredResults.get(i);
                     String resultType = isCompetition ? "Turnerings" : "Trænings";
@@ -230,11 +233,9 @@ public class Database {
                     Member member = getMemberByEmail(result.getMail());
 
                     if (member != null) {
-                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, %s, Medlem: %s",
-                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName(), swimStyle));
-                    } else {
-                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet, Disciplin: %s",
-                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, swimStyle));
+
+                         resultStringBuilder.append(String.format("\n| %-10d | %-15s | %-13s | %-13s | %-10s |",
+                                i + 1, member.getName(), result.getTime(), result.getDate(), ageGroup));
                     }
                 }
                 resultStringBuilder.append("\n--------------------------------------------------------");

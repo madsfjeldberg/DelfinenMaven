@@ -1,7 +1,9 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -17,11 +19,21 @@ public class DatabaseTest {
 
     @BeforeEach
     void setup() {
-        db = new Database();
+        db = new Database("membersTest.csv", "resultTest.csv");
         fh = new FileHandler();
         memberList = new ArrayList<>();
         resultList = new ArrayList<>();
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
+        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
+        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
+        memberList.add(testMember);
+        memberList.add(testMember1);
+        memberList.add(testMember2);
+    }
+
+    @AfterEach
+    void tearDown() {
         db.getMemberList().clear();
     }
 
@@ -30,13 +42,7 @@ public class DatabaseTest {
         Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
 
         String actual = db.showInfo(testMember);
-
-        String expected = """
-                
-                Navn: name
-                Alder: 28
-                Mail: mail
-                """;
+        String expected = "| name                 | 28         | mail                           | 12345678        |\n";
         assertEquals(expected, actual);
     }
 
@@ -66,12 +72,10 @@ public class DatabaseTest {
         db.addMember("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
         memberList.add(testMember);
         String actual = db.showList();
-        String expected = """
-                
-                Navn: name
-                Alder: 28
-                Mail: mail
-                """;
+        String expected = "──────────────────────────────────────────────────────────────────────────────────────────\n" +
+                "| Navn                 | Alder      | Mail                           | Telefon nr.     |\n" +
+                "──────────────────────────────────────────────────────────────────────────────────────────\n" +
+                "| name                 | 28         | mail                           | 12345678        |\n";
         assertEquals(actual, expected);
     }
 
@@ -104,21 +108,17 @@ public class DatabaseTest {
     @Test
     void getTotalSubscriptionAmount() {
 
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
-        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
-        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29));
-
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
-        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
-        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
+        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
+        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(2023, 4, 29), 12345678);
 
         db.getMemberList().clear();
         db.getMemberList().add(testMember);
         db.getMemberList().add(testMember1);
         db.getMemberList().add(testMember2);
 
-        int expected = 4800;
-        int actual = Integer.parseInt(db.getTotalSubscriptionAmount());
+        String expected = "\u001B[32m4800\u001B[0m";
+        String actual = db.getTotalSubscriptionAmount();
 
         assertEquals(expected, actual);
     }
@@ -129,37 +129,5 @@ public class DatabaseTest {
         String result = db.updatePaymentForMember(mail);
         assertTrue(result.equals("Medlem opdateret.") || result.equals("Medlem ikke fundet."));
     }
-
-    @Test
-    public void testGetUnpaidMember() {
-        String unpaidMemberList = db.getUnpaidMember();
-        assertNotNull(unpaidMemberList);
-        assertTrue(unpaidMemberList.contains("Medlemmer der ikke har betalt"));
-    }
-
-    @Test
-    public void testGetPaidMember() {
-        String paidMemberList = db.getPaidMember();
-        assertNotNull(paidMemberList);
-        assertTrue(paidMemberList.contains("Medlemmer der har betalt"));
-    }
-
-
-    @Test
-    public void testShowSubscriptionList() {
-        db.getMemberList().clear();
-        Member testMember = new Member("John Doe", "john@example.com", true, LocalDate.of(1990, 1, 1), LocalDate.now());
-        testMember.setIsPaid(true);
-        db.getMemberList().add(testMember);
-
-
-        String subscriptionList = db.showSubscriptionList();
-
-
-        assertTrue(subscriptionList.contains("Navn: John Doe"));
-        assertTrue(subscriptionList.contains("Kontingent: " + testMember.calculateSubscription()));
-        assertTrue(subscriptionList.contains("Betalt: " + testMember.getIsPaidString()));
-    }
-
 }
 

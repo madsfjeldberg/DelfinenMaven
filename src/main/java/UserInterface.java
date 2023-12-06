@@ -123,8 +123,9 @@ public class UserInterface{
             }
         } while (userInput != 9);
     }
+
     public void deleteMember() {
-        System.out.println("Indtast email på det medlem, du ønsker at slette");
+        System.out.println("Indtast email på det medlem, du ønsker at slette:");
         Iterator<Member> iterator = ctrl.getMemberList().iterator();
         String emailToDelete = input.nextLine();
         while (iterator.hasNext()) {
@@ -426,7 +427,7 @@ public class UserInterface{
                 if (response.equals("ja")) {
                     ctrl.updatePaymentForMember(mail);
                     member.updateLastPaymentDate();
-                    ctrl.saveMemberList();
+                    // ctrl.saveMemberList();
                     System.out.println("Betaling opdateret for medlem: " + member.getName());
                 } else {
                     System.out.println("Betaling ikke opdateret.");
