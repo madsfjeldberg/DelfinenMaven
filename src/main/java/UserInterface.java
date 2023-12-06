@@ -132,7 +132,6 @@ public class UserInterface{
             Member member = iterator.next();
             if (member.getMail().equalsIgnoreCase(emailToDelete)) {
                 iterator.remove();
-                ctrl.saveMemberList(); // Save the updated list after deletion
                 System.out.println("Medlem slettet: " + member.getName());
                 return;
             }
@@ -175,7 +174,7 @@ public class UserInterface{
                 System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
-        int phoneNumber = 0;
+        int phoneNumber;
 
         while (true) {
             System.out.println("Indtast telefonnummer: (eks. 12345678)");

@@ -25,20 +25,6 @@ public class Database {
         fh.saveResultList(resultList, "results.csv");
     }
 
-    // viser alle informationer om et givet medlem
-    // skal måske skrives om til kun at vise relevant info
-    /*
-    public String showInfo(Member member) {
-        String output;
-        output = "\nNavn: " + member.getName()
-                + "\nAlder: " + member.getAge()
-                + "\nMail: " + member.getMail()
-                + "\n";
-        return output;
-    }
-
-     */
-
     public String showInfo(Member member) {
         StringBuilder output = new StringBuilder();
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
