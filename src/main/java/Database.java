@@ -164,7 +164,7 @@ public class Database {
            output.append(showInfoSubscription(member));
         }
 
-        System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalamount + " kr.");
+        System.out.println("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         return output.toString();
 
     }
@@ -187,7 +187,7 @@ public class Database {
         for (Member member : paidMember) {
             output.append(showInfoSubscription(member));
         }
-        System.out.println("\n Indtægt fra betalende medlemmer: " + totalamount + " kr.");
+        System.out.println("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         return output.toString();
 
 
