@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Database {
 
@@ -186,30 +185,42 @@ public class Database {
         }
         return "Medlem ikke fundet.";
     }
-    public void showTop5(boolean isCompetition, boolean isSenior, String swimStyle) {
-        List<Result> filteredResults = resultList.stream()
-                .filter(result -> result instanceof CompResult == isCompetition)
-                .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
-                .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle)).sorted(Comparator.comparing(Result::getTime)).toList();
+    public String showTop5(boolean isCompetition, boolean isSenior) {
+        StringBuilder resultStringBuilder = new StringBuilder();
 
-        System.out.printf("Top 5 %stid - %s\n", isCompetition ? "Turnerings" : "Trænings", swimStyle);
-        System.out.println("--------------------------------------------------------");
-        for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
-            Result result = filteredResults.get(i);
-            String resultType = isCompetition ? "Turnerings" : "Trænings";
-            String ageGroup = isSenior ? "Senior" : "Junior";
+        resultStringBuilder.append(String.format("Top 5 %stid - Alle discipliner\n", isCompetition ? "Turnerings" : "Trænings"));
+        resultStringBuilder.append("--------------------------------------------------------");
 
-            Member member = getMemberByEmail(result.getMail());
+        for (String swimStyle : List.of("crawl", "rygcrawl", "brystsvømning", "butterfly")) {
+            List<Result> filteredResults = resultList.stream()
+                    .filter(result -> result instanceof CompResult == isCompetition)
+                    .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
+                    .filter(result -> result.getDiscipline().equalsIgnoreCase(swimStyle))
+                    .sorted(Comparator.comparing(Result::getTime))
+                    .toList();
 
-            if (member != null) {
-                System.out.printf("%d. %stid: %s, Dato: %s, %s, %s\n",
-                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName());
-            } else {
-                System.out.printf("%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet\n",
-                        i + 1, resultType, result.getTime(), result.getDate(), ageGroup);
+            if (!filteredResults.isEmpty()) {
+                resultStringBuilder.append("\nDisciplin: ").append(swimStyle);
+                for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
+                    Result result = filteredResults.get(i);
+                    String resultType = isCompetition ? "Turnerings" : "Trænings";
+                    String ageGroup = isSenior ? "Senior" : "Junior";
+
+                    Member member = getMemberByEmail(result.getMail());
+
+                    if (member != null) {
+                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, %s, Medlem: %s",
+                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, member.getName(), swimStyle));
+                    } else {
+                        resultStringBuilder.append(String.format("\n%d. %stid: %s, Dato: %s, %s, Medlem ikke fundet, Disciplin: %s",
+                                i + 1, resultType, result.getTime(), result.getDate(), ageGroup, swimStyle));
+                    }
+                }
+                resultStringBuilder.append("\n--------------------------------------------------------");
             }
         }
-        System.out.println("--------------------------------------------------------");
+
+        return resultStringBuilder.toString();
     }
 
     public Member getMemberByEmail(String email) {
