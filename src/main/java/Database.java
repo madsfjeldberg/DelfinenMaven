@@ -170,13 +170,13 @@ public class Database {
         StringBuilder output = new StringBuilder();
         output.append("─".repeat(130));
         output.append("\n");
+        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
         output.append("─".repeat(130));
         output.append("\n");
         for (Member member : paidMember) {
             output.append(showInfoSubscription(member));
         }
-        System.out.println("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         return output.toString();
     }
 
@@ -196,8 +196,12 @@ public class Database {
     public String showTop5(boolean isCompetition, boolean isSenior) {
         StringBuilder resultStringBuilder = new StringBuilder();
 
-        resultStringBuilder.append(String.format("Top 5 %stid - Alle discipliner\n", isCompetition ? "Turnerings" : "Trænings"));
-        resultStringBuilder.append("--------------------------------------------------------");
+        resultStringBuilder.append(String.format("Top 5 %stider - Alle discipliner:\n", isCompetition ? "Turnerings" : "Trænings"));
+        resultStringBuilder.append("─".repeat(77));
+        resultStringBuilder.append("\n");
+        resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s |", "Placering", "Navn", "Tid", "Dato", "Gruppe"));
+        resultStringBuilder.append("\n");
+        resultStringBuilder.append("─".repeat(77));
 
         for (String swimStyle : List.of("crawl", "rygcrawl", "brystsvømning", "butterfly")) {
             List<Result> filteredResults = resultList.stream()
@@ -224,7 +228,8 @@ public class Database {
                                 i + 1, member.getName(), result.getTime(), result.getDate(), ageGroup));
                     }
                 }
-                resultStringBuilder.append("\n--------------------------------------------------------");
+                resultStringBuilder.append("\n");
+                resultStringBuilder.append("─".repeat(77));
             }
         }
 
