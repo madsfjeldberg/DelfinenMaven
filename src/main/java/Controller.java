@@ -1,9 +1,5 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -33,8 +29,8 @@ public class Controller {
         return db.getResultList();
     }
 
-    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment) {
-        db.addMember(name, mail, activeMembership, birthday, lastPayment);
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+        db.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
     }
 
     public void addResult(String mail, LocalDate date, String time, String discipline) {
@@ -62,19 +58,8 @@ public class Controller {
         db.updatePaymentForMember(mail);
     }
 
-    public void showTop5(String discipline) {
-        List<Result> results = getResultList();
-
-        List<Result> filteredResults = results.stream()
-                .filter(result -> result.getDiscipline().equalsIgnoreCase(discipline)).sorted(Comparator.comparing(Result::getTime)).toList();
-
-        System.out.println("Top 5 in " + discipline + ":");
-        int count = Math.min(5, filteredResults.size());
-        for (int i = 0; i < count; i++) {
-            Result result = filteredResults.get(i);
-            System.out.println((i + 1) + ". " + result.getMail() + " - " + result.getTime());
-        }
-
-        System.out.println();
+    public String showTop5(boolean isCompetition, boolean isSenior){
+        return db.showTop5(isCompetition, isSenior);
     }
+
 }

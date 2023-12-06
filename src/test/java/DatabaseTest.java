@@ -27,7 +27,7 @@ public class DatabaseTest {
 
     @Test
     void showInfo() {
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
 
         String actual = db.showInfo(testMember);
 
@@ -43,7 +43,7 @@ public class DatabaseTest {
     @Test
     void addMember() {
 
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
 
         ArrayList<Member> memberList = new ArrayList<>();
         memberList.add(testMember);
@@ -60,10 +60,10 @@ public class DatabaseTest {
     @Test
     void showList() {
 
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29), 12345678);
         db.getMemberList().clear();
 
-        db.addMember("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        db.addMember("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
         memberList.add(testMember);
         String actual = db.showList();
         String expected = """
@@ -93,7 +93,7 @@ public class DatabaseTest {
     @Test
     void ageCalculator() {
         LocalDate currentDate = LocalDate.now();
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
 
         int actual = db.ageCalculator(testMember);
         Period period = Period.between(LocalDate.of(1995, 4, 29), currentDate);
@@ -104,9 +104,9 @@ public class DatabaseTest {
     @Test
     void getTotalSubscriptionAmount() {
 
-        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
-        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29));
+        Member testMember = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
+        Member testMember1 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
+        Member testMember2 = new Member("name", "mail", true, LocalDate.of(1995, 4, 29), LocalDate.of(1995, 4, 29),12345678);
 
         db.getMemberList().clear();
         db.getMemberList().add(testMember);

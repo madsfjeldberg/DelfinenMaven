@@ -5,11 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserInterface {
+public class UserInterface{
 
     private final Controller ctrl;
     private final Scanner input;
@@ -47,7 +48,7 @@ public class UserInterface {
         do {
             System.out.println("""
                     Træner Menu
-                    1. Top 5 svømmere (IKKE IMPLEMENTERET)
+                    1. Top 5 svømmere (BETA)
                     2. Opdater resultat (BETA)
                     3. Søg efter svømmer
                     9. Tilbage til hovedmenu
@@ -105,6 +106,7 @@ public class UserInterface {
                     1. Opret Medlemskab
                     2. Liste over medlemmer
                     3. Redigér medlem (IKKE IMPLEMENTERET)
+                    4. Slet medlem
                     9. Tilbage til hovedmenu
                     """);
 
@@ -113,12 +115,28 @@ public class UserInterface {
             switch (userInput) {
                 case 1 -> createMembership();
                 case 2 -> showList();
+                case 4 -> deleteMember();
                 case 9 -> {
                     ctrl.saveMemberList();
                     run();
                 }
             }
         } while (userInput != 9);
+    }
+    public void deleteMember() {
+        System.out.println("Indtast email på det medlem, du ønsker at slette");
+        Iterator<Member> iterator = ctrl.getMemberList().iterator();
+        String emailToDelete = input.nextLine();
+        while (iterator.hasNext()) {
+            Member member = iterator.next();
+            if (member.getMail().equalsIgnoreCase(emailToDelete)) {
+                iterator.remove();
+                ctrl.saveMemberList(); // Save the updated list after deletion
+                System.out.println("Medlem slettet: " + member.getName());
+                return;
+            }
+        }
+        System.out.println("Medlem ikke fundet med email: " + emailToDelete);
     }
 
     private void createMembership() {
@@ -149,18 +167,33 @@ public class UserInterface {
                 birthday = LocalDate.parse(input.nextLine(), formatter);
                 if (birthday.isAfter(minDate) && birthday.isBefore(maxDate)) {
                     validDate = true;
-                } else System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
+                } else
+                    System.out.println("Dato skal være mellem " + formatter.format(minDate) + " og " + formatter.format(maxDate) + ".");
 
             } catch (DateTimeParseException e) {
                 System.out.println("Ugyldigt format. Prøv igen. (dd-MM-yyyy)");
             }
         } while (!validDate);
+        int phoneNumber = 0;
 
-        System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
-        LocalDate lastPayment = LocalDate.now();
+        while (true) {
+            System.out.println("Indtast telefonnummer: (eks. 12345678)");
 
-        ctrl.addMember(name, mail, activeMembership, birthday, lastPayment);
-        System.out.println("Medlem oprettet.\n");
+            if (input.hasNextInt()) {
+                phoneNumber = input.nextInt();
+                break;
+            } else {
+                System.out.println("Telefonnummer skal være et tal. Prøv igen.");
+                input.next();
+            }
+        }
+
+            System.out.println("Note: Medlemskabsstart bliver automatisk sat til nuværende dag.");
+            LocalDate lastPayment = LocalDate.now();
+
+            ctrl.addMember(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
+            System.out.println("Medlem oprettet.\n");
+
     }
 
     private void showList() {
@@ -188,30 +221,38 @@ public class UserInterface {
                 9. Afslut""");
     }
 
-    private void top5() {
-        do {
-            System.out.println("""
-                1. Sorter efter TOP 5 i crawl
-                2. Sorter efter TOP 5 i rygcrawl
-                3. Sorter efter TOP 5 i bryst
-                4. Sorter efter TOP 5 i butterfly
-                9. Tilbage til trænermenu
-                """);
+    public void top5() {
+        System.out.println("""
+        1. Turneringstider
+        2. Træningstider
+        9. Tilbage til Træner Menu
+        """);
 
-            int swimStyleOption = getValidInput();
+        int timeTypeOption = getValidInput();
 
-            switch (swimStyleOption) {
-                case 1 -> ctrl.showTop5("crawl");
-                case 2 -> ctrl.showTop5("rygcrawl");
-                case 3 -> ctrl.showTop5("brysts");
-                case 4 -> ctrl.showTop5("butterfly");
-                case 9 -> {
-                    ctrl.saveMemberList();
-                    trainerMenu();
-                }
-            }
-        } while (userInput != 9);
+        boolean isCompetition = timeTypeOption == 1;
+        if (timeTypeOption == 9) {
+            trainerMenu();
+        }
+
+        System.out.println("""
+        1. Senior
+        2. Junior
+        9. Tilbage til Træner Menu
+        """);
+
+        int categoryOption = getValidInput();
+
+        boolean isSenior = categoryOption == 1;
+        if (categoryOption == 9) {
+            trainerMenu();
+        }
+
+        String top5Result = ctrl.showTop5(isCompetition, isSenior);
+        System.out.println(top5Result);
+        System.out.println();
     }
+
 
     public void coachSearch() {
         boolean foundMember = false;

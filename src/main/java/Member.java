@@ -11,8 +11,9 @@ public class Member {
     private LocalDate birthday;
     private LocalDate lastPaymentDate;
     private boolean isPaid;
+    private int phoneNumber;
 
-    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate) {
+    public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, int phoneNumber) {
         this.name = name;
         this.age = ageCalculator(birthday);
         this.mail = mail;
@@ -20,6 +21,7 @@ public class Member {
         this.birthday = birthday;
         this.lastPaymentDate = lastPaymentDate;
         this.isPaid = updatePaymentStatus();
+        this.phoneNumber = phoneNumber;
     }
 
     public static int ageCalculator(LocalDate birthday) {
@@ -50,6 +52,10 @@ public class Member {
 
     public String getMail() {
         return mail;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setMail(String mail) {
@@ -88,7 +94,11 @@ public class Member {
     private boolean updatePaymentStatus() {
         LocalDate lastPaymentDate = getLastPaymentDate();
         LocalDate currentDate = LocalDate.now();
-        return !lastPaymentDate.plusYears(1).isBefore(currentDate);
+
+        int lastPaymentYear = lastPaymentDate.getYear();
+        int currentYear = currentDate.getYear();
+
+        return !(lastPaymentYear == currentYear - 1 && lastPaymentDate.getMonthValue() < 9);
     }
 
     public boolean isPaid() {
@@ -97,7 +107,7 @@ public class Member {
 
     public String getIsPaidString() {
         updatePaymentStatus();
-        return isPaid ? "Ja" : "Nej";
+        return isPaid ? "\u001B[32mJa\u001B[0m" : "\u001B[31mNej\u001B[0m";
     }
 
     @Override
