@@ -1,6 +1,8 @@
+package objects;
+
 import java.time.LocalDate;
 
-public class CompResult extends Result{
+public class CompResult extends Result {
 
     String placement;
     String competition;

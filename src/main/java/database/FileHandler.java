@@ -1,3 +1,9 @@
+package database;
+
+import objects.CompResult;
+import objects.Member;
+import objects.Result;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

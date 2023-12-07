@@ -1,3 +1,9 @@
+package database;
+
+import objects.CompResult;
+import objects.Member;
+import objects.Result;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -17,17 +23,25 @@ public class Database {
         resultList = fh.loadResultList(results);
     }
 
+    private String colorize(String text, String color) {
+
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_GREEN = "\u001B[32m";
+
+        return switch (color.toUpperCase()) {
+            case "GREEN" -> ANSI_GREEN + text + ANSI_RESET;
+            case "RED" -> ANSI_RED + text + ANSI_RESET;
+            default -> text;
+        };
+    }
+
     public void saveMemberList() {
         fh.saveMemberList(memberList, "members.csv");
     }
 
     public void saveResultList() {
         fh.saveResultList(resultList, "results.csv");
-    }
-
-    public String showInfo(Member member) {
-        return String.format("| %-20s | %-10s | %-30s | %-15s |\n",
-                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber());
     }
 
     public ArrayList<Member> getMemberList() {
@@ -38,6 +52,11 @@ public class Database {
         return resultList;
     }
 
+    public String showInfo(Member member) {
+        return String.format("| %-20s | %-10s | %-30s | %-15s |\n",
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber());
+    }
+
     public String showList() {
         StringBuilder output = new StringBuilder();
         output.append("─".repeat(90));
@@ -46,15 +65,13 @@ public class Database {
         output.append("─".repeat(90));
         output.append("\n");
 
-
         for (Member member : memberList) {
             output.append(showInfo(member));
         }
         return output.toString();
     }
 
-    public void addMember(String name, String mail, boolean activeMembership,
-                          LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
+    public void addMember(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPayment, int phoneNumber) {
         Member member = new Member(name, mail, activeMembership, birthday, lastPayment, phoneNumber);
         memberList.add(member);
     }
@@ -77,12 +94,10 @@ public class Database {
         return period.getYears();
     }
 
+    // Viser det totale beløb i budgettet for i år.
     public String getTotalSubscriptionAmount() {
         int totalAmount = 0;
-
         int currentYear = LocalDate.now().getYear();
-
-
 
         for (Member member : memberList) {
             if (member.getLastPaymentDate().getYear() == currentYear){
@@ -93,6 +108,7 @@ public class Database {
         return colorize(total, "GREEN");
     }
 
+    // String format der bliver brugt flere steder.
     public String accountMenu() {
         return "─".repeat(130) +
                 "\n" +
@@ -101,11 +117,13 @@ public class Database {
                 "\n";
     }
 
+    // viser formatteret info om et medlem
     public String showInfoSubscription(Member member) {
         return String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-23s |\n",
                 member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber(), member.calculateSubscription() + " kr.", member.getIsPaidString());
     }
 
+    // viser en liste med info om alle medlemmer.
     public String showSubscriptionList() {
 
         StringBuilder output = new StringBuilder();
@@ -118,59 +136,39 @@ public class Database {
         return output.toString();
     }
 
-    private String colorize(String text, String color) {
-
-        String ANSI_RESET = "\u001B[0m";
-        String ANSI_RED = "\u001B[31m";
-        String ANSI_GREEN = "\u001B[32m";
-
-        return switch (color.toUpperCase()) {
-            case "GREEN" -> ANSI_GREEN + text + ANSI_RESET;
-            case "RED" -> ANSI_RED + text + ANSI_RESET;
-            default -> text;
-        };
-    }
-
-    public String getUnpaidMember() {
-        ArrayList<Member> unpaidMember = new ArrayList<>();
+    // viser en liste af henholdsvis medlemmer der har betalt/ikke betalt.
+    public String showPayingMembers(boolean paid) {
+        StringBuilder output = new StringBuilder();
+        ArrayList<Member> members = new ArrayList<>();
         int totalAmount = 0;
+        String totalAmountText = "";
 
         for (Member member : memberList) {
-            if (!member.isPaid()) {
-                unpaidMember.add(member);
-                totalAmount += member.calculateSubscription();
+            if (paid) {
+                if (member.isPaid()) {
+                    members.add(member);
+                    totalAmount += member.calculateSubscription();
+                    totalAmountText = "Indtægt fra medlemmer: " + colorize(String.valueOf(totalAmount), "GREEN" + "kr.\n");
+                }
+            } else {
+                if (!member.isPaid()) {
+                    members.add(member);
+                    totalAmount += member.calculateSubscription();
+                    totalAmountText = "Manglende indtægt fra medlemmer: " + colorize(String.valueOf(totalAmount), "RED" + "kr.\n");
+                }
             }
         }
 
-        StringBuilder output = new StringBuilder();
         output.append(accountMenu());
-        for (Member member : unpaidMember) {
-           output.append(showInfoSubscription(member));
-        }
-
-        output.append("\n Manglende indtægt fra betalende medlemmer: ").append(colorize(String.valueOf(totalAmount), "RED")).append(" kr.\n");
-        return output.toString();
-    }
-
-    public String getPaidMember() {
-        ArrayList<Member> paidMember = new ArrayList<>();
-        int totalAmount = 0;
-
-        for (Member member : memberList) {
-            if (member.isPaid()) {
-                paidMember.add(member);
-                totalAmount += member.calculateSubscription();
-            }
-        }
-        StringBuilder output = new StringBuilder();
-        output.append(accountMenu());
-        for (Member member : paidMember) {
+        for (Member member : members) {
             output.append(showInfoSubscription(member));
         }
-        output.append("\n Indtægt fra betalende medlemmer: ").append(colorize(String.valueOf(totalAmount), "GREEN")).append(" kr.");
+
+        output.append(totalAmountText);
         return output.toString();
     }
 
+    // Sætter et member til at have betalt.
     public String updatePaymentForMember(String mail) {
         ArrayList<Member> memberList = getMemberList();
 
@@ -184,6 +182,8 @@ public class Database {
         }
         return "Medlem ikke fundet.";
     }
+
+    // Finder de bedste 5 tider fra results.csv, og returnerer dem.
     public String showTop5(boolean isCompetition, boolean isSenior) {
         StringBuilder resultStringBuilder = new StringBuilder();
 
