@@ -1,3 +1,10 @@
+package userinterface;
+
+import objects.CompResult;
+import objects.Member;
+import objects.Result;
+import controller.Controller;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -29,6 +36,7 @@ public class UserInterface{
         mailPattern = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"); // sikrer mailformat
     }
 
+    // funktion til at formatere tekst.
     public String format(String text, String type) {
         String ANSI_BOLD = "\u001B[1m";
         String ANSI_ITALIC = "\u001B[3m";
@@ -49,9 +57,9 @@ public class UserInterface{
         };
     }
 
-    public void run() {
+    public void mainMenu() {
 
-        String headline = format("Delfin Svømmeklub Database\n", "bold");
+        String headline = format("Delfin Svømmeklub database.Database\n", "bold");
         String headline2 = format("Tast venligst dit ønskede input:\n", "italic");
 
         do {
@@ -92,7 +100,7 @@ public class UserInterface{
                 case 4 -> deleteMember();
                 case 9 -> {
                     ctrl.saveMemberList();
-                    run();
+                    mainMenu();
                 }
             }
         } while (userInput != 9);
@@ -115,12 +123,12 @@ public class UserInterface{
             switch (userInput) {
                 case 1 -> System.out.println(ctrl.showSubscriptionList());
                 case 2 -> System.out.println("Totale beløb: " + ctrl.getTotalSubscriptionAmount() + " kr. for indeværende år.\n");
-                case 3 -> System.out.println(ctrl.getUnpaidMember());
-                case 4 -> System.out.println(ctrl.getPaidMember());
+                case 3 -> System.out.println(ctrl.showPayingMembers(false));
+                case 4 -> System.out.println(ctrl.showPayingMembers(true));
                 case 5 -> updatePaymentForMember();
                 case 9 -> {
                     ctrl.saveMemberList();
-                    run();
+                    mainMenu();
                 }
             }
         } while (userInput != 9);
@@ -145,11 +153,14 @@ public class UserInterface{
                 case 9 -> {
                     ctrl.saveMemberList();
                     ctrl.saveResultList();
-                    run();
+                    mainMenu();
                 }
             }
         } while (userInput != 9);
     }
+
+    // FORMAND FUNKTIONER
+    //--------------------------------------------------------------------------------------------------------------//
 
     public void createMember() {
 
@@ -238,6 +249,37 @@ public class UserInterface{
         return inputNumber;
     }
 
+    //KASSERER FUNKTIONER
+    //--------------------------------------------------------------------------------------------------------------//
+
+    private void updatePaymentForMember() {
+
+        System.out.println("Indtast mail på det medlem, du skal opdatere betaling for:");
+        String mail = input.nextLine();
+
+        for (Member member : ctrl.getMemberList()) {
+            if (mail.equals(member.getMail())) {
+                System.out.println("Ønsker du at opdatere betalingen for dette medlem Ja eller Nej?\n" + "Navn: " + member.getName()
+                        + ", Kontingent: " + member.calculateSubscription()
+                        + ", Betalt: " + member.getIsPaidString());
+
+                String response = input.nextLine().toLowerCase();
+                if (response.equals("ja")) {
+                    ctrl.updatePaymentForMember(mail);
+                    member.updateLastPaymentDate();
+                    // ctrl.saveMemberList();
+                    System.out.println("Betaling opdateret for medlem: " + member.getName());
+                } else {
+                    System.out.println("Betaling ikke opdateret.");
+                }
+            }
+        }
+    }
+
+    //TRÆNER FUNKTIONER
+    //--------------------------------------------------------------------------------------------------------------//
+
+    // viser en liste af de 5 hurtigste tider i hver disciplin, i både stævne og træning.
     public void top5() {
         System.out.println("""
         1. Turneringstider
@@ -246,7 +288,6 @@ public class UserInterface{
         """);
 
         int timeTypeOption = getValidInput();
-
         boolean isCompetition = timeTypeOption == 1;
         if (timeTypeOption == 9) {
             trainerMenu();
@@ -259,16 +300,15 @@ public class UserInterface{
         """);
 
         int categoryOption = getValidInput();
-
         boolean isSenior = categoryOption == 1;
         if (categoryOption == 9) {
             trainerMenu();
         }
-
         String top5Result = ctrl.showTop5(isCompetition, isSenior);
         System.out.println(top5Result + "\n");
     }
 
+    // søger efter et enkelt medlem, og viser deres tider i træning og stævne.
     public void coachSearch() {
         boolean foundMember = false;
         boolean foundResult = false;
@@ -313,6 +353,7 @@ public class UserInterface{
         }
     }
 
+    // tilføjer en tid til et medlem.
     private void update() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:SS");
@@ -325,7 +366,6 @@ public class UserInterface{
 
         System.out.println("Stævnetid? (y/n): ");
         boolean comp = booleanCheck(input.nextLine());
-
         if (comp) {
             System.out.println("Indtast stævnenavn: ");
             competition = input.nextLine();
@@ -334,7 +374,6 @@ public class UserInterface{
         }
 
         System.out.println("Indtast navn eller mail på det medlem der skal opdateres:");
-
         String mail = "";
         String response = input.nextLine();
         for (Member member: ctrl.getMemberList()) {
@@ -414,30 +453,7 @@ public class UserInterface{
             System.out.println("Tid opdateret.");
         }
 
-    private void updatePaymentForMember() {
-
-        System.out.println("Indtast mail på det medlem, du skal opdatere betaling for:");
-        String mail = input.nextLine();
-
-        for (Member member : ctrl.getMemberList()) {
-            if (mail.equals(member.getMail())) {
-                System.out.println("Ønsker du at opdatere betalingen for dette medlem Ja eller Nej?\n" + "Navn: " + member.getName()
-                        + ", Kontingent: " + member.calculateSubscription()
-                        + ", Betalt: " + member.getIsPaidString());
-
-                String response = input.nextLine().toLowerCase();
-                if (response.equals("ja")) {
-                    ctrl.updatePaymentForMember(mail);
-                    member.updateLastPaymentDate();
-                    // ctrl.saveMemberList();
-                    System.out.println("Betaling opdateret for medlem: " + member.getName());
-                } else {
-                    System.out.println("Betaling ikke opdateret.");
-                }
-            }
-        }
-    }
-
+        // inputchecker for boolean værdier.
     private boolean booleanCheck(String response) {
         while (true) {
             if (response.equalsIgnoreCase("y")) {

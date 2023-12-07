@@ -1,3 +1,9 @@
+package controller;
+
+import database.Database;
+import objects.Member;
+import objects.Result;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -46,14 +52,13 @@ public class Controller {
     }
 
     public String getTotalSubscriptionAmount() {
-        return db.getTotalSubscriptionAmount(); // Get the total amount from the database
+        return db.getTotalSubscriptionAmount();
     }
-    public String getUnpaidMember() {
-        return db.getUnpaidMember();
+
+    public String showPayingMembers(boolean paid) {
+        return db.showPayingMembers(paid);
     }
-    public String getPaidMember() {
-        return db.getPaidMember();
-    }
+
     public void updatePaymentForMember(String mail) {
         db.updatePaymentForMember(mail);
     }

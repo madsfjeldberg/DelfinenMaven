@@ -1,3 +1,5 @@
+package objects;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -35,7 +37,7 @@ public class Result {
 
     @Override
     public String toString() {
-        return "Result{" +
+        return "objects.Result{" +
                 "date=" + date +
                 ", time='" + time + '\'' +
                 ", discipline='" + discipline + '\'' +
