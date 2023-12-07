@@ -122,7 +122,6 @@ public class Database {
             output.append(showInfoSubscription(member));
 
         }
-
         return output.toString();
     }
 
