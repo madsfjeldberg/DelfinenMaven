@@ -253,7 +253,6 @@ public class UserInterface{
         System.out.println();
     }
 
-
     public void coachSearch() {
         boolean foundMember = false;
         boolean foundResult = false;

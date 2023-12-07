@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class Database {
 
     FileHandler fh;
@@ -17,7 +16,6 @@ public class Database {
         memberList = fh.loadMemberList(members);
         resultList = fh.loadResultList(results);
     }
-
 
     public void saveMemberList() {
         fh.saveMemberList(memberList, "members.csv");
@@ -122,6 +120,7 @@ public class Database {
         for (Member member : memberList) {
 
             output.append(showInfoSubscription(member));
+
         }
 
         return output.toString();
@@ -179,8 +178,6 @@ public class Database {
         output.append("\n Indtægt fra betalende medlemmer: " + colorize(String.valueOf(totalAmount), "GREEN") + " kr.");
         return output.toString();
     }
-
-
 
     public String updatePaymentForMember(String mail) {
         ArrayList<Member> memberList = getMemberList();
