@@ -266,8 +266,7 @@ public class UserInterface{
         }
 
         String top5Result = ctrl.showTop5(isCompetition, isSenior);
-        System.out.println(top5Result);
-        System.out.println();
+        System.out.println(top5Result + "\n");
     }
 
     public void coachSearch() {
@@ -289,19 +288,19 @@ public class UserInterface{
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
                         if (result instanceof CompResult) {
-                            outputCompetition.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s |%n",
+                            outputCompetition.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s | %n",
                                     result.getDiscipline(), result.getTime(), result.getDate(),
                                     ((CompResult) result).getCompetition(), ((CompResult) result).getPlacement()));
                         } else {
-                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-29s |%n",
-                                    result.getDiscipline(), result.getTime(), result.getDate(), "\u001B[32mTræning\u001B[0m"));
+                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-20s | %n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(), "Træning"));
                         }
                     }
                 }
 
-                System.out.printf("\u001B[36m%s\u001B[0m\n%s\n%s\n%s\n%s\n%s\n%s",
-                        member.getName(), "─".repeat(85), "| Disciplin       | Tid        | Dato       | Stævne               | Placering  |\n",
-                        "─".repeat(85), outputCompetition, outputTraining, "─".repeat(85));
+                System.out.printf("\n\u001B[36m%s\u001B[0m\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                        member.getName(), "─".repeat(82), "| Disciplin       | Tid        | Dato       | Stævne               | Placering  |",
+                        "─".repeat(82), outputCompetition,"─".repeat(82), outputTraining, "─".repeat(82));
                 System.out.println();
             }
         }
