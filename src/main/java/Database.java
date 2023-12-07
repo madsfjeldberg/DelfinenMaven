@@ -8,7 +8,7 @@ public class Database {
 
     FileHandler fh;
     private ArrayList<Member> memberList;
-    private ArrayList<Result> resultList;
+    private final ArrayList<Result> resultList;
 
     public Database(String members, String results) {
         fh = new FileHandler();
@@ -26,10 +26,8 @@ public class Database {
     }
 
     public String showInfo(Member member) {
-        StringBuilder output = new StringBuilder();
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s |\n",
-                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber()));
-        return output.toString();
+        return String.format("| %-20s | %-10s | %-30s | %-15s |\n",
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber());
     }
 
     public ArrayList<Member> getMemberList() {
@@ -95,22 +93,23 @@ public class Database {
         return colorize(total, "GREEN");
     }
 
+    public String accountMenu() {
+        return "─".repeat(130) +
+                "\n" +
+                String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-14s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt Ja/Nej") +
+                "─".repeat(130) +
+                "\n";
+    }
+
     public String showInfoSubscription(Member member) {
-        StringBuilder output = new StringBuilder();
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-25s |\n",
-                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber(), member.calculateSubscription() + " kr.", member.getIsPaidString()));
-        return output.toString();
+        return String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-23s |\n",
+                member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber(), member.calculateSubscription() + " kr.", member.getIsPaidString());
     }
 
     public String showSubscriptionList() {
 
         StringBuilder output = new StringBuilder();
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
-
+        output.append(accountMenu());
         for (Member member : memberList) {
 
             output.append(showInfoSubscription(member));
@@ -144,16 +143,12 @@ public class Database {
         }
 
         StringBuilder output = new StringBuilder();
-        output.append("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
+        output.append(accountMenu());
         for (Member member : unpaidMember) {
            output.append(showInfoSubscription(member));
         }
 
+        output.append("\n Manglende indtægt fra betalende medlemmer: ").append(colorize(String.valueOf(totalAmount), "RED")).append(" kr.\n");
         return output.toString();
     }
 
@@ -168,15 +163,11 @@ public class Database {
             }
         }
         StringBuilder output = new StringBuilder();
-        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
+        output.append(accountMenu());
         for (Member member : paidMember) {
             output.append(showInfoSubscription(member));
         }
+        output.append("\n Indtægt fra betalende medlemmer: ").append(colorize(String.valueOf(totalAmount), "GREEN")).append(" kr.");
         return output.toString();
     }
 
@@ -197,13 +188,13 @@ public class Database {
         StringBuilder resultStringBuilder = new StringBuilder();
 
         resultStringBuilder.append(String.format("Top 5 %stider - Alle discipliner:\n", isCompetition ? "Turnerings" : "Trænings"));
-        resultStringBuilder.append("─".repeat(77));
+        resultStringBuilder.append("─".repeat(100));
         resultStringBuilder.append("\n");
-        resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s |", "Placering", "Navn", "Tid", "Dato", "Gruppe"));
+        resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |", "Placering", "Navn", "Tid", "Dato", "Gruppe", "Stævne"));
         resultStringBuilder.append("\n");
-        resultStringBuilder.append("─".repeat(77));
+        resultStringBuilder.append("─".repeat(100));
 
-        for (String swimStyle : List.of("crawl", "rygcrawl", "brystsvømning", "butterfly")) {
+        for (String swimStyle : List.of("crawl", "rygcrawl", "bryst", "butterfly")) {
             List<Result> filteredResults = resultList.stream()
                     .filter(result -> result instanceof CompResult == isCompetition)
                     .filter(result -> isSenior == (ageCalculator(getMemberByEmail(result.getMail())) >= 18))
@@ -213,23 +204,22 @@ public class Database {
 
             if (!filteredResults.isEmpty()) {
                 resultStringBuilder.append("\n");
-                resultStringBuilder.append(String.format("%38s", swimStyle.toUpperCase()));
+                resultStringBuilder.append(String.format("%52s", swimStyle.toUpperCase()));
                 resultStringBuilder.append("\n");
                 for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
                     Result result = filteredResults.get(i);
-                    String resultType = isCompetition ? "Turnerings" : "Trænings";
                     String ageGroup = isSenior ? "Senior" : "Junior";
 
                     Member member = getMemberByEmail(result.getMail());
 
                     if (member != null) {
 
-                         resultStringBuilder.append(String.format("\n| %-10d | %-15s | %-13s | %-13s | %-10s |",
-                                i + 1, member.getName(), result.getTime(), result.getDate(), ageGroup));
+                         resultStringBuilder.append(String.format("\n| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |",
+                                 ((CompResult) result).getPlacement(), member.getName(), result.getTime(), result.getDate(), ageGroup, ((CompResult) result).getCompetition()));
                     }
                 }
                 resultStringBuilder.append("\n");
-                resultStringBuilder.append("─".repeat(77));
+                resultStringBuilder.append("─".repeat(100));
             }
         }
 

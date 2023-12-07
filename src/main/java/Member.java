@@ -7,11 +7,11 @@ public class Member {
     private final String name;
     private final int age;
     private String mail;
-    private boolean activeMembership;
-    private LocalDate birthday;
+    private final boolean activeMembership;
+    private final LocalDate birthday;
     private LocalDate lastPaymentDate;
     private boolean isPaid;
-    private int phoneNumber;
+    private final int phoneNumber;
 
     public Member(String name, String mail, boolean activeMembership, LocalDate birthday, LocalDate lastPaymentDate, int phoneNumber) {
         this.name = name;

@@ -16,7 +16,9 @@ public class FileHandler {
 
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    throw new RuntimeException("Failed to create file: " + fileName);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -45,7 +47,9 @@ public class FileHandler {
 
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    throw new RuntimeException("Failed to create file: " + fileName);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
