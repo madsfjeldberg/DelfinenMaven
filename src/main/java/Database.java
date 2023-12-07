@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
 public class Database {
 
     FileHandler fh;
@@ -16,6 +17,7 @@ public class Database {
         memberList = fh.loadMemberList(members);
         resultList = fh.loadResultList(results);
     }
+
 
     public void saveMemberList() {
         fh.saveMemberList(memberList, "members.csv");
@@ -95,9 +97,20 @@ public class Database {
         return colorize(total, "GREEN");
     }
 
+    public String accountMenu() {
+        StringBuilder output = new StringBuilder();
+        output.append("─".repeat(130));
+        output.append("\n");
+        output.append(String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-14s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt Ja/Nej"));
+        output.append("─".repeat(130));
+        output.append("\n");
+
+        return output.toString();
+    }
+
     public String showInfoSubscription(Member member) {
         StringBuilder output = new StringBuilder();
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-25s |\n",
+        output.append(String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-23s |\n",
                 member.getName(), member.getAge(), member.getMail(), member.getPhoneNumber(), member.calculateSubscription() + " kr.", member.getIsPaidString()));
         return output.toString();
     }
@@ -105,17 +118,12 @@ public class Database {
     public String showSubscriptionList() {
 
         StringBuilder output = new StringBuilder();
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
-
+        output.append(accountMenu());
         for (Member member : memberList) {
 
             output.append(showInfoSubscription(member));
-
         }
+
         return output.toString();
     }
 
@@ -144,16 +152,12 @@ public class Database {
         }
 
         StringBuilder output = new StringBuilder();
-        output.append("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
+        output.append(accountMenu());
         for (Member member : unpaidMember) {
            output.append(showInfoSubscription(member));
         }
 
+        output.append("\n Manglende indtægt fra betalende medlemmer: " + colorize(String.valueOf(totalAmount), "RED") + " kr.\n");
         return output.toString();
     }
 
@@ -168,17 +172,15 @@ public class Database {
             }
         }
         StringBuilder output = new StringBuilder();
-        output.append("─".repeat(130));
-        output.append("\n");
-        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
-        output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
-        output.append("\n");
+        output.append(accountMenu());
         for (Member member : paidMember) {
             output.append(showInfoSubscription(member));
         }
+        output.append("\n Indtægt fra betalende medlemmer: " + colorize(String.valueOf(totalAmount), "GREEN") + " kr.");
         return output.toString();
     }
+
+
 
     public String updatePaymentForMember(String mail) {
         ArrayList<Member> memberList = getMemberList();
