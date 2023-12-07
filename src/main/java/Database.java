@@ -145,10 +145,10 @@ public class Database {
 
         StringBuilder output = new StringBuilder();
         output.append("\n Manglende indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
-        output.append("─".repeat(130));
+        output.append("─".repeat(125));
         output.append("\n");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
+        output.append("─".repeat(125));
         output.append("\n");
         for (Member member : unpaidMember) {
            output.append(showInfoSubscription(member));
@@ -168,11 +168,11 @@ public class Database {
             }
         }
         StringBuilder output = new StringBuilder();
-        output.append("─".repeat(130));
+        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.\n");
+        output.append("─".repeat(125));
         output.append("\n");
-        output.append("\n Indtægt fra betalende medlemmer: " + totalAmount + " kr.");
         output.append(String.format("| %-20s | %-10s | %-30s | %-15s | %-15s | %-16s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt ja/nej."));
-        output.append("─".repeat(130));
+        output.append("─".repeat(125));
         output.append("\n");
         for (Member member : paidMember) {
             output.append(showInfoSubscription(member));
