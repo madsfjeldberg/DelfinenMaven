@@ -98,7 +98,10 @@ public class Member {
         int lastPaymentYear = lastPaymentDate.getYear();
         int currentYear = currentDate.getYear();
 
-        return !(lastPaymentYear <= currentYear - 1 && lastPaymentDate.getMonthValue() < 9);
+        boolean isPaid = !(lastPaymentYear < currentYear - 1 || (lastPaymentYear == currentYear - 1 && lastPaymentDate.getMonthValue() < 9));
+
+        setIsPaid(isPaid); // Set the isPaid field based on the updated status
+        return isPaid;
     }
 
     public boolean isPaid() {
