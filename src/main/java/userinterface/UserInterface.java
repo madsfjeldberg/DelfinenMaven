@@ -111,7 +111,7 @@ public class UserInterface{
         do {
             System.out.println("""
                     Kasserer Menu
-                    1. Se Kontingentliste
+                    1. Se Medlemsliste
                     2. Se samlet kontingentbeløb
                     3. Se ubetalt kontingentliste
                     4. Se betalt kontingentliste
@@ -313,7 +313,7 @@ public class UserInterface{
         boolean foundMember = false;
         boolean foundResult = false;
 
-        System.out.println("\u001B[34mIndtast navn eller mail:\u001B[0m");
+        System.out.println("Indtast navn eller mail:");
         String response = input.nextLine();
         String mail;
 
@@ -327,18 +327,18 @@ public class UserInterface{
                 for (Result result : ctrl.getResultList()) {
                     if (mail.equals(result.getMail())) {
                         foundResult = true;
+                        // sorterer og sætter format efter træning og turneringstid
                         if (result instanceof CompResult) {
                             outputCompetition.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s | %n",
                                     result.getDiscipline(), result.getTime(), result.getDate(),
                                     ((CompResult) result).getCompetition(), ((CompResult) result).getPlacement()));
                         } else {
-                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-20s | %n",
-                                    result.getDiscipline(), result.getTime(), result.getDate(), "Træning"));
+                            outputTraining.append(String.format("| %-15s | %-10s | %-10s | %-20s | %-10s | %n",
+                                    result.getDiscipline(), result.getTime(), result.getDate(), "Træning", "n/a"));
                         }
                     }
                 }
-
-                System.out.printf("\n\u001B[36m%s\u001B[0m\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
+                System.out.printf("\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",
                         member.getName(), "─".repeat(82), "| Disciplin       | Tid        | Dato       | Stævne               | Placering  |",
                         "─".repeat(82), outputCompetition,"─".repeat(82), outputTraining, "─".repeat(82));
                 System.out.println();

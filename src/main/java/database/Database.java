@@ -110,10 +110,10 @@ public class Database {
 
     // String format der bliver brugt flere steder.
     public String accountMenu() {
-        return "─".repeat(130) +
+        return "─".repeat(111) +
                 "\n" +
                 String.format("| %-18s | %-10s | %-25s | %-13s | %-12s | %-14s |\n", "Navn", "Alder", "Mail", "Telefon nr.", "Beløb i kr.", "Betalt Ja/Nej") +
-                "─".repeat(130) +
+                "─".repeat(111) +
                 "\n";
     }
 
@@ -187,12 +187,24 @@ public class Database {
     public String showTop5(boolean isCompetition, boolean isSenior) {
         StringBuilder resultStringBuilder = new StringBuilder();
 
-        resultStringBuilder.append(String.format("Top 5 %stider - Alle discipliner:\n", isCompetition ? "Turnerings" : "Trænings"));
-        resultStringBuilder.append("─".repeat(100));
-        resultStringBuilder.append("\n");
-        resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |", "Placering", "Navn", "Tid", "Dato", "Gruppe", "Stævne"));
-        resultStringBuilder.append("\n");
-        resultStringBuilder.append("─".repeat(100));
+        if (isCompetition) {
+            resultStringBuilder.append("─".repeat(100));
+            resultStringBuilder.append("\nTop 5 Stævnetider - Alle discipliner:\n");
+            resultStringBuilder.append("─".repeat(100));
+            resultStringBuilder.append("\n");
+            resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |", "Placering", "Navn", "Tid", "Dato", "Gruppe", "Stævne"));
+            resultStringBuilder.append("\n");
+            resultStringBuilder.append("─".repeat(100));
+        } else {
+            resultStringBuilder.append("─".repeat(77));
+            resultStringBuilder.append("\nTop 5 Træningstider - Alle discipliner:\n");
+            resultStringBuilder.append("─".repeat(77));
+            resultStringBuilder.append("\n");
+            resultStringBuilder.append(String.format("| %-10s | %-15s | %-13s | %-13s | %-10s |", "Placering", "Navn", "Tid", "Dato", "Gruppe"));
+            resultStringBuilder.append("\n");
+            resultStringBuilder.append("─".repeat(77));
+        }
+
 
         for (String swimStyle : List.of("crawl", "rygcrawl", "bryst", "butterfly")) {
             List<Result> filteredResults = resultList.stream()
@@ -204,7 +216,7 @@ public class Database {
 
             if (!filteredResults.isEmpty()) {
                 resultStringBuilder.append("\n");
-                resultStringBuilder.append(String.format("%52s", swimStyle.toUpperCase()));
+                resultStringBuilder.append(String.format("%s",swimStyle.toUpperCase()));
                 resultStringBuilder.append("\n");
                 for (int i = 0; i < Math.min(5, filteredResults.size()); i++) {
                     Result result = filteredResults.get(i);
@@ -213,16 +225,24 @@ public class Database {
                     Member member = getMemberByEmail(result.getMail());
 
                     if (member != null) {
+                        if (isCompetition) {
 
-                         resultStringBuilder.append(String.format("\n| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |",
-                                 ((CompResult) result).getPlacement(), member.getName(), result.getTime(), result.getDate(), ageGroup, ((CompResult) result).getCompetition()));
+                            resultStringBuilder.append(String.format("\n| %-10s | %-15s | %-13s | %-13s | %-10s | %-20s |",
+                                    ((CompResult) result).getPlacement(), member.getName(), result.getTime(), result.getDate(), ageGroup, ((CompResult) result).getCompetition()));
+                            resultStringBuilder.append("\n");
+                            resultStringBuilder.append("─".repeat(100));
+                        }
+                        else {
+                            resultStringBuilder.append(String.format("\n| %-10s | %-15s | %-13s | %-13s | %-10s |",
+                                    i + 1, member.getName(), result.getTime(), result.getDate(), ageGroup));
+                            resultStringBuilder.append("\n");
+                            resultStringBuilder.append("─".repeat(77));
+                        }
                     }
                 }
-                resultStringBuilder.append("\n");
-                resultStringBuilder.append("─".repeat(100));
+
             }
         }
-
         return resultStringBuilder.toString();
     }
 
@@ -234,9 +254,6 @@ public class Database {
         }
         return null;
     }
-
-
-
 }
 
 
